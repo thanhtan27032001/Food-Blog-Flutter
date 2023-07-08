@@ -24,19 +24,19 @@ class AppColors {
 
   static final Color _blackColor = Color(int.parse("0xff000000"));
 
-  static Color getPrimaryColor({int level = 1}) {
+  static Color primaryColor({int level = 1}) {
     return _primaryColor[level];
   }
 
-  static Color getSecondaryColor({int level = 1}) {
+  static Color secondaryColor({int level = 1}) {
     return _secondaryColor[level];
   }
 
-  static Color getGrayColor({required int level}) {
+  static Color grayColor({required int level}) {
     return _grayColor[level];
   }
 
-  static Color getBlackColor() => _blackColor;
+  static Color blackColor() => _blackColor;
 
-  static Color getWhiteColor() => _whiteColor;
+  static Color whiteColor() => _whiteColor;
 }

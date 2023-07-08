@@ -6,7 +6,7 @@ class LoginLogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 40),
+      margin: const EdgeInsets.only(top: 64),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -15,7 +15,7 @@ class LoginLogoWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: AppTextStyle.fontSizeDisplay2,
               fontWeight: FontWeight.bold,
-              color: AppColors.getPrimaryColor(),
+              color: AppColors.primaryColor(),
             ),
           ),
           Text(
@@ -23,7 +23,7 @@ class LoginLogoWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: AppTextStyle.fontSizeDisplay2,
               fontWeight: FontWeight.bold,
-              color: AppColors.getBlackColor(),
+              color: AppColors.blackColor(),
             ),
           ),
           SizedBox(

@@ -41,7 +41,10 @@ class AppMainPageWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           color: _pageBackgroundColor,
-          child: _pageBody,
+          child: Container(
+            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: (_pageBody),
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,

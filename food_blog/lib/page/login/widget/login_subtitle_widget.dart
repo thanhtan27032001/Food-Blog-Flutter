@@ -10,7 +10,7 @@ class LoginSubtitleWidget extends StatelessWidget {
       child: Text(
         'Khám phá nhiều hơn công thức mới\ndành riêng cho bạn',
         textAlign: TextAlign.center,
-        style: TextStyle(color: AppColors.getGrayColor(level: 2)),
+        style: TextStyle(color: AppColors.grayColor(level: 2)),
       ),
     );
   }
