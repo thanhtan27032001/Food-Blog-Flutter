@@ -60,7 +60,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 focusNode: _focusNode,
                 textInputAction: _textInputAction,
                 obscureText: _obscureText != null ? _obscureText! : false,
-                cursorColor: AppColors.primaryColor(),
+                cursorColor: AppColors.secondaryColor(),
                 onFieldSubmitted: _onFieldSubmitted,
                 keyboardType: _inputType,
                 decoration: const InputDecoration(
@@ -71,7 +71,8 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
             _suffixIcon != null
                 ? Container(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
-                    child: _suffixIcon!,)
+                    child: _suffixIcon!,
+                  )
                 : const SizedBox(width: 8),
           ],
         ),

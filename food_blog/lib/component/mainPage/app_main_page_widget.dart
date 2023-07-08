@@ -37,6 +37,7 @@ class AppMainPageWidget extends StatelessWidget {
     );
     return MaterialApp(
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
