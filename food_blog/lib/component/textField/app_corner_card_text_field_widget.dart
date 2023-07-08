@@ -43,7 +43,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(35),
       ),
-      elevation: 4,
+      elevation: 2,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Row(
@@ -77,35 +77,5 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
         ),
       ),
     );
-    // return Container(
-    //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    //   alignment: Alignment.center,
-    //   decoration: BoxDecoration(
-    //     color: AppColors.grayColor(level: 0),
-    //     borderRadius: BorderRadius.circular(100),
-    //   ),
-    // child:
-    // TextFormField(
-    //   onChanged: _onChange,
-    //   autofocus: (_autofocus != null) ? _autofocus! : false,
-    //   focusNode: _focusNode,
-    //   textInputAction: _textInputAction,
-    //   obscureText: _obscureText != null ? _obscureText! : false,
-    //   cursorColor: AppColors.primaryColor(),
-    //   onFieldSubmitted: _onFieldSubmitted,
-    //   keyboardType: _inputType,
-    //   decoration: InputDecoration(
-    //       border: InputBorder.none,
-    //       enabledBorder: UnderlineInputBorder(
-    //         borderSide: BorderSide(color: Colors.transparent),
-    //       ),
-    //       focusedBorder: UnderlineInputBorder(
-    //         borderSide: BorderSide(color: Colors.transparent),
-    //       ),
-    //       suffixIcon: _suffixIcon != null ? _suffixIcon! : const SizedBox(),
-    //       icon: const Icon(Icons.account_circle_outlined)),
-    // )
-    // ,
-    // );
   }
 }
