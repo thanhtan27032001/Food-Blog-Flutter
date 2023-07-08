@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/config/app_colors.dart';
+import 'package:get/get.dart';
 
 class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final ValueChanged<String> _onChange;
@@ -68,15 +69,27 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 ),
               ),
             ),
-            _suffixIcon != null
-                ? Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    child: _suffixIcon!,
-                  )
-                : const SizedBox(width: 8),
+            GestureDetector(
+              onTap: _suffixIconOnPress,
+              child: _suffixIcon != null
+                  ? Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                child: _suffixIcon!,
+              )
+                  : const SizedBox(width: 8),
+            )
           ],
         ),
       ),
     );
   }
 }
+
+// class _AppCornerCardTextFieldWidgetState extends State<AppCornerCardTextFieldWidget> {
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+//
+// }

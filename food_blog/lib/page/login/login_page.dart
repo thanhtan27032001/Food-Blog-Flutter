@@ -1,13 +1,14 @@
 part of 'login_controller.dart';
 
 void main() {
-  runApp(LoginPage());
+  Get.put(LoginController());
+  runApp(const LoginPage());
 }
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-
-  final LoginController controller = LoginController();
+class LoginPage extends GetView<LoginController> {
+  const LoginPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +30,33 @@ class LoginPage extends StatelessWidget {
                 Icons.account_circle_outlined,
                 color: AppColors.grayColor(level: 2),
               ),
-              // suffixIcon: Icon(Icons.clear_rounded, color: AppColors.grayColor(level: 2)),
-            ).build(context),
+            ),
           ),
-          // username text field
+          // password text field
           Container(
             margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: AppCornerCardTextFieldWidget(
-              onChange: (value) => controller.password = value,
-              leadingIcon: Icon(
-                Icons.lock_outline_rounded,
-                color: AppColors.grayColor(level: 2),
-              ),
-              suffixIcon:
-                  Icon(Icons.visibility, color: AppColors.grayColor(level: 2)),
-            ).build(context),
+            child: Obx(
+              () {
+                return AppCornerCardTextFieldWidget(
+                  onChange: (value) => controller.password = value,
+                  leadingIcon: Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppColors.grayColor(level: 2),
+                  ),
+                  suffixIcon: Icon(
+                    controller.isObscurePassword.value
+                        ? Icons.visibility_rounded
+                        : Icons.visibility_off_rounded,
+                    color: AppColors.grayColor(level: 2),
+                  ),
+                  obscureText: controller.isObscurePassword.value,
+                  suffixIconOnPress: () {
+                    controller.isObscurePassword.value =
+                        !controller.isObscurePassword.value;
+                  },
+                );
+              },
+            ),
           ),
           // forgot password
           Container(
