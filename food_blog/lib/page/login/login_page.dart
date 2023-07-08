@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_blog/config/app_colors.dart';
 import 'package:food_blog/config/text_style.dart';
 
 void main() {
@@ -59,16 +60,22 @@ class LoginLogo extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Food',
-              style: TextStyle(
-                  fontSize: AppTextStyle.fontSizeDisplay2,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 183, 28, 28))),
-          const Text('blog',
-              style: TextStyle(
-                  fontSize: AppTextStyle.fontSizeDisplay2,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black)),
+          Text(
+            'Food',
+            style: TextStyle(
+              fontSize: AppTextStyle.fontSizeDisplay2,
+              fontWeight: FontWeight.bold,
+              color: AppColors.getPrimaryColor(),
+            ),
+          ),
+          Text(
+            'blog',
+            style: TextStyle(
+              fontSize: AppTextStyle.fontSizeDisplay2,
+              fontWeight: FontWeight.bold,
+              color: AppColors.getBlackColor(),
+            ),
+          ),
           SizedBox(
             width: 45,
             height: 45,
@@ -86,11 +93,11 @@ class LoginSubtitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
-      child: const Text(
+      margin: const EdgeInsets.only(top: 8),
+      child: Text(
         'Khám phá nhiều hơn công thức mới\ndành riêng cho bạn',
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.black54),
+        style: TextStyle(color: AppColors.getGrayColor(level: 2)),
       ),
     );
   }
