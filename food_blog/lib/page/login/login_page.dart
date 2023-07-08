@@ -1,10 +1,5 @@
 part of 'login_controller.dart';
 
-void main() {
-  Get.put(LoginController());
-  runApp(const LoginPage());
-}
-
 class LoginPage extends GetView<LoginController> {
   const LoginPage({
     super.key,
@@ -109,21 +104,21 @@ class LoginPage extends GetView<LoginController> {
                 width: 20,
                 height: 20,
               ),
-              onPressed: () {},
+              onPressed: () {
+                controller.loginWithGoogle();
+              },
             ),
           ),
           // register suggestion
           Expanded(
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 32,
-                  child: FractionallySizedBox(
-                    widthFactor: 0.5,
-                    child: RichText(
-                      text: TextSpan(children: [
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
                         TextSpan(
                             text: 'Bạn chưa có tài khoản? ',
                             style: TextStyle(color: AppColors.blackColor())),
@@ -133,11 +128,11 @@ class LoginPage extends GetView<LoginController> {
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryColor()),
                         ),
-                      ]),
+                      ],
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ],
