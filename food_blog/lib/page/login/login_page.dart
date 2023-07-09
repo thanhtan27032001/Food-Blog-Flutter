@@ -1,9 +1,20 @@
 part of 'login_controller.dart';
 
-class LoginPage extends GetView<LoginController> {
+class LoginPage extends StatefulWidget {
+
   const LoginPage({
     super.key,
   });
+
+  @override
+  State<StatefulWidget> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  final LoginController controller = LoginController();
+
+  _LoginPageState();
 
   @override
   Widget build(BuildContext context) {
@@ -30,26 +41,23 @@ class LoginPage extends GetView<LoginController> {
           // password text field
           Container(
             margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Obx(
-              () {
-                return AppCornerCardTextFieldWidget(
-                  onChange: (value) => controller.password = value,
-                  leadingIcon: Icon(
-                    Icons.lock_outline_rounded,
-                    color: AppColors.grayColor(level: 2),
-                  ),
-                  suffixIcon: Icon(
-                    controller.isObscurePassword.value
-                        ? Icons.visibility_rounded
-                        : Icons.visibility_off_rounded,
-                    color: AppColors.grayColor(level: 2),
-                  ),
-                  obscureText: controller.isObscurePassword.value,
-                  suffixIconOnPress: () {
-                    controller.isObscurePassword.value =
-                        !controller.isObscurePassword.value;
-                  },
-                );
+            child: AppCornerCardTextFieldWidget(
+              onChange: (value) => controller.password = value,
+              leadingIcon: Icon(
+                Icons.lock_outline_rounded,
+                color: AppColors.grayColor(level: 2),
+              ),
+              suffixIcon: Icon(
+                controller.isObscurePassword
+                    ? Icons.visibility_rounded
+                    : Icons.visibility_off_rounded,
+                color: AppColors.grayColor(level: 2),
+              ),
+              obscureText: controller.isObscurePassword,
+              suffixIconOnPress: () {
+                setState(() {
+                  controller.isObscurePassword = !controller.isObscurePassword;
+                });
               },
             ),
           ),
@@ -95,18 +103,22 @@ class LoginPage extends GetView<LoginController> {
           // login with google
           Container(
             margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: AppFilledCornerButton(
-              text: "Tiếp tục với Google",
-              textColor: AppColors.blackColor(),
-              buttonColor: AppColors.whiteColor(),
-              icon: Image.asset(
-                "assets/images/google_logo.png",
-                width: 20,
-                height: 20,
-              ),
-              onPressed: () {
-                controller.loginWithGoogle();
-              },
+            child: Builder(
+              builder: (context) {
+                return AppFilledCornerButton(
+                  text: "Tiếp tục với Google",
+                  textColor: AppColors.blackColor(),
+                  buttonColor: AppColors.whiteColor(),
+                  icon: Image.asset(
+                    "assets/images/google_logo.png",
+                    width: 20,
+                    height: 20,
+                  ),
+                  onPressed: () {
+                    controller.loginWithGoogle(context);
+                  },
+                );
+              }
             ),
           ),
           // register suggestion
