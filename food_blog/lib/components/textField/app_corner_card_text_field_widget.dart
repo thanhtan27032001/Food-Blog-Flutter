@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_blog/config/app_colors.dart';
+import 'package:food_blog/configs/app_colors.dart';
 
 class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final ValueChanged<String> _onChange;

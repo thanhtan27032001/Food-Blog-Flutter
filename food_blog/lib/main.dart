@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_blog/page/login/login_controller.dart';
+import 'package:food_blog/pages/main/main_controller.dart';
 
 import 'firebase_options.dart';
+import 'pages/login/login_controller.dart';
 
 void main() async {
   // Get.put(LoginController());
@@ -10,9 +12,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const LoginPage(
-    key: Key('login_page'),
-  ));
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      // User is signed out
+      print('Sign out');
+      runApp(const LoginPage());
+    } else {
+      // User is signed in
+      print('Sign in');
+      runApp(const MainPage());
+    }
+  });
 }
 
 class MyApp extends StatelessWidget {

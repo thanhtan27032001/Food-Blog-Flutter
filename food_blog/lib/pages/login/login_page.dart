@@ -1,7 +1,6 @@
 part of 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
-
   const LoginPage({
     super.key,
   });
@@ -11,7 +10,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final LoginController controller = LoginController();
 
   _LoginPageState();
@@ -103,23 +101,21 @@ class _LoginPageState extends State<LoginPage> {
           // login with google
           Container(
             margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: Builder(
-              builder: (context) {
-                return AppFilledCornerButton(
-                  text: "Tiếp tục với Google",
-                  textColor: AppColors.blackColor(),
-                  buttonColor: AppColors.whiteColor(),
-                  icon: Image.asset(
-                    "assets/images/google_logo.png",
-                    width: 20,
-                    height: 20,
-                  ),
-                  onPressed: () {
-                    controller.loginWithGoogle(context);
-                  },
-                );
-              }
-            ),
+            child: Builder(builder: (context) {
+              return AppFilledCornerButton(
+                text: "Tiếp tục với Google",
+                textColor: AppColors.blackColor(),
+                buttonColor: AppColors.whiteColor(),
+                icon: SvgPicture.asset(
+                  'assets/svgs/google_logo.svg',
+                  width: 20,
+                  height: 20,
+                ),
+                onPressed: () {
+                  controller.signInWithGoogle();
+                },
+              );
+            }),
           ),
           // register suggestion
           Expanded(
