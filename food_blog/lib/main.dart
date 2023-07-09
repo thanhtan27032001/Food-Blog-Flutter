@@ -20,7 +20,7 @@ void main() async {
     } else {
       // User is signed in
       print('Sign in');
-      runApp(const MainPage());
+      runApp(MainPage());
     }
   });
 }
