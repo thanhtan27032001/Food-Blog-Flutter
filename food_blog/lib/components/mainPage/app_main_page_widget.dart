@@ -5,15 +5,18 @@ class AppMainPageWidget extends StatelessWidget {
   late final Color _statusBarColor;
   late final Color _pageBackgroundColor;
   late final Widget _pageBody;
+  late final BottomNavigationBar? _bottomNavigationBar;
 
   AppMainPageWidget(
       {super.key,
       required statusBarColor,
       required pageBackgroundColor,
-      required pageBody}) {
+      required pageBody,
+      BottomNavigationBar? bottomNavigationBar}) {
     _statusBarColor = statusBarColor;
     _pageBackgroundColor = pageBackgroundColor;
     _pageBody = pageBody;
+    _bottomNavigationBar = bottomNavigationBar;
   }
 
   bool _isStatusBarColorBright() {
@@ -47,6 +50,7 @@ class AppMainPageWidget extends StatelessWidget {
             child: (_pageBody),
           ),
         ),
+        bottomNavigationBar: _bottomNavigationBar,
       ),
       debugShowCheckedModeBanner: false,
     );
