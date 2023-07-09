@@ -1,6 +1,6 @@
 part of 'main_controller.dart';
 
-class MainPage extends GetView<MainController> {
+class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   @override
