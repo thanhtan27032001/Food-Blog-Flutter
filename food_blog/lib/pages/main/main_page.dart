@@ -29,6 +29,13 @@ class _MainPageState extends State<MainPage> {
     ),
   ];
 
+
+  @override
+  void initState() {
+    super.initState();
+    controller.createUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppMainPageWidget(

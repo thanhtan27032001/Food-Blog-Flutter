@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1029223792125",
+    "firebase_url": "https://food-blog-1d537-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "food-blog-1d537",
+    "storage_bucket": "food-blog-1d537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029223792125:android:b2a353e8618afc96ff6d94",
+        "android_client_info": {
+          "package_name": "com.example.food_blog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1029223792125-suq50d2tbet5e7kkh7t1h1rblfglurm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.food_blog",
+            "certificate_hash": "2dbb3bca6389bd5e9e82fe5306a80ae10f732af5"
+          }
+        },
+        {
+          "client_id": "1029223792125-82iero7g16nirjebpgltdd15v2ne8g9h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5iLUwRDJCxRN-VfjOPuW2Flft6swVBhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029223792125-82iero7g16nirjebpgltdd15v2ne8g9h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1029223792125-v9d5n05v2cvli287uq1os6sg4ia0bgj9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodBlog"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
