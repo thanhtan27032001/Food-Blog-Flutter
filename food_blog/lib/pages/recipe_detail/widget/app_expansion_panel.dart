@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppRecipeExpansion extends StatelessWidget {
+class AppRecipeExpansion extends StatefulWidget {
   late String description;
   late int maxLine;
   late bool isExpanded;
@@ -8,9 +8,31 @@ class AppRecipeExpansion extends StatelessWidget {
   AppRecipeExpansion({
     super.key,
     required this.description,
-    required this.maxLine,
-    required this.isExpanded,
+    this.maxLine = 3,
+    this.isExpanded = false,
   });
+
+  @override
+  State<StatefulWidget> createState() => AppRecipeExpansionState();
+}
+
+class AppRecipeExpansionState extends State<AppRecipeExpansion> {
+  late String description;
+  late int maxLine;
+  late bool isExpanded;
+
+  @override
+  void initState() {
+    description = widget.description;
+    maxLine = widget.maxLine;
+    isExpanded = widget.isExpanded;
+  }
+
+  void _changeExpandStatus() {
+    setState(() {
+      isExpanded = !isExpanded;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +45,14 @@ class AppRecipeExpansion extends StatelessWidget {
             child: Text(
               description,
               maxLines: isExpanded ? null : maxLine,
-              overflow: TextOverflow.ellipsis,
+              overflow: isExpanded ? null : TextOverflow.ellipsis,
               style: const TextStyle(height: 1.5),
             ),
           ),
+        ),
+        TextButton(
+          onPressed: () => _changeExpandStatus(),
+          child: Text(isExpanded ? 'Thu gọn' : 'Xem chi tiết'),
         ),
       ],
     );
