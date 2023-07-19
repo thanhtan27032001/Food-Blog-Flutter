@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:food_blog/configs/theme_style.dart';
 
 class AppMainPageWidget extends StatelessWidget {
   late final Color _statusBarColor;
@@ -29,25 +33,48 @@ class AppMainPageWidget extends StatelessWidget {
     return false;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  void _customStatusBar(){
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarIconBrightness:
-            _isStatusBarColorBright() ? Brightness.dark : Brightness.light,
+        _isStatusBarColorBright() ? Brightness.dark : Brightness.light,
         statusBarColor: _statusBarColor,
       ),
     );
+  }
+
+  Future<void> _setOptimalDisplayMode() async {
+    final List<DisplayMode> supported = await FlutterDisplayMode.supported;
+    final DisplayMode active = await FlutterDisplayMode.active;
+
+    final List<DisplayMode> sameResolution = supported.where(
+            (DisplayMode m) => m.width == active.width
+            && m.height == active.height).toList()..sort(
+            (DisplayMode a, DisplayMode b) =>
+            b.refreshRate.compareTo(a.refreshRate));
+
+    final DisplayMode mostOptimalMode = sameResolution.isNotEmpty
+        ? sameResolution.first
+        : active;
+
+    await FlutterDisplayMode.setPreferredMode(mostOptimalMode);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _customStatusBar();
+    _setOptimalDisplayMode();
     return MaterialApp(
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: _pageBackgroundColor,
+        body: SafeArea(
           child: Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: (_pageBody),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: _pageBackgroundColor,
+            child: Container(
+              child: (_pageBody),
+            ),
           ),
         ),
         bottomNavigationBar: _bottomNavigationBar,

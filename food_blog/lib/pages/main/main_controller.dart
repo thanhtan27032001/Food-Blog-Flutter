@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/configs/app_colors.dart';
 import 'package:food_blog/configs/app_const.dart';
+import 'package:food_blog/pages/main/views/home/home_view.dart';
 
 part 'main_page.dart';
 

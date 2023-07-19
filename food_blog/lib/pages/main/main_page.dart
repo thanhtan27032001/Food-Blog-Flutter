@@ -12,9 +12,7 @@ class _MainPageState extends State<MainPage> {
 
   int _currentIndex = 0;
   final List<Widget> _page = [
-    Container(
-      color: Colors.red,
-    ),
+    HomeView(),
     Container(
       color: Colors.black54,
     ),
@@ -33,7 +31,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    controller.createUser();
+    // controller.createUser();
   }
 
   @override
