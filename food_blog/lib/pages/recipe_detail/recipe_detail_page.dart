@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_blog/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/configs/app_colors.dart';
+import 'package:food_blog/models/recipe_comment.dart';
 import 'package:food_blog/models/recipe_model.dart';
 import 'package:food_blog/models/recipe_step.dart';
+import 'package:food_blog/models/user.dart';
 import 'package:food_blog/pages/recipe_detail/widget/app_expansion_panel.dart';
+import 'package:food_blog/pages/recipe_detail/widget/recipe_comment_list_widget.dart';
 import 'package:food_blog/pages/recipe_detail/widget/recipe_ingredient_list_widget.dart';
 import 'package:food_blog/pages/recipe_detail/widget/recipe_step_list_widget.dart';
 import 'package:food_blog/pages/recipe_detail/widget/recipe_summary_card.dart';
@@ -66,18 +70,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Container(
-                        width: 48,
-                        height: 48,
-                        child: ClipRRect(
-                          child: Image.network(
-                            'https://znews-photo.zingcdn.me/w660/Uploaded/spivovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(40)),
-                        ),
-                      ),
-                      SizedBox(
+                      AppAvatarWidget(avtUrl: 'https://znews-photo.zingcdn.me/w660/Uploaded/spivovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg', size: 48, onPress: () {}),
+                      const SizedBox(
                         width: 8,
                       ),
                       Expanded(
@@ -94,7 +88,8 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                           Row(
                             children: [
                               Icon(Icons.access_time,
-                                  size: 16, color: AppColors.grayColor(level: 2)),
+                                  size: 16,
+                                  color: AppColors.grayColor(level: 2)),
                               SizedBox(width: 4),
                               Text(
                                 '1 giờ trước',
@@ -169,12 +164,54 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: RecipeStepWidget(recipeStepList: [
-                  RecipeStep(1, 'Cắt bò thành những miếng có độ dày khoảng 03 cm có trọng lượng từ 200-250 gram.'),
-                  RecipeStep(2, 'Ướp thịt bò với muối và tiêu.', imgUrl: 'https://ussinavietnam.vn/wp-content/uploads/2022/11/tieuchi_3.png'),
-                  RecipeStep(3, 'Dùng chảo gang nóng cho dầu oliu vào, dầu sôi cho từng miếng thịt bò đã ướp vào áp chảo - mỗi mặt áp chảo trong vòng 2 phút, mỗi cạnh bên 40 giây.'),
-                  RecipeStep(4, 'Cho thịt nghỉ 5 phút, cho ra đĩa rồi thưởng thức.', imgUrl: 'https://websitecukcukvn.misacdn.net/wp-content/uploads/2023/03/batch_moo-beef-st-4.jpeg'),
+                  RecipeStep(1,
+                      'Cắt bò thành những miếng có độ dày khoảng 03 cm có trọng lượng từ 200-250 gram.'),
+                  RecipeStep(2, 'Ướp thịt bò với muối và tiêu.',
+                      imgUrl:
+                          'https://ussinavietnam.vn/wp-content/uploads/2022/11/tieuchi_3.png'),
+                  RecipeStep(3,
+                      'Dùng chảo gang nóng cho dầu oliu vào, dầu sôi cho từng miếng thịt bò đã ướp vào áp chảo - mỗi mặt áp chảo trong vòng 2 phút, mỗi cạnh bên 40 giây.'),
+                  RecipeStep(
+                      4, 'Cho thịt nghỉ 5 phút, cho ra đĩa rồi thưởng thức.',
+                      imgUrl:
+                          'https://websitecukcukvn.misacdn.net/wp-content/uploads/2023/03/batch_moo-beef-st-4.jpeg'),
                 ]),
               ),
+
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+                child: const Divider(
+                  thickness: 1,
+                ),
+              ),
+
+              // add comment button
+              FilledButton(
+                onPressed: () {},
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.add_comment_rounded, size: 18,),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text('Thêm bình luận'),
+                  ],
+                ),
+              ),
+
+              // comments
+              const SizedBox(height: 40,),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                child: RecipeCommentListWidget([
+                  RecipeComment('id', 'Gooood', DateTime.now(), User('id', 'Nguyễn Thành Tân', 'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
+                  RecipeComment('id', 'Ngonnn', DateTime.now(), User('id', 'Nguyễn A', 'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
+                  RecipeComment('id', 'Tuyệt vời', DateTime.now(), User('id', 'Nguyễn B', null)),
+                  RecipeComment('id', 'bla bla bla\nbla bla bla\nbla bla blasghsdjhfksldglksdhkjfhsdklghsdkgafdadfadsfasdfasdf', DateTime.now(), User('id', 'Nguyễn C', null)),
+                ]),
+              )
             ],
           ),
         ),
