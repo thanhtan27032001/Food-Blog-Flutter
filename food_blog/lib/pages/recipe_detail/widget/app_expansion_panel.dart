@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:food_blog/components/text/app_text_base_builder.dart';
 
 class AppRecipeExpansion extends StatefulWidget {
-  late String description;
-  late int maxLine;
-  late bool isExpanded;
+  final String description;
+  final int maxLine;
+  final bool isExpanded;
 
-  AppRecipeExpansion({
+  const AppRecipeExpansion({
     super.key,
     required this.description,
     this.maxLine = 3,
@@ -23,6 +24,7 @@ class AppRecipeExpansionState extends State<AppRecipeExpansion> {
 
   @override
   void initState() {
+    super.initState();
     description = widget.description;
     maxLine = widget.maxLine;
     isExpanded = widget.isExpanded;
@@ -42,17 +44,19 @@ class AppRecipeExpansionState extends State<AppRecipeExpansion> {
           duration: const Duration(milliseconds: 100),
           child: SizedBox(
             width: double.infinity,
-            child: Text(
-              description,
-              maxLines: isExpanded ? null : maxLine,
-              overflow: isExpanded ? null : TextOverflow.ellipsis,
-              style: const TextStyle(height: 1.5),
-            ),
+            child: AppTextBody2Widget()
+                .setText(description)
+                .setMaxLines(isExpanded ? null : maxLine)
+                .setTextOverFlow(isExpanded ? null : TextOverflow.ellipsis)
+                .setTextStyle(const TextStyle(height: 1.5))
+                .build(context),
           ),
         ),
         TextButton(
           onPressed: () => _changeExpandStatus(),
-          child: Text(isExpanded ? 'Thu gọn' : 'Xem chi tiết'),
+          child: AppTextBody2Widget()
+              .setText(isExpanded ? 'Thu gọn' : 'Xem chi tiết')
+              .build(context),
         ),
       ],
     );

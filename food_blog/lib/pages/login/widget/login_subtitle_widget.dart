@@ -7,11 +7,11 @@ class LoginSubtitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 8),
-      child: Text(
-        'Khám phá nhiều hơn công thức mới\ndành riêng cho bạn',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: AppColors.grayColor(level: 2)),
-      ),
+      child: AppTextBody2Widget()
+          .setText('Khám phá nhiều hơn công thức mới\ndành riêng cho bạn')
+          .setTextAlign(TextAlign.center)
+          .setTextStyle(TextStyle(color: AppColors.grayColor(level: 2)))
+          .build(context),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/configs/app_colors.dart';
 
 class RecipeIngredientListWidget extends StatelessWidget {
@@ -11,8 +12,13 @@ class RecipeIngredientListWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Nguyên liệu', style: TextStyle(fontWeight: FontWeight.bold),),
-        const SizedBox(height: 16,),
+        AppTextBody2Widget()
+            .setText('Nguyên liệu')
+            .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+            .build(context),
+        const SizedBox(
+          height: 16,
+        ),
         SizedBox(
           width: double.infinity,
           child: ListView.builder(
@@ -22,10 +28,13 @@ class RecipeIngredientListWidget extends StatelessWidget {
               return Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                    color: index % 2 == 0 ? AppColors.grayColor(level: 0) : AppColors.whiteColor(),
-                    borderRadius: const BorderRadius.all(Radius.circular(8))
-                ),
-                child: Text(ingredientList[index]),
+                    color: index % 2 == 0
+                        ? AppColors.grayColor(level: 0)
+                        : AppColors.whiteColor(),
+                    borderRadius: const BorderRadius.all(Radius.circular(8))),
+                child: AppTextBody2Widget()
+                    .setText(ingredientList[index])
+                    .build(context),
               );
             },
             itemCount: ingredientList.length,

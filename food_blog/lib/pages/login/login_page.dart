@@ -64,10 +64,10 @@ class _LoginPageState extends State<LoginPage> {
             width: double.infinity,
             margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             child: GestureDetector(
-              child: const Text(
-                'Quên mật khẩu?',
-                textAlign: TextAlign.right,
-              ),
+              child: AppTextBody2Widget()
+                  .setText('Quên mật khẩu?')
+                  .setTextAlign(TextAlign.right)
+                  .build(context),
               onTap: () => print('forgot password'),
             ),
           ),

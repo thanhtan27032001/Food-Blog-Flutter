@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_blog/components/text/app_text_base_builder.dart';
 
 class AppFilledCornerButton extends StatelessWidget {
   late final String _text;
@@ -32,7 +33,6 @@ class AppFilledCornerButton extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
           backgroundColor: _buttonColor,
-          // padding: const EdgeInsets.symmetric(vertical: 16),
         ),
         child: SizedBox(
           width: double.infinity,
@@ -40,11 +40,11 @@ class AppFilledCornerButton extends StatelessWidget {
           child: Stack(
             children: [
               Center(
-                child: Text(
-                  _text,
-                  style:
-                      TextStyle(color: _textColor, fontWeight: FontWeight.bold),
-                ),
+                child: AppTextBody2Widget()
+                    .setText(_text)
+                    .setColor(_textColor)
+                    .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                    .build(context),
               ),
               _icon != null
                   ? Positioned(left: 4, top: 8, bottom: 8, child: _icon!)

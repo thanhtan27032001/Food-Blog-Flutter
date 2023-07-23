@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
-import 'package:food_blog/configs/theme_style.dart';
 
 class AppMainPageWidget extends StatelessWidget {
   late final Color _statusBarColor;

@@ -12,7 +12,7 @@ class _MainPageState extends State<MainPage> {
 
   int _currentIndex = 0;
   final List<Widget> _page = [
-    HomeView(),
+    const HomeView(),
     Container(
       color: Colors.black54,
     ),

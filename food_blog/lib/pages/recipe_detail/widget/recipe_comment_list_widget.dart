@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/components/avatar/app_avatar_widget.dart';
+import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/models/recipe_comment.dart';
 
 class RecipeCommentListWidget extends StatelessWidget {
@@ -14,8 +15,13 @@ class RecipeCommentListWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Tất cả tương tác'),
-          const SizedBox(height: 8,),
+          AppTextBody2Widget()
+              .setText('Tất cả tương tác')
+              .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+              .build(context),
+          const SizedBox(
+            height: 8,
+          ),
           ListView.builder(
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
@@ -29,14 +35,24 @@ class RecipeCommentListWidget extends StatelessWidget {
                   children: [
                     AppAvatarWidget(
                         avtUrl: commentList[index].user.avtUrl, size: 40),
-                    const SizedBox(width: 4,),
+                    const SizedBox(
+                      width: 4,
+                    ),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(commentList[index].user.name),
-                          const SizedBox(height: 2,),
-                          Text(commentList[index].comment)
+                          AppTextBody2Widget()
+                              .setText(commentList[index].user.name)
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                              .build(context),
+                          const SizedBox(
+                            height: 2,
+                          ),
+                          AppTextBody2Widget()
+                              .setText(commentList[index].comment)
+                              .build(context),
                         ],
                       ),
                     )

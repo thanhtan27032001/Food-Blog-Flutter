@@ -1,29 +1,23 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/models/recipe_model.dart';
 import 'package:food_blog/pages/main/views/home/widget/recipe_preview_card_widget.dart';
 import 'package:food_blog/pages/recipe_detail/recipe_detail_page.dart';
 
 class HomeSuggestionWidget extends StatefulWidget {
+  final BuildContext pageContext;
+  final String title;
 
-  late BuildContext pageContext;
-  late String title;
-
-
-  HomeSuggestionWidget({required this.pageContext, required this.title});
+  const HomeSuggestionWidget(
+      {super.key, required this.pageContext, required this.title});
 
   @override
   State<StatefulWidget> createState() => HomeSuggestionWidgetState();
-
 }
 
 class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
-
   late BuildContext pageContext;
   late String title;
-
 
   @override
   void initState() {
@@ -36,29 +30,38 @@ class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 32),
+      margin: const EdgeInsets.only(top: 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                'Các nguyên liệu đang trong mùa',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            child: AppTextBody2Widget()
+                .setText(title)
+                .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                .build(context),
+          ),
           Container(
             width: double.infinity,
             height: 180,
-            margin: EdgeInsets.only(top: 16),
+            margin: const EdgeInsets.only(top: 16),
             child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: 20,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(pageContext, MaterialPageRoute(builder: (context) => RecipeDetailPage(RecipeModel()),));
+                    Navigator.push(
+                        pageContext,
+                        MaterialPageRoute(
+                          builder: (context) => RecipeDetailPage(RecipeModel()),
+                        ));
                   },
-                  child: RecipePreviewCardWidget(RecipeModel(), cardWidth: 200, cardHeight: 180,),
+                  child: RecipePreviewCardWidget(
+                    RecipeModel(),
+                    cardWidth: 200,
+                    cardHeight: 180,
+                  ),
                 );
               },
               scrollDirection: Axis.horizontal,
@@ -68,5 +71,4 @@ class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
       ),
     );
   }
-
 }

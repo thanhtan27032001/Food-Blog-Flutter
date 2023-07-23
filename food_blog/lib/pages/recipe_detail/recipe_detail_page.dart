@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_blog/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
+import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/configs/app_colors.dart';
 import 'package:food_blog/models/recipe_comment.dart';
 import 'package:food_blog/models/recipe_model.dart';
@@ -16,7 +17,7 @@ import 'package:food_blog/pages/recipe_detail/widget/recipe_summary_card.dart';
 class RecipeDetailPage extends StatefulWidget {
   final RecipeModel recipeModel;
 
-  RecipeDetailPage(this.recipeModel);
+  const RecipeDetailPage(this.recipeModel, {super.key});
 
   @override
   State<StatefulWidget> createState() => _RecipeDetailPageState();
@@ -49,10 +50,15 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                       iconSize: 16,
                       color: AppColors.whiteColor(),
                     ),
-                    Text(
-                      'Beefsteak',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    )
+                    AppTextBody1Widget()
+                        .setText('Beefsteak')
+                        .setTextStyle(
+                          const TextStyle(
+                            // fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        )
+                        .build(context),
                   ],
                 ),
               ),
@@ -70,47 +76,57 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      AppAvatarWidget(avtUrl: 'https://znews-photo.zingcdn.me/w660/Uploaded/spivovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg', size: 48, onPress: () {}),
+                      AppAvatarWidget(
+                          avtUrl:
+                              'https://znews-photo.zingcdn.me/w660/Uploaded/spiv'
+                                  'ovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg',
+                          size: 48,
+                          onPress: () {}),
                       const SizedBox(
                         width: 8,
                       ),
                       Expanded(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nguyễn Thành Tân',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.access_time,
-                                  size: 16,
-                                  color: AppColors.grayColor(level: 2)),
-                              SizedBox(width: 4),
-                              Text(
-                                '1 giờ trước',
-                                style: TextStyle(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AppTextBody2Widget()
+                                .setText('Nguyễn Thành Tân')
+                                .setTextStyle(const TextStyle(
+                                    fontWeight: FontWeight.bold))
+                                .build(context),
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            Row(
+                              children: [
+                                Icon(Icons.access_time,
+                                    size: 16,
                                     color: AppColors.grayColor(level: 2)),
-                              )
-                            ],
-                          )
-                        ],
-                      ))
+                                const SizedBox(width: 4),
+                                AppTextBody2Widget()
+                                    .setText('1 giờ trước')
+                                    .setColor(AppColors.grayColor(level: 2))
+                                    .build(context),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
               ),
 
               // description
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 child: AppRecipeExpansion(
                   description:
-                      'Bít tết, là một món ăn bao gồm miếng thịt bò lát phẳng, thường được nướng vỉ, áp chảo hoặc nướng broiling ở nhiệt độ cao.\nNhững miếng thịt mềm hơn được cắt ra từ phần thăn và sườn được làm chín nhanh chóng, sử dụng nhiệt khô và phục vụ toàn bộ.',
+                      'Bít tết, là một món ăn bao gồm miếng thịt bò lát phẳng, '
+                      'thường được nướng vỉ, áp chảo hoặc nướng broiling ở '
+                      'nhiệt độ cao.\nNhững miếng thịt mềm hơn được cắt ra '
+                      'từ phần thăn và sườn được làm chín nhanh chóng, sử '
+                      'dụng nhiệt khô và phục vụ toàn bộ.',
                 ),
               ),
 
@@ -189,27 +205,47 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               // add comment button
               FilledButton(
                 onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.add_comment_rounded, size: 18,),
-                    SizedBox(
+                    const Icon(
+                      Icons.add_comment_rounded,
+                      size: 18,
+                    ),
+                    const SizedBox(
                       width: 8,
                     ),
-                    Text('Thêm bình luận'),
+                    AppTextBody2Widget().setText('Thêm bình luận').build(context),
                   ],
                 ),
               ),
 
               // comments
-              const SizedBox(height: 40,),
+              const SizedBox(
+                height: 40,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: RecipeCommentListWidget([
-                  RecipeComment('id', 'Gooood', DateTime.now(), User('id', 'Nguyễn Thành Tân', 'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
-                  RecipeComment('id', 'Ngonnn', DateTime.now(), User('id', 'Nguyễn A', 'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
-                  RecipeComment('id', 'Tuyệt vời', DateTime.now(), User('id', 'Nguyễn B', null)),
-                  RecipeComment('id', 'bla bla bla\nbla bla bla\nbla bla blasghsdjhfksldglksdhkjfhsdklghsdkgafdadfadsfasdfasdf', DateTime.now(), User('id', 'Nguyễn C', null)),
+                  RecipeComment(
+                      'id',
+                      'Gooood',
+                      DateTime.now(),
+                      User('id', 'Nguyễn Thành Tân',
+                          'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
+                  RecipeComment(
+                      'id',
+                      'Ngonnn',
+                      DateTime.now(),
+                      User('id', 'Nguyễn A',
+                          'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
+                  RecipeComment('id', 'Tuyệt vời', DateTime.now(),
+                      User('id', 'Nguyễn B', null)),
+                  RecipeComment(
+                      'id',
+                      'bla bla bla\nbla bla bla\nbla bla blasghsdjhfksldglksdhkjfhsdklghsdkgafdadfadsfasdfasdf',
+                      DateTime.now(),
+                      User('id', 'Nguyễn C', null)),
                 ]),
               )
             ],

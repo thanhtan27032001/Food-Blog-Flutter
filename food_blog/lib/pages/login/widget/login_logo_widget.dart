@@ -10,22 +10,16 @@ class LoginLogoWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Food',
-            style: TextStyle(
-              fontSize: AppTextStyle.fontSizeDisplay2,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryColor(),
-            ),
-          ),
-          Text(
-            'blog',
-            style: TextStyle(
-              fontSize: AppTextStyle.fontSizeDisplay2,
-              fontWeight: FontWeight.bold,
-              color: AppColors.blackColor(),
-            ),
-          ),
+          AppTextDisplay2Widget()
+              .setText('Food')
+              .setColor(AppColors.primaryColor())
+              .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+              .build(context),
+          AppTextDisplay2Widget()
+              .setText('blog')
+              .setColor(AppColors.blackColor())
+              .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+              .build(context),
           SizedBox(
             width: 45,
             height: 45,
