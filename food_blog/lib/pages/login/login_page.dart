@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
           // login with username password button
           Container(
             margin: const EdgeInsets.fromLTRB(16, 40, 16, 0),
-            child: AppFilledCornerButton(
+            child: AppFilledCornerButtonWidget(
               text: "Đăng nhập",
               textColor: AppColors.whiteColor(),
               buttonColor: AppColors.primaryColor(),
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
             child: Builder(builder: (context) {
-              return AppFilledCornerButton(
+              return AppFilledCornerButtonWidget(
                 text: "Tiếp tục với Google",
                 textColor: AppColors.blackColor(),
                 buttonColor: AppColors.whiteColor(),

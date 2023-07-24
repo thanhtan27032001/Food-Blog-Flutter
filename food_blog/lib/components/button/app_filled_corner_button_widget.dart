@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/components/text/app_text_base_builder.dart';
 
-class AppFilledCornerButton extends StatelessWidget {
+class AppFilledCornerButtonWidget extends StatelessWidget {
   late final String _text;
   late final Color _textColor;
   late final Color _buttonColor;
   late final VoidCallback _onPressed;
   late final Widget? _icon;
 
-  AppFilledCornerButton(
+  AppFilledCornerButtonWidget(
       {super.key,
       required String text,
       required Color textColor,

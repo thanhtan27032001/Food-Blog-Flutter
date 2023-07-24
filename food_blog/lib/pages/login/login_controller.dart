@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_blog/components/button/app_filled_corner_button.dart';
+import 'package:food_blog/components/button/app_filled_corner_button_widget.dart';
 import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/components/textField/app_corner_card_text_field_widget.dart';

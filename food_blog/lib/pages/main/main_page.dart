@@ -16,9 +16,7 @@ class _MainPageState extends State<MainPage> {
     Container(
       color: Colors.black54,
     ),
-    Container(
-      color: Colors.blue,
-    ),
+    const RecipeManagementPage(),
     Container(
       color: Colors.yellow,
     ),
