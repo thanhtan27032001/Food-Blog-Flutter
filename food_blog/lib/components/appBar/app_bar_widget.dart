@@ -7,6 +7,7 @@ class AppBarWidget extends StatelessWidget {
   final bool? isCenterTitle;
   final Widget? leading;
   final List<Widget>? actions;
+  final Color? titleColor;
   final Color? backgroundColor;
 
   const AppBarWidget({
@@ -15,13 +16,14 @@ class AppBarWidget extends StatelessWidget {
     this.isCenterTitle,
     this.leading,
     this.actions,
+    this.titleColor,
     this.backgroundColor,
   });
 
   @override
   AppBar build(BuildContext context) {
     return AppBar(
-      title: AppTextBody1Widget().setText(title).build(context),
+      title: AppTextBody1Widget().setText(title).setColor(titleColor).build(context),
       centerTitle: isCenterTitle,
       actions: actions,
       leading: leading,
