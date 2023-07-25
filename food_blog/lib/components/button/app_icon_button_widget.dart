@@ -18,7 +18,7 @@ class AppIconButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(icon.size ?? 1000),
+      borderRadius: BorderRadius.circular(icon.size != null ? icon.size!/2 : 1000),
       child: Material(
         color: backgroundColor ?? Colors.transparent,
         child: IconButton(

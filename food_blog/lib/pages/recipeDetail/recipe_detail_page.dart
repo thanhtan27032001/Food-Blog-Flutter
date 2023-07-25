@@ -8,11 +8,11 @@ import 'package:food_blog/models/recipe_comment.dart';
 import 'package:food_blog/models/recipe_model.dart';
 import 'package:food_blog/models/recipe_step.dart';
 import 'package:food_blog/models/user.dart';
-import 'package:food_blog/pages/recipe_detail/widget/app_expansion_panel.dart';
-import 'package:food_blog/pages/recipe_detail/widget/recipe_comment_list_widget.dart';
-import 'package:food_blog/pages/recipe_detail/widget/recipe_ingredient_list_widget.dart';
-import 'package:food_blog/pages/recipe_detail/widget/recipe_step_list_widget.dart';
-import 'package:food_blog/pages/recipe_detail/widget/recipe_summary_card.dart';
+import 'package:food_blog/pages/recipeDetail/widget/app_expansion_panel.dart';
+import 'package:food_blog/pages/recipeDetail/widget/recipe_comment_list_widget.dart';
+import 'package:food_blog/pages/recipeDetail/widget/recipe_ingredient_list_widget.dart';
+import 'package:food_blog/pages/recipeDetail/widget/recipe_step_list_widget.dart';
+import 'package:food_blog/pages/recipeDetail/widget/recipe_summary_card.dart';
 
 class RecipeDetailPage extends StatefulWidget {
   final RecipeModel recipeModel;

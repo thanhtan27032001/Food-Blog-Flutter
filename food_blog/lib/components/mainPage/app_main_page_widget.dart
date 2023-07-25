@@ -7,17 +7,20 @@ class AppMainPageWidget extends StatelessWidget {
   late final Color _pageBackgroundColor;
   late final Widget _pageBody;
   late final BottomNavigationBar? _bottomNavigationBar;
+  late final AppBar? _appbar;
 
   AppMainPageWidget(
       {super.key,
       required statusBarColor,
       required pageBackgroundColor,
       required pageBody,
-      BottomNavigationBar? bottomNavigationBar}) {
+      BottomNavigationBar? bottomNavigationBar,
+      AppBar? appbar}) {
     _statusBarColor = statusBarColor;
     _pageBackgroundColor = pageBackgroundColor;
     _pageBody = pageBody;
     _bottomNavigationBar = bottomNavigationBar;
+    _appbar = appbar;
   }
 
   bool _isStatusBarColorBright() {
@@ -63,6 +66,7 @@ class AppMainPageWidget extends StatelessWidget {
     _setOptimalDisplayMode();
     return MaterialApp(
       home: Scaffold(
+        appBar: _appbar,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Container(

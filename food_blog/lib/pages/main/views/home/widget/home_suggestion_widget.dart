@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/models/recipe_model.dart';
 import 'package:food_blog/pages/main/views/home/widget/recipe_preview_card_widget.dart';
-import 'package:food_blog/pages/recipe_detail/recipe_detail_page.dart';
+import 'package:food_blog/pages/recipeDetail/recipe_detail_page.dart';
 
 class HomeSuggestionWidget extends StatefulWidget {
   final BuildContext pageContext;
