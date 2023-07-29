@@ -8,19 +8,21 @@ class AppMainPageWidget extends StatelessWidget {
   late final Widget _pageBody;
   late final BottomNavigationBar? _bottomNavigationBar;
   late final AppBar? _appbar;
+  late final bool? _resizeToAvoidBottomInset;
 
-  AppMainPageWidget(
-      {super.key,
-      required statusBarColor,
-      required pageBackgroundColor,
-      required pageBody,
-      BottomNavigationBar? bottomNavigationBar,
-      AppBar? appbar}) {
+  AppMainPageWidget({super.key,
+    required statusBarColor,
+    required pageBackgroundColor,
+    required pageBody,
+    BottomNavigationBar? bottomNavigationBar,
+    AppBar? appbar,
+    bool? resizeToAvoidBottomInset}) {
     _statusBarColor = statusBarColor;
     _pageBackgroundColor = pageBackgroundColor;
     _pageBody = pageBody;
     _bottomNavigationBar = bottomNavigationBar;
     _appbar = appbar;
+    _resizeToAvoidBottomInset = resizeToAvoidBottomInset;
   }
 
   bool _isStatusBarColorBright() {
@@ -33,7 +35,7 @@ class AppMainPageWidget extends StatelessWidget {
     return false;
   }
 
-  void _customStatusBar(){
+  void _customStatusBar() {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarIconBrightness:
@@ -48,10 +50,12 @@ class AppMainPageWidget extends StatelessWidget {
     final DisplayMode active = await FlutterDisplayMode.active;
 
     final List<DisplayMode> sameResolution = supported.where(
-            (DisplayMode m) => m.width == active.width
-            && m.height == active.height).toList()..sort(
-            (DisplayMode a, DisplayMode b) =>
-            b.refreshRate.compareTo(a.refreshRate));
+            (DisplayMode m) =>
+        m.width == active.width
+            && m.height == active.height).toList()
+      ..sort(
+              (DisplayMode a, DisplayMode b) =>
+              b.refreshRate.compareTo(a.refreshRate));
 
     final DisplayMode mostOptimalMode = sameResolution.isNotEmpty
         ? sameResolution.first
@@ -67,11 +71,17 @@ class AppMainPageWidget extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: _appbar,
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: _resizeToAvoidBottomInset,
         body: SafeArea(
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
             color: _pageBackgroundColor,
             child: Container(
               child: (_pageBody),

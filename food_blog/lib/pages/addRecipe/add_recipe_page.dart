@@ -42,6 +42,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            // image demo
             InkWell(
               onTap: () {
                 controller.pickImage(context);
@@ -61,7 +62,34 @@ class AddRecipePage extends GetView<AddRecipeController> {
                   color: AppColors.grayColor(level: 2),
                 );
               }),
-            )
+            ),
+
+            // title
+            const SizedBox(
+              height: 16,
+            ),
+            AppCornerCardTextFieldWidget(
+              borderRadius: 6,
+              elevation: 2,
+              backgroundColor: AppColors.whiteColor(),
+              hintText: 'Tên công thức của bạn',
+              onChange: (value) {},
+            ),
+
+            // description
+            const SizedBox(
+              height: 16,
+            ),
+            SizedBox(
+              child: AppCornerCardTextFieldWidget(
+                borderRadius: 6,
+                elevation: 2,
+                backgroundColor: AppColors.whiteColor(),
+                hintText: 'Mô tả công thức của bạn',
+                inputType: TextInputType.multiline,
+                onChange: (value) {},
+              ),
+            ),
           ],
         ),
       ),

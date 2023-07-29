@@ -12,6 +12,10 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final Icon? _suffixIcon;
   late final VoidCallback? _suffixIconOnPress;
   late final TextInputType? _inputType;
+  late final double? _elevation;
+  late final double? _borderRadius;
+  late final Color? _backgroundColor;
+  late final String? _hintText;
 
   AppCornerCardTextFieldWidget(
       {super.key,
@@ -24,7 +28,11 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
       Icon? leadingIcon,
       Icon? suffixIcon,
       VoidCallback? suffixIconOnPress,
-      TextInputType? inputType}) {
+      TextInputType? inputType,
+      double? elevation,
+      double? borderRadius,
+      Color? backgroundColor,
+      String? hintText,}) {
     _onChange = onChange;
     _autofocus = autofocus;
     _focusNode = focusNode;
@@ -35,15 +43,20 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     _suffixIcon = suffixIcon;
     _suffixIconOnPress = suffixIconOnPress;
     _inputType = inputType;
+    _elevation = elevation;
+    _borderRadius = borderRadius;
+    _backgroundColor = backgroundColor;
+    _hintText = hintText;
   }
 
   @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(35),
+        borderRadius: BorderRadius.circular(_borderRadius ?? 35),
       ),
-      elevation: 2,
+      color: _backgroundColor ?? AppColors.whiteColor(),
+      elevation: _elevation ?? 2,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Row(
@@ -59,11 +72,14 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 autofocus: (_autofocus != null) ? _autofocus! : false,
                 focusNode: _focusNode,
                 textInputAction: _textInputAction,
+                textAlign: TextAlign.left,
                 obscureText: _obscureText != null ? _obscureText! : false,
                 cursorColor: AppColors.secondaryColor(),
                 onFieldSubmitted: _onFieldSubmitted,
                 keyboardType: _inputType,
-                decoration: const InputDecoration(
+                maxLines: null,
+                decoration: InputDecoration(
+                  hintText: _hintText,
                   border: InputBorder.none,
                 ),
               ),
@@ -72,9 +88,9 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
               onTap: _suffixIconOnPress,
               child: _suffixIcon != null
                   ? Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8),
-                child: _suffixIcon!,
-              )
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      child: _suffixIcon!,
+                    )
                   : const SizedBox(width: 8),
             )
           ],
@@ -83,12 +99,3 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     );
   }
 }
-
-// class _AppCornerCardTextFieldWidgetState extends State<AppCornerCardTextFieldWidget> {
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     throw UnimplementedError();
-//   }
-//
-// }
