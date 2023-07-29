@@ -16,6 +16,8 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final double? _borderRadius;
   late final Color? _backgroundColor;
   late final String? _hintText;
+  late final int? _maxLine;
+  late final String? _text;
 
   AppCornerCardTextFieldWidget(
       {super.key,
@@ -32,7 +34,9 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
       double? elevation,
       double? borderRadius,
       Color? backgroundColor,
-      String? hintText,}) {
+      String? hintText,
+      int? maxLine,
+      String? text}) {
     _onChange = onChange;
     _autofocus = autofocus;
     _focusNode = focusNode;
@@ -47,6 +51,8 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     _borderRadius = borderRadius;
     _backgroundColor = backgroundColor;
     _hintText = hintText;
+    _maxLine = maxLine;
+    _text = text;
   }
 
   @override
@@ -68,6 +74,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 : const SizedBox(width: 8),
             Expanded(
               child: TextFormField(
+                initialValue: _text,
                 onChanged: _onChange,
                 autofocus: (_autofocus != null) ? _autofocus! : false,
                 focusNode: _focusNode,
@@ -76,8 +83,8 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 obscureText: _obscureText != null ? _obscureText! : false,
                 cursorColor: AppColors.secondaryColor(),
                 onFieldSubmitted: _onFieldSubmitted,
-                keyboardType: _inputType,
-                maxLines: null,
+                keyboardType: _inputType ?? TextInputType.text,
+                maxLines: _maxLine,
                 decoration: InputDecoration(
                   hintText: _hintText,
                   border: InputBorder.none,
