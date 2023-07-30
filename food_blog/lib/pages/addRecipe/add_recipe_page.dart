@@ -68,9 +68,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
             ),
 
             // title
-            const SizedBox(height: 16),
             Container(
-              margin: const EdgeInsets.only(left: 2),
+              margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
                   .setText('Tên công thức')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
@@ -85,9 +84,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
             ),
 
             // description
-            const SizedBox(height: 16),
             Container(
-              margin: const EdgeInsets.only(left: 2),
+              margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
                   .setText('Mô tả công thức')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
@@ -105,9 +103,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
             ),
 
             // estimate served people
-            const SizedBox(height: 16),
             Container(
-              margin: const EdgeInsets.only(left: 2),
+              margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
                   .setText('Khẩu phần (người)')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
@@ -121,9 +118,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
             ),
 
             // estimate time
-            const SizedBox(height: 16),
             Container(
-              margin: const EdgeInsets.only(left: 2),
+              margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
                   .setText('Thời gian ước tính (phút)')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
@@ -153,76 +149,105 @@ class AddRecipePage extends GetView<AddRecipeController> {
               ],
             ),
 
-            // estimate time
-            const SizedBox(height: 16),
-            Container(
-              margin: const EdgeInsets.only(left: 2),
-              child: AppTextBody2Widget()
-                  .setText('Nguyên liệu')
-                  .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
-                  .build(context),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Obx(() {
-                return ListView.builder(
-                  itemCount: controller.ingredientCount.value,
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Dismissible(
-                      key: Key(controller.ingredientList[index].id),
-                      onDismissed: (direction) {
-                        // controller.removeIngredient(controller.ingredientList[index].id);
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                                "${controller.ingredientList[index].id} dismissed")));
+            // ingredients
+            // const SizedBox(height: 16),
+            Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 2),
+                          child: AppTextBody2Widget()
+                              .setText(
+                                  'Nguyên liệu (${controller.ingredientList.value.length})')
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                              .build(context),
+                        ),
+                        const Spacer(),
+                        Tooltip(
+                          message: 'Bạn có thể vuốt sang trái để xóa nguyên liệu',
+                          child: Icon(
+                            Icons.info_outline_rounded,
+                            color: AppColors.secondaryColor(level: 2),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount: controller.ingredientList.value.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                          key:
+                              ObjectKey(controller.ingredientList.value[index]),
+                          onDismissed: (details) {
+                            controller.removeIngredient(context, index);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: AppCornerCardTextFieldWidget(
+                                  borderRadius: 6,
+                                  elevation: 2,
+                                  hintText: 'Cà chua',
+                                  text: controller
+                                      .ingredientList.value[index].name,
+                                  onChange: (value) {
+                                    controller.updateIngredient(
+                                        index, value, null);
+                                  },
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: AppCornerCardTextFieldWidget(
+                                  borderRadius: 6,
+                                  elevation: 2,
+                                  hintText: '1 quả',
+                                  text: controller.ingredientList.value[index]
+                                      .numberDescription,
+                                  onChange: (value) {
+                                    controller.updateIngredient(
+                                        index, null, value);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
                       },
-                      background: Container(color: Colors.red),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: AppCornerCardTextFieldWidget(
-                              borderRadius: 6,
-                              elevation: 2,
-                              hintText: 'Cà chua',
-                              text: controller.ingredientList[index].id,
-                              onChange: (value) {
-                                controller.updateIngredient(index, value, null);
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: AppCornerCardTextFieldWidget(
-                              borderRadius: 6,
-                              elevation: 2,
-                              hintText: '1 quả',
-                              text: controller
-                                  .ingredientList[index].numberDescription,
-                              onChange: (value) {
-                                controller.updateIngredient(index, null, value);
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
-              }),
+                    ),
+                  ),
+                ],
+              ),
             ),
 
             const SizedBox(height: 16),
-            AppFilledCornerButtonWidget(
-              text: 'Thêm nguyên liệu',
-              textColor: AppColors.whiteColor(),
-              buttonColor: AppColors.primaryColor(),
-              onPressed: () {
-                controller.addIngredient();
-              },
+            Center(
+              child: FilledButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColors.primaryColor()),
+                ),
+                child: AppTextBody2Widget()
+                    .setText('Thêm nguyên liệu')
+                    .setColor(AppColors.whiteColor())
+                    .build(context),
+                onPressed: () {
+                  controller.addIngredient();
+                },
+              ),
             )
           ],
         ),
