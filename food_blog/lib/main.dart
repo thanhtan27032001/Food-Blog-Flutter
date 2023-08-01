@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:food_blog/pages/addRecipe/add_recipe_controller.dart';
-import 'package:food_blog/pages/main/main_controller.dart';
+import 'package:food_blog/app/pages/main/main_controller.dart';
 import 'package:get/get.dart';
 
+import 'app/pages/addRecipe/add_recipe_controller.dart';
+import 'app/pages/login/login_controller.dart';
 import 'firebase_options.dart';
-import 'pages/login/login_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
