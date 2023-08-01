@@ -3,8 +3,9 @@ import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/configs/app_colors.dart';
 import 'package:food_blog/pages/main/views/home/widget/home_suggestion_widget.dart';
+import 'package:get/get.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends GetWidget {
   const HomeView({super.key});
 
   @override

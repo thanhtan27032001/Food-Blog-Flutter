@@ -38,6 +38,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
 
   Widget _body(BuildContext context) {
     return SingleChildScrollView(
+      controller: controller.scrollController,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -58,10 +59,12 @@ class AddRecipePage extends GetView<AddRecipeController> {
                       fit: BoxFit.cover,
                     );
                   }
-                  return Image.asset(
-                    'assets/images/pick_image.png',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                  return Center(
+                    child: Image.asset(
+                      'assets/images/pick_image.png',
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 }),
               ),
@@ -150,7 +153,6 @@ class AddRecipePage extends GetView<AddRecipeController> {
             ),
 
             // ingredients
-            // const SizedBox(height: 16),
             Obx(
               () => Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,7 +172,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
                         ),
                         const Spacer(),
                         Tooltip(
-                          message: 'Bạn có thể vuốt sang trái để xóa nguyên liệu',
+                          message:
+                              'Bạn có thể vuốt sang trái để xóa nguyên liệu',
                           child: Icon(
                             Icons.info_outline_rounded,
                             color: AppColors.secondaryColor(level: 2),
@@ -232,7 +235,6 @@ class AddRecipePage extends GetView<AddRecipeController> {
                 ],
               ),
             ),
-
             const SizedBox(height: 16),
             Center(
               child: FilledButton(
@@ -246,6 +248,130 @@ class AddRecipePage extends GetView<AddRecipeController> {
                     .build(context),
                 onPressed: () {
                   controller.addIngredient();
+                },
+              ),
+            ),
+
+            // steps
+            Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 2),
+                          child: AppTextBody2Widget()
+                              .setText(
+                                  'Thực hiện (${controller.stepList.value.length})')
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                              .build(context),
+                        ),
+                        const Spacer(),
+                        Tooltip(
+                          message:
+                              'Bạn có thể vuốt sang trái để xóa bước thực hiện',
+                          child: Icon(
+                            Icons.info_outline_rounded,
+                            color: AppColors.secondaryColor(level: 2),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ListView.builder(
+                      itemCount: controller.stepList.value.length,
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Dismissible(
+                          key: ObjectKey(controller.stepList.value[index]),
+                          onDismissed: (details) {
+                            controller.removeStep(context, index);
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 4, top: index > 0 ? 16 : 0),
+                                child: AppTextBody2Widget()
+                                    .setText(
+                                        'Bước ${controller.stepList.value[index].index}')
+                                    .build(context),
+                              ),
+                              AppCornerCardTextFieldWidget(
+                                borderRadius: 6,
+                                elevation: 2,
+                                hintText: 'Mô tả bước thực hiện của bạn',
+                                text: controller
+                                    .stepList.value[index].description,
+                                onChange: (value) {
+                                  controller.updateStep(index, value);
+                                },
+                              ).build(context),
+                              Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.pickStepImage(context, index);
+                                  },
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: controller.stepList.value[index]
+                                                .imageUrl !=
+                                            null
+                                        ? Image.file(
+                                            File(controller.stepList
+                                                .value[index].imageUrl!),
+                                            width: double.infinity,
+                                            fit: BoxFit.cover)
+                                        : Container(
+                                            width: double.infinity,
+                                            height: 100,
+                                            color:
+                                                AppColors.grayColor(level: 0),
+                                            child: Center(
+                                              child: AppTextBody3Widget()
+                                                  .setText(
+                                                      'Ảnh hướng dẫn\n- Không bắt buộc -')
+                                                  .setTextAlign(
+                                                      TextAlign.center)
+                                                  .build(context),
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 16),
+            Center(
+              child: FilledButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColors.primaryColor()),
+                ),
+                child: AppTextBody2Widget()
+                    .setText('Thêm bước thực hiện')
+                    .setColor(AppColors.whiteColor())
+                    .build(context),
+                onPressed: () {
+                  controller.addStep();
                 },
               ),
             )

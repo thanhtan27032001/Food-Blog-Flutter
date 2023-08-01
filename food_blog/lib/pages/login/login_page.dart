@@ -1,18 +1,11 @@
 part of 'login_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({
-    super.key,
-  });
+class LoginPage extends GetView<LoginController> {
 
   @override
-  State<StatefulWidget> createState() => _LoginPageState();
-}
+  final LoginController controller = Get.put(LoginController());
 
-class _LoginPageState extends State<LoginPage> {
-  final LoginController controller = LoginController();
-
-  _LoginPageState();
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +18,11 @@ class _LoginPageState extends State<LoginPage> {
           // AppStatusBarWidget(AppColors.getWhiteColor()),
           const LoginLogoWidget(),
           const LoginSubtitleWidget(),
-          // username text field
+          // email text field
           Container(
             margin: const EdgeInsets.fromLTRB(16, 40, 16, 0),
             child: AppCornerCardTextFieldWidget(
+              hintText: 'Email',
               onChange: (value) => controller.username = value,
               leadingIcon: Icon(
                 Icons.account_circle_outlined,
@@ -39,24 +33,26 @@ class _LoginPageState extends State<LoginPage> {
           // password text field
           Container(
             margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: AppCornerCardTextFieldWidget(
-              onChange: (value) => controller.password = value,
-              leadingIcon: Icon(
-                Icons.lock_outline_rounded,
-                color: AppColors.grayColor(level: 2),
+            child: Obx(
+              () => AppCornerCardTextFieldWidget(
+                hintText: 'Mật khẩu',
+                onChange: (value) => controller.password = value,
+                leadingIcon: Icon(
+                  Icons.lock_outline_rounded,
+                  color: AppColors.grayColor(level: 2),
+                ),
+                suffixIcon: Icon(
+                  controller.isObscurePassword.value
+                      ? Icons.visibility_rounded
+                      : Icons.visibility_off_rounded,
+                  color: AppColors.grayColor(level: 2),
+                ),
+                obscureText: controller.isObscurePassword.value,
+                suffixIconOnPress: () {
+                  controller.isObscurePassword.value =
+                      !controller.isObscurePassword.value;
+                },
               ),
-              suffixIcon: Icon(
-                controller.isObscurePassword
-                    ? Icons.visibility_rounded
-                    : Icons.visibility_off_rounded,
-                color: AppColors.grayColor(level: 2),
-              ),
-              obscureText: controller.isObscurePassword,
-              suffixIconOnPress: () {
-                setState(() {
-                  controller.isObscurePassword = !controller.isObscurePassword;
-                });
-              },
             ),
           ),
           // forgot password
@@ -112,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 onPressed: () {
-                  controller.signInWithGoogle();
+                  controller.signInWithGoogle(context);
                 },
               );
             }),

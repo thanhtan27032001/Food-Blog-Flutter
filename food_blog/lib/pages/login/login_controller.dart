@@ -6,24 +6,28 @@ import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/components/textField/app_corner_card_text_field_widget.dart';
 import 'package:food_blog/configs/app_colors.dart';
+import 'package:food_blog/pages/main/main_controller.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 part 'login_page.dart';
+
 part 'widget/login_logo_widget.dart';
+
 part 'widget/login_subtitle_widget.dart';
 
-class LoginController {
-
+class LoginController extends GetxController {
   String username = "";
   String password = "";
-  bool isObscurePassword = true;
+  RxBool isObscurePassword = true.obs;
 
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential> executeSignInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -35,7 +39,8 @@ class LoginController {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  // void signInWithGoogle(BuildContext context) {
-  //   executeSignInWithGoogle();
-  // }
+  Future<void> signInWithGoogle(BuildContext context) async {
+    await executeSignInWithGoogle();
+    Get.off(MainPage());
+  }
 }

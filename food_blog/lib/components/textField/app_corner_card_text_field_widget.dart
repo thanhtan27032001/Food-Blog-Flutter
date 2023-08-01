@@ -80,11 +80,11 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 focusNode: _focusNode,
                 textInputAction: _textInputAction,
                 textAlign: TextAlign.left,
-                obscureText: _obscureText != null ? _obscureText! : false,
+                obscureText: _obscureText ?? false,
                 cursorColor: AppColors.secondaryColor(),
                 onFieldSubmitted: _onFieldSubmitted,
                 keyboardType: _inputType ?? TextInputType.text,
-                maxLines: _maxLine,
+                maxLines: _obscureText == true ? 1 : _maxLine,
                 decoration: InputDecoration(
                   hintText: _hintText,
                   border: InputBorder.none,

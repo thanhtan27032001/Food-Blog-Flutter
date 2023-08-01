@@ -3,8 +3,9 @@ import 'package:food_blog/components/text/app_text_base_builder.dart';
 import 'package:food_blog/models/recipe_model.dart';
 import 'package:food_blog/pages/main/views/home/widget/recipe_preview_card_widget.dart';
 import 'package:food_blog/pages/recipeDetail/recipe_detail_page.dart';
+import 'package:get/get.dart';
 
-class HomeSuggestionWidget extends StatefulWidget {
+class HomeSuggestionWidget extends GetWidget {
   final BuildContext pageContext;
   final String title;
 
@@ -12,19 +13,7 @@ class HomeSuggestionWidget extends StatefulWidget {
       {super.key, required this.pageContext, required this.title});
 
   @override
-  State<StatefulWidget> createState() => HomeSuggestionWidgetState();
-}
-
-class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
-  late BuildContext pageContext;
-  late String title;
-
-  @override
-  void initState() {
-    super.initState();
-    pageContext = widget.pageContext;
-    title = widget.title;
-  }
+  // State<StatefulWidget> createState() => HomeSuggestionWidgetState();
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +40,12 @@ class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        pageContext,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeDetailPage(RecipeModel()),
-                        ));
+                    Get.to(RecipeDetailPage(RecipeModel()));
+                    // Navigator.push(
+                    //     pageContext,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => RecipeDetailPage(RecipeModel()),
+                    //     ));
                   },
                   child: RecipePreviewCardWidget(
                     RecipeModel(),
@@ -72,3 +62,61 @@ class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
     );
   }
 }
+
+// class HomeSuggestionWidgetState extends State<HomeSuggestionWidget> {
+//   late BuildContext pageContext;
+//   late String title;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     pageContext = widget.pageContext;
+//     title = widget.title;
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: double.infinity,
+//       margin: const EdgeInsets.only(top: 32),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Container(
+//             margin: const EdgeInsets.symmetric(horizontal: 16),
+//             child: AppTextBody2Widget()
+//                 .setText(title)
+//                 .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+//                 .build(context),
+//           ),
+//           Container(
+//             width: double.infinity,
+//             height: 180,
+//             margin: const EdgeInsets.only(top: 16),
+//             child: ListView.builder(
+//               padding: const EdgeInsets.symmetric(horizontal: 12),
+//               itemCount: 20,
+//               itemBuilder: (context, index) {
+//                 return GestureDetector(
+//                   onTap: () {
+//                     // Navigator.push(
+//                     //     pageContext,
+//                     //     MaterialPageRoute(
+//                     //       builder: (context) => RecipeDetailPage(RecipeModel()),
+//                     //     ));
+//                   },
+//                   child: RecipePreviewCardWidget(
+//                     RecipeModel(),
+//                     cardWidth: 200,
+//                     cardHeight: 180,
+//                   ),
+//                 );
+//               },
+//               scrollDirection: Axis.horizontal,
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

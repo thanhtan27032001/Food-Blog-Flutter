@@ -16,12 +16,14 @@ class AddRecipeController extends GetxController {
   RxnString imageUrl = RxnString();
   late XFile? imageFile;
   final Rx<List<IngredientModel>> ingredientList = Rx([]);
-  final List<StepModel> stepList = [];
+  final Rx<List<StepModel>> stepList = Rx([]);
+  ScrollController scrollController = ScrollController();
 
   @override
   void onInit() {
     super.onInit();
     addIngredient();
+    addStep();
   }
 
   void pickRecipeImage(BuildContext context) async {
@@ -54,9 +56,8 @@ class AddRecipeController extends GetxController {
         ),
       );
       addIngredient();
-    } else {
-      ingredientList.refresh();
     }
+    ingredientList.refresh();
   }
 
   void updateIngredient(int index, String? name, String? numberDescription) {
@@ -65,6 +66,54 @@ class AddRecipeController extends GetxController {
     }
     if (numberDescription != null) {
       ingredientList.value[index].numberDescription = numberDescription;
+    }
+  }
+
+  void addStep() {
+    stepList.value.add(StepModel(stepList.value.length + 1, '', null));
+    stepList.refresh();
+  }
+
+  void removeStep(BuildContext context, int index) {
+    stepList.value.removeAt(index);
+    for (int i=0; i<stepList.value.length; i++) {
+      stepList.value[i].index = i+1;
+    }
+    if (stepList.value.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: AppTextBody2Widget()
+              .setText('Công thức phải có ít nhất 1 bước thực hiện')
+              .build(context),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      addStep();
+    }
+    stepList.refresh();
+  }
+
+  void updateStep(int index, String description) {
+    stepList.value[index].description = description;
+  }
+
+  void pickStepImage(BuildContext context, int index) async {
+    try {
+      XFile? imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+      String? imageUrl = imageFile?.path;
+      if (imageUrl != null) {
+        stepList.value[index].imageUrl = imageUrl;
+        stepList.refresh();
+        if (index == stepList.value.length - 1) {
+          scrollController.jumpTo(scrollController.position.maxScrollExtent + 500);
+        }
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+        ),
+      );
     }
   }
 }

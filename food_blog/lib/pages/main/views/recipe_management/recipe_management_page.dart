@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/components/appBar/app_bar_widget.dart';
 import 'package:food_blog/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/configs/app_colors.dart';
+import 'package:food_blog/pages/addRecipe/add_recipe_controller.dart';
 import 'package:food_blog/pages/main/views/recipe_management/recipe_management_controller.dart';
+import 'package:get/get.dart';
 
 class RecipeManagementPage extends StatefulWidget {
   const RecipeManagementPage({super.key});
@@ -23,7 +25,7 @@ class RecipeManagementPageState extends State<RecipeManagementPage> {
         title: 'Quản lý công thức',
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {Get.to(AddRecipePage());},
             icon: const Icon(Icons.add_circle_outline_rounded),
           )
         ],
