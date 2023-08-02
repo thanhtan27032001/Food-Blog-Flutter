@@ -7,6 +7,8 @@ import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/main/main_controller.dart';
+import 'package:food_blog/data/user_data.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -40,7 +42,13 @@ class LoginController extends GetxController {
   }
 
   Future<void> signInWithGoogle(BuildContext context) async {
-    await executeSignInWithGoogle();
+    UserCredential userCredential = await executeSignInWithGoogle();
+    UserData.instance().addUser(
+      UserModel(
+        email: userCredential.user?.email ?? '',
+        nickname: userCredential.user?.displayName ?? 'No name',
+      ),
+    );
     Get.off(MainPage());
   }
 }

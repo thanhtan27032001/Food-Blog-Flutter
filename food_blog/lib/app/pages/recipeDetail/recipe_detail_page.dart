@@ -4,10 +4,8 @@ import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
-import 'package:food_blog/domain/models/recipe_comment.dart';
 import 'package:food_blog/domain/models/recipe_model.dart';
 import 'package:food_blog/domain/models/recipe_step.dart';
-import 'package:food_blog/domain/models/user.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/app_expansion_panel.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_comment_list_widget.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_ingredient_list_widget.dart';
@@ -227,25 +225,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 child: RecipeCommentListWidget([
-                  RecipeComment(
-                      'id',
-                      'Gooood',
-                      DateTime.now(),
-                      User('id', 'Nguyễn Thành Tân',
-                          'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
-                  RecipeComment(
-                      'id',
-                      'Ngonnn',
-                      DateTime.now(),
-                      User('id', 'Nguyễn A',
-                          'https://images.thequint.com/thequint-fit%2F2019-10%2Fed93b668-8d3f-4505-9b43-bffabc8873d9%2Ftomato.jpg')),
-                  RecipeComment('id', 'Tuyệt vời', DateTime.now(),
-                      User('id', 'Nguyễn B', null)),
-                  RecipeComment(
-                      'id',
-                      'bla bla bla\nbla bla bla\nbla bla blasghsdjhfksldglksdhkjfhsdklghsdkgafdadfadsfasdfasdf',
-                      DateTime.now(),
-                      User('id', 'Nguyễn C', null)),
+
                 ]),
               )
             ],

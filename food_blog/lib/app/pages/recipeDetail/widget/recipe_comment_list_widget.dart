@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
-import 'package:food_blog/domain/models/recipe_comment.dart';
+import 'package:food_blog/domain/models/recipe_comment_model.dart';
 
 class RecipeCommentListWidget extends StatelessWidget {
-  final List<RecipeComment> commentList;
+  final List<RecipeCommentModel> commentList;
 
   const RecipeCommentListWidget(this.commentList, {super.key});
 
@@ -34,7 +34,7 @@ class RecipeCommentListWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppAvatarWidget(
-                        avtUrl: commentList[index].user.avtUrl, size: 40),
+                        avtUrl: commentList[index].user.avatarUrl, size: 40),
                     const SizedBox(
                       width: 4,
                     ),
@@ -43,7 +43,7 @@ class RecipeCommentListWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppTextBody2Widget()
-                              .setText(commentList[index].user.name)
+                              .setText(commentList[index].user.nickname)
                               .setTextStyle(
                                   const TextStyle(fontWeight: FontWeight.bold))
                               .build(context),

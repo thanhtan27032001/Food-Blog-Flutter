@@ -44,6 +44,9 @@ dependencies:
   flutter_displaymode: ^0.6.0
   image_picker: ^1.0.1
   get: ^4.6.5
+  cloud_firestore: ^4.8.4
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.6
 
 dev_dependencies:
   flutter_test:
