@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
-import 'package:food_blog/domain/models/ingredient_model.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 import 'package:food_blog/domain/models/step_model.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +15,7 @@ part 'add_recipe_page.dart';
 class AddRecipeController extends GetxController {
   RxnString imageUrl = RxnString();
   late XFile? imageFile;
-  final Rx<List<IngredientModel>> ingredientList = Rx([]);
+  final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
   final Rx<List<StepModel>> stepList = Rx([]);
   ScrollController scrollController = ScrollController();
 
@@ -40,7 +40,7 @@ class AddRecipeController extends GetxController {
   }
 
   void addIngredient() {
-    ingredientList.value.add(IngredientModel('', ''));
+    ingredientList.value.add(RecipeIngredientModel('', ''));
     ingredientList.refresh();
   }
 

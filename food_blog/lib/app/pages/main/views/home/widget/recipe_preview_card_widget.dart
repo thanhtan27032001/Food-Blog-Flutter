@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
-import 'package:food_blog/domain/models/recipe_model.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 
 class RecipePreviewCardWidget extends StatefulWidget {
   final RecipeModel recipe;

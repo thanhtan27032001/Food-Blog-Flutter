@@ -4,7 +4,7 @@ import 'package:food_blog/domain/models/base_model.dart';
 
 class UserData {
   static final UserData _instance = UserData();
-  static final userDbRef = FirebaseFirestore.instance.collection(DataTree.user);
+  static final userDbRef = FirebaseFirestore.instance.collection(UserCollection.collectionName);
 
   static UserData instance() {
     return _instance;
@@ -12,7 +12,7 @@ class UserData {
 
   Future<bool> checkEmailExisted(String email) async {
     bool result = true;
-    await userDbRef.where('email', isEqualTo: email).get().then(
+    await userDbRef.where(UserCollection.fieldEmail, isEqualTo: email).get().then(
       (value) {
         if (value.docs.isNotEmpty) {
           result = true;

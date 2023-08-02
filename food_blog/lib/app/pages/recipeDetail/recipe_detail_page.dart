@@ -4,8 +4,7 @@ import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
-import 'package:food_blog/domain/models/recipe_model.dart';
-import 'package:food_blog/domain/models/recipe_step.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/app_expansion_panel.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_comment_list_widget.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_ingredient_list_widget.dart';
@@ -178,14 +177,14 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: RecipeStepWidget(recipeStepList: [
-                  RecipeStep(1,
+                  RecipeStepModel(1,
                       'Cắt bò thành những miếng có độ dày khoảng 03 cm có trọng lượng từ 200-250 gram.'),
-                  RecipeStep(2, 'Ướp thịt bò với muối và tiêu.',
+                  RecipeStepModel(2, 'Ướp thịt bò với muối và tiêu.',
                       imgUrl:
                           'https://ussinavietnam.vn/wp-content/uploads/2022/11/tieuchi_3.png'),
-                  RecipeStep(3,
+                  RecipeStepModel(3,
                       'Dùng chảo gang nóng cho dầu oliu vào, dầu sôi cho từng miếng thịt bò đã ướp vào áp chảo - mỗi mặt áp chảo trong vòng 2 phút, mỗi cạnh bên 40 giây.'),
-                  RecipeStep(
+                  RecipeStepModel(
                       4, 'Cho thịt nghỉ 5 phút, cho ra đĩa rồi thưởng thức.',
                       imgUrl:
                           'https://websitecukcukvn.misacdn.net/wp-content/uploads/2023/03/batch_moo-beef-st-4.jpeg'),

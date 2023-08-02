@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
-import 'package:food_blog/domain/models/recipe_step.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 
 class RecipeStepWidget extends StatelessWidget {
-  final List<RecipeStep> recipeStepList;
+  final List<RecipeStepModel> recipeStepList;
 
   const RecipeStepWidget({super.key, required this.recipeStepList});
 

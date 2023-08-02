@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
-import 'package:food_blog/domain/models/recipe_model.dart';
 import 'package:food_blog/app/pages/main/views/home/widget/recipe_preview_card_widget.dart';
 import 'package:food_blog/app/pages/recipeDetail/recipe_detail_page.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
 
 class HomeSuggestionWidget extends GetWidget {
@@ -40,7 +40,16 @@ class HomeSuggestionWidget extends GetWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(RecipeDetailPage(RecipeModel()));
+                    Get.to(
+                      RecipeDetailPage(
+                        RecipeModel(
+                          title: '',
+                          author:
+                              UserModel(email: 'email', nickname: 'nickname'),
+                          imageUrl: '',
+                        ),
+                      ),
+                    );
                     // Navigator.push(
                     //     pageContext,
                     //     MaterialPageRoute(
@@ -48,7 +57,12 @@ class HomeSuggestionWidget extends GetWidget {
                     //     ));
                   },
                   child: RecipePreviewCardWidget(
-                    RecipeModel(),
+                    RecipeModel(
+                      title: '',
+                      author:
+                      UserModel(email: 'email', nickname: 'nickname'),
+                      imageUrl: '',
+                    ),
                     cardWidth: 200,
                     cardHeight: 180,
                   ),
