@@ -21,13 +21,17 @@ class AddRecipePage extends GetView<AddRecipeController> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_outlined),
             color: AppColors.blackColor(),
-            onPressed: () {},
+            onPressed: () {
+              Get.back();
+            },
           ),
           actions: [
             IconButton(
               icon: const Icon(Icons.save_outlined),
               color: AppColors.blackColor(),
-              onPressed: () {controller.executeAddRecipe();},
+              onPressed: () {
+                controller.executeAddRecipe();
+              },
             )
           ],
           backgroundColor: AppColors.whiteColor(),
@@ -83,7 +87,9 @@ class AddRecipePage extends GetView<AddRecipeController> {
               elevation: 2,
               backgroundColor: AppColors.whiteColor(),
               hintText: 'Vd: Gà nướng, beefsteak...',
-              onChange: (value) {},
+              onChange: (value) {
+                controller.newRecipe.title = value;
+              },
             ),
 
             // description
@@ -102,7 +108,9 @@ class AddRecipePage extends GetView<AddRecipeController> {
                   'Nêu lên ý tưởng tạo ra công thức, điều gì mang lại cảm hứng cho bạn,...',
               maxLine: 5,
               inputType: TextInputType.multiline,
-              onChange: (value) {},
+              onChange: (value) {
+                controller.newRecipe.description = value;
+              },
             ),
 
             // estimate served people
@@ -117,7 +125,11 @@ class AddRecipePage extends GetView<AddRecipeController> {
               borderRadius: 6,
               elevation: 2,
               hintText: 'Vd: 1',
-              onChange: (value) {},
+              inputType: const TextInputType.numberWithOptions(
+                  decimal: false, signed: false),
+              onChange: (value) {
+                controller.newRecipe.serveNum = int.parse(value);
+              },
             ),
 
             // estimate time
@@ -137,7 +149,11 @@ class AddRecipePage extends GetView<AddRecipeController> {
                     borderRadius: 6,
                     elevation: 2,
                     hintText: 'Chuẩn bị',
-                    onChange: (value) {},
+                    inputType: const TextInputType.numberWithOptions(
+                        decimal: false, signed: false),
+                    onChange: (value) {
+                      controller.newRecipe.prepareTime = int.parse(value);
+                    },
                   ),
                 ),
                 Expanded(
@@ -146,7 +162,11 @@ class AddRecipePage extends GetView<AddRecipeController> {
                     borderRadius: 6,
                     elevation: 2,
                     hintText: 'Thực hiện',
-                    onChange: (value) {},
+                    inputType: const TextInputType.numberWithOptions(
+                        decimal: false, signed: false),
+                    onChange: (value) {
+                      controller.newRecipe.cookTime = int.parse(value);
+                    },
                   ),
                 ),
               ],
@@ -202,8 +222,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                             text: controller
                                 .ingredientList.value[index].description,
                             onChange: (value) {
-                              controller.updateIngredient(
-                                  index, value);
+                              controller.updateIngredient(index, value);
                             },
                           ),
                         );

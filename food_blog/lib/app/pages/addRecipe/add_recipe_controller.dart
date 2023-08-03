@@ -124,6 +124,7 @@ class AddRecipeController extends GetxController {
   void executeAddRecipe() async {
     newRecipe.ingredientList = ingredientList.value;
     newRecipe.stepList = stepList.value;
+    newRecipe.imageUrl = imageUrl.value;
     bool result = await RecipeData.instance().addRecipe(newRecipe);
     print('result ' + (result == true ? 'success' : 'fail'));
   }

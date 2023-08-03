@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
+import 'package:food_blog/data/file_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 
 class RecipeData {
@@ -24,7 +25,15 @@ class RecipeData {
         recipe.stepList?.map((e) => e.toJson()).toList();
     param.remove(RecipeCollection.fieldAuthor);
     // execute add
-    await recipeDbRef.add(param).then((value) => result = true);
+    String recipeId = '';
+    await recipeDbRef.add(param).then((value) {
+      result = true;
+      recipeId = value.id;
+    });
+    // upload file
+    if (result == true) {
+      await FileData.instance().uploadFile(filePath: recipe.imageUrl, fileKey: '2lyT6s0vzFDrDlwzFPil/recipeImages/$recipeId');
+    }
     return result;
   }
 
