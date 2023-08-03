@@ -14,6 +14,11 @@ class RecipeCollection {
   static const String fieldImageUrl = 'imageUrl';
   static const String fieldIngredientList = 'ingredientList';
   static const String fieldStepList = 'stepList';
-  static const String fieldAuthor = 'author';
+  static const String fieldUserId = 'userId';
   static const String fieldNumOfLike = 'numOfLike';
+  static const String fieldCookTime = 'cookTime';
+  static const String fieldPrepareTime = 'prepareTime';
+  static const String fieldServeNum = 'serveNum';
+
+  static const String fieldAuthor = 'author';
 }

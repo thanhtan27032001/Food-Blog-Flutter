@@ -27,7 +27,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
             IconButton(
               icon: const Icon(Icons.save_outlined),
               color: AppColors.blackColor(),
-              onPressed: () {},
+              onPressed: () {controller.executeAddRecipe();},
             )
           ],
           backgroundColor: AppColors.whiteColor(),
@@ -195,38 +195,16 @@ class AddRecipePage extends GetView<AddRecipeController> {
                           onDismissed: (details) {
                             controller.removeIngredient(context, index);
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: AppCornerCardTextFieldWidget(
-                                  borderRadius: 6,
-                                  elevation: 2,
-                                  hintText: 'Cà chua',
-                                  text: controller
-                                      .ingredientList.value[index].name,
-                                  onChange: (value) {
-                                    controller.updateIngredient(
-                                        index, value, null);
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: AppCornerCardTextFieldWidget(
-                                  borderRadius: 6,
-                                  elevation: 2,
-                                  hintText: '1 quả',
-                                  text: controller.ingredientList.value[index]
-                                      .numberDescription,
-                                  onChange: (value) {
-                                    controller.updateIngredient(
-                                        index, null, value);
-                                  },
-                                ),
-                              ),
-                            ],
+                          child: AppCornerCardTextFieldWidget(
+                            borderRadius: 6,
+                            elevation: 2,
+                            hintText: '1 quả cà chua',
+                            text: controller
+                                .ingredientList.value[index].description,
+                            onChange: (value) {
+                              controller.updateIngredient(
+                                  index, value);
+                            },
                           ),
                         );
                       },

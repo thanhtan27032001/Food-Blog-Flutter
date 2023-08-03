@@ -2,10 +2,9 @@ part of 'base_model.dart';
 
 @JsonSerializable()
 class RecipeIngredientModel {
-  late String name;
-  late String numberDescription;
+  late String description;
 
-  RecipeIngredientModel(this.name, this.numberDescription);
+  RecipeIngredientModel(this.description);
 
   Map<String, dynamic> toJson() => _$RecipeIngredientModelToJson(this);
 

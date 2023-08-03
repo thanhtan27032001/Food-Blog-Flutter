@@ -31,7 +31,7 @@ class RecipeStepWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppTextBody2Widget()
-                        .setText('Bước ${recipeStepList[index].stepIndex}')
+                        .setText('Bước ${recipeStepList[index].index}')
                         .setTextStyle(
                             const TextStyle(fontWeight: FontWeight.bold))
                         .build(context),
@@ -45,12 +45,12 @@ class RecipeStepWidget extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    recipeStepList[index].imgUrl == null
+                    recipeStepList[index].imageUrl == null
                         ? const SizedBox()
                         : ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(8)),
-                            child: Image.network(recipeStepList[index].imgUrl!),
+                            child: Image.network(recipeStepList[index].imageUrl!),
                           )
                   ],
                 ),

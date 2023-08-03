@@ -2,22 +2,28 @@ part of 'base_model.dart';
 
 @JsonSerializable()
 class RecipeModel {
-  late String title;
+  late String? title;
   late String? description;
-  late UserModel author;
-  late String imageUrl;
+  late int? cookTime;
+  late int? prepareTime;
+  late int? serveNum;
+  late UserModel? author;
+  late String? imageUrl;
   late String? videoUrl;
-  late List<RecipeStepModel>? recipeStepList;
-  late List<RecipeIngredientModel>? recipeIngredientList;
+  late List<RecipeStepModel>? stepList;
+  late List<RecipeIngredientModel>? ingredientList;
 
   RecipeModel({
-    required this.title,
+    this.title,
     this.description,
-    required this.author,
-    required this.imageUrl,
+    this.cookTime,
+    this.prepareTime,
+    this.serveNum,
+    this.author,
+    this.imageUrl,
     this.videoUrl,
-    this.recipeStepList,
-    this.recipeIngredientList,
+    this.stepList,
+    this.ingredientList,
   });
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);

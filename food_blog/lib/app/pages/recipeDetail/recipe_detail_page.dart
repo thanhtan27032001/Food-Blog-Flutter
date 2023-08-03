@@ -76,7 +76,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                       AppAvatarWidget(
                           avtUrl:
                               'https://znews-photo.zingcdn.me/w660/Uploaded/spiv'
-                                  'ovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg',
+                              'ovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg',
                           size: 48,
                           onPress: () {}),
                       const SizedBox(
@@ -177,16 +177,24 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: RecipeStepWidget(recipeStepList: [
-                  RecipeStepModel(1,
-                      'Cắt bò thành những miếng có độ dày khoảng 03 cm có trọng lượng từ 200-250 gram.'),
-                  RecipeStepModel(2, 'Ướp thịt bò với muối và tiêu.',
-                      imgUrl:
-                          'https://ussinavietnam.vn/wp-content/uploads/2022/11/tieuchi_3.png'),
-                  RecipeStepModel(3,
-                      'Dùng chảo gang nóng cho dầu oliu vào, dầu sôi cho từng miếng thịt bò đã ướp vào áp chảo - mỗi mặt áp chảo trong vòng 2 phút, mỗi cạnh bên 40 giây.'),
                   RecipeStepModel(
-                      4, 'Cho thịt nghỉ 5 phút, cho ra đĩa rồi thưởng thức.',
-                      imgUrl:
+                      index: 1,
+                      description:
+                          'Cắt bò thành những miếng có độ dày khoảng 03 cm có trọng lượng từ 200-250 gram.'),
+                  RecipeStepModel(
+                      index: 2,
+                      description: 'Ướp thịt bò với muối và tiêu.',
+                      imageUrl:
+                          'https://ussinavietnam.vn/wp-content/uploads/2022/11/tieuchi_3.png'),
+                  RecipeStepModel(
+                      index: 3,
+                      description:
+                          'Dùng chảo gang nóng cho dầu oliu vào, dầu sôi cho từng miếng thịt bò đã ướp vào áp chảo - mỗi mặt áp chảo trong vòng 2 phút, mỗi cạnh bên 40 giây.'),
+                  RecipeStepModel(
+                      index: 4,
+                      description:
+                          'Cho thịt nghỉ 5 phút, cho ra đĩa rồi thưởng thức.',
+                      imageUrl:
                           'https://websitecukcukvn.misacdn.net/wp-content/uploads/2023/03/batch_moo-beef-st-4.jpeg'),
                 ]),
               ),
@@ -212,7 +220,9 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
                     const SizedBox(
                       width: 8,
                     ),
-                    AppTextBody2Widget().setText('Thêm bình luận').build(context),
+                    AppTextBody2Widget()
+                        .setText('Thêm bình luận')
+                        .build(context),
                   ],
                 ),
               ),
@@ -223,9 +233,7 @@ class _RecipeDetailPageState extends State<RecipeDetailPage> {
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
-                child: RecipeCommentListWidget([
-
-                ]),
+                child: RecipeCommentListWidget([]),
               )
             ],
           ),

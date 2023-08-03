@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
+import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
-import 'package:food_blog/domain/models/step_model.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -16,8 +16,10 @@ class AddRecipeController extends GetxController {
   RxnString imageUrl = RxnString();
   late XFile? imageFile;
   final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
-  final Rx<List<StepModel>> stepList = Rx([]);
+  final Rx<List<RecipeStepModel>> stepList = Rx([]);
   ScrollController scrollController = ScrollController();
+
+  RecipeModel newRecipe = RecipeModel();
 
   @override
   void onInit() {
@@ -40,7 +42,7 @@ class AddRecipeController extends GetxController {
   }
 
   void addIngredient() {
-    ingredientList.value.add(RecipeIngredientModel('', ''));
+    ingredientList.value.add(RecipeIngredientModel(''));
     ingredientList.refresh();
   }
 
@@ -57,27 +59,25 @@ class AddRecipeController extends GetxController {
       );
       addIngredient();
     }
-    ingredientList.refresh();
+    else {
+      ingredientList.refresh();
+    }
   }
 
-  void updateIngredient(int index, String? name, String? numberDescription) {
-    if (name != null) {
-      ingredientList.value[index].name = name;
-    }
-    if (numberDescription != null) {
-      ingredientList.value[index].numberDescription = numberDescription;
-    }
+  void updateIngredient(int index, String ingredientDescription) {
+    ingredientList.value[index].description = ingredientDescription;
   }
 
   void addStep() {
-    stepList.value.add(StepModel(stepList.value.length + 1, '', null));
+    stepList.value.add(RecipeStepModel(
+        index: stepList.value.length + 1, description: '', imageUrl: null));
     stepList.refresh();
   }
 
   void removeStep(BuildContext context, int index) {
     stepList.value.removeAt(index);
-    for (int i=0; i<stepList.value.length; i++) {
-      stepList.value[i].index = i+1;
+    for (int i = 0; i < stepList.value.length; i++) {
+      stepList.value[i].index = i + 1;
     }
     if (stepList.value.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,7 +90,9 @@ class AddRecipeController extends GetxController {
       );
       addStep();
     }
-    stepList.refresh();
+    else {
+      stepList.refresh();
+    }
   }
 
   void updateStep(int index, String description) {
@@ -99,13 +101,15 @@ class AddRecipeController extends GetxController {
 
   void pickStepImage(BuildContext context, int index) async {
     try {
-      XFile? imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+      XFile? imageFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
       String? imageUrl = imageFile?.path;
       if (imageUrl != null) {
         stepList.value[index].imageUrl = imageUrl;
         stepList.refresh();
         if (index == stepList.value.length - 1) {
-          scrollController.jumpTo(scrollController.position.maxScrollExtent + 500);
+          scrollController
+              .jumpTo(scrollController.position.maxScrollExtent + 500);
         }
       }
     } catch (e) {
@@ -115,5 +119,12 @@ class AddRecipeController extends GetxController {
         ),
       );
     }
+  }
+
+  void executeAddRecipe() async {
+    newRecipe.ingredientList = ingredientList.value;
+    newRecipe.stepList = stepList.value;
+    bool result = await RecipeData.instance().addRecipe(newRecipe);
+    print('result ' + (result == true ? 'success' : 'fail'));
   }
 }
