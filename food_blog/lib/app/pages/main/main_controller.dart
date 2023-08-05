@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/main/views/home/home_view.dart';
-import 'package:food_blog/app/pages/main/views/recipe_management/recipe_management_page.dart';
+import 'package:food_blog/app/pages/main/views/recipe_management/recipe_management_controller.dart';
 import 'package:get/get.dart';
 
 part 'main_page.dart';
@@ -14,7 +14,7 @@ class MainController extends GetxController{
     Container(
       color: Colors.black54,
     ),
-    const RecipeManagementPage(),
+    RecipeManagementPage(),
     Container(
       color: Colors.yellow,
     ),

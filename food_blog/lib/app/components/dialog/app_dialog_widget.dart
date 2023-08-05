@@ -37,19 +37,33 @@ class AppDialogWidget {
 
   AppDialogWidget buildDialog(BuildContext context) {
     if (appDialogType == AppDialogType.success) {
-      icon = Image.asset('assets/images/ic_success.png', width: 64, height: 64);
+      icon = Image.asset(
+        'assets/images/ic_success.png',
+        width: 64,
+        height: 64,
+        fit: BoxFit.fill,
+      );
     }
     if (appDialogType == AppDialogType.error) {
-      icon = Image.asset('assets/images/ic_fail.png', width: 64, height: 64);
+      icon = Image.asset(
+        'assets/images/ic_fail.png',
+        width: 64,
+        height: 64,
+        fit: BoxFit.fill,
+      );
     }
     if (appDialogType == AppDialogType.confirm) {
-      icon = Image.asset('assets/images/ic_confirm.png', width: 64, height: 64);
+      icon = Image.asset(
+        'assets/images/ic_confirm.png',
+        width: 64,
+        height: 64,
+        fit: BoxFit.fill,
+      );
     }
     dialog = Dialog(
       insetPadding: const EdgeInsets.all(16),
       shape: const BeveledRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(16))
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(16))),
       child: Stack(
         children: [
           Container(
@@ -83,7 +97,9 @@ class AppDialogWidget {
                 const SizedBox(height: 24),
                 if (textField != null) textField!,
                 if (textField != null) const SizedBox(height: 24),
-                const SizedBox(height: 8,),
+                const SizedBox(
+                  height: 8,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,18 +108,17 @@ class AppDialogWidget {
                       Expanded(
                         child: ElevatedButton(
                           style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
-                            ),
-                            backgroundColor: MaterialStateProperty.all(
-                              AppColors.whiteColor(),
-                            ),
-                            overlayColor: MaterialStateProperty.all(
-                              AppColors.grayColor(level: 1),
-                            )
-                          ),
+                              backgroundColor: MaterialStateProperty.all(
+                                AppColors.whiteColor(),
+                              ),
+                              overlayColor: MaterialStateProperty.all(
+                                AppColors.grayColor(level: 1),
+                              )),
                           onPressed: () {
                             Get.back();
                             onNegative?.call();

@@ -13,14 +13,14 @@ class AddRecipePage extends GetView<AddRecipeController> {
   @override
   Widget build(BuildContext context) {
     return AppMainPageWidget(
-        statusBarColor: AppColors.whiteColor(),
+        statusBarColor: AppColors.primaryColor(level: 2),
         appbar: AppBarWidget(
           title: 'Công thức mới',
-          titleColor: AppColors.blackColor(),
+          titleColor: AppColors.whiteColor(),
           isCenterTitle: true,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_outlined),
-            color: AppColors.blackColor(),
+            color: AppColors.whiteColor(),
             onPressed: () {
               Get.back();
             },
@@ -28,13 +28,13 @@ class AddRecipePage extends GetView<AddRecipeController> {
           actions: [
             IconButton(
               icon: const Icon(Icons.save_outlined),
-              color: AppColors.blackColor(),
+              color: AppColors.whiteColor(),
               onPressed: () {
                 controller.showDialogAddRecipe(context);
               },
             )
           ],
-          backgroundColor: AppColors.whiteColor(),
+          backgroundColor: AppColors.primaryColor(level: 2),
         ).build(context),
         pageBackgroundColor: AppColors.whiteColor(),
         pageBody: _body(context));

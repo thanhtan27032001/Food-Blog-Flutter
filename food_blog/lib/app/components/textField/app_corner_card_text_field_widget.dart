@@ -18,25 +18,28 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final String? _hintText;
   late final int? _maxLine;
   late final String? _text;
+  late final String? Function(String?)? _validator;
 
-  AppCornerCardTextFieldWidget(
-      {super.key,
-      required ValueChanged<String> onChange,
-      bool? autofocus,
-      FocusNode? focusNode,
-      TextInputAction? textInputAction,
-      bool? obscureText,
-      ValueChanged<String>? onFieldSubmitted,
-      Icon? leadingIcon,
-      Icon? suffixIcon,
-      VoidCallback? suffixIconOnPress,
-      TextInputType? inputType,
-      double? elevation,
-      double? borderRadius,
-      Color? backgroundColor,
-      String? hintText,
-      int? maxLine,
-      String? text}) {
+  AppCornerCardTextFieldWidget({
+    super.key,
+    required ValueChanged<String> onChange,
+    bool? autofocus,
+    FocusNode? focusNode,
+    TextInputAction? textInputAction,
+    bool? obscureText,
+    ValueChanged<String>? onFieldSubmitted,
+    Icon? leadingIcon,
+    Icon? suffixIcon,
+    VoidCallback? suffixIconOnPress,
+    TextInputType? inputType,
+    double? elevation,
+    double? borderRadius,
+    Color? backgroundColor,
+    String? hintText,
+    int? maxLine,
+    String? text,
+    String? Function(String?)? validator,
+  }) {
     _onChange = onChange;
     _autofocus = autofocus;
     _focusNode = focusNode;
@@ -53,6 +56,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     _hintText = hintText;
     _maxLine = maxLine;
     _text = text;
+    _validator = validator;
   }
 
   @override
@@ -89,6 +93,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                   hintText: _hintText,
                   border: InputBorder.none,
                 ),
+                validator: _validator,
               ),
             ),
             GestureDetector(

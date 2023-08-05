@@ -14,6 +14,8 @@ import 'package:food_blog/app/configs/app_colors.dart';
 part 'add_recipe_page.dart';
 
 class AddRecipeController extends GetxController {
+  static String resultAddedRecipe = 'resultAddedRecipe';
+
   RxnString imageUrl = RxnString();
   late XFile? imageFile;
   final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
@@ -120,25 +122,65 @@ class AddRecipeController extends GetxController {
     }
   }
 
-  void showDialogAddRecipe(BuildContext context) {
-    AppDialogWidget(
-      title: 'Tạo công thức thành công',
-      content: 'Giờ đây mọi người đều có thể xem được công thức của bạn.',
-      positiveText: 'Xác nhận',
-      appDialogType: AppDialogType.success,
-      onPositive: () {
-        print('Tạo công thức');
-        // executeAddRecipe();
-      },
-      negativeText: 'Hủy'
-    ).buildDialog(context).show(context);
+  String? validate() {
+    if (imageUrl.value == null) {
+      return 'Vui lòng chọn ảnh cho công thức.';
+    }
+    if (newRecipe.title == null || newRecipe.title!.trim() == '') {
+      return 'Vui lòng nhập tên công thức.';
+    }
+    if (newRecipe.description == null || newRecipe.description!.trim() == '') {
+      return 'Vui lòng nhập mô tả cho công thức.';
+    }
+    if (newRecipe.serveNum == null) {
+      return 'Vui lòng nhập khẩu phần.';
+    }
+    if (newRecipe.prepareTime == null) {
+      return 'Vui lòng nhập thời gian chuẩn bị.';
+    }
+    if (newRecipe.cookTime == null) {
+      return 'Vui lòng nhập thơi gian thực hiện.';
+    }
+    return null;
   }
 
-  void executeAddRecipe() async {
+  void showDialogAddRecipe(BuildContext context) {
+    String? error = validate();
+    if (error == null) {
+      AppDialogWidget(
+          title: 'Xác nhận tạo công thức',
+          content: 'Bạn có chắc chắn muốn tạo và công khai công thức mới của mình? Mọi người sẽ có thể xem được công thức mà bạn đăng.',
+          appDialogType: AppDialogType.confirm,
+          positiveText: 'Xác nhận',
+          onPositive: () {
+            print('Tạo công thức');
+            executeAddRecipe(context);
+          },
+          negativeText: 'Hủy'
+      ).buildDialog(context).show(context);
+    }
+    else {
+      AppDialogWidget(
+          title: 'Công thức chưa đủ thông tin',
+          content: 'Bạn không thể công khai công thức ngay bây giờ. $error',
+          appDialogType: AppDialogType.error,
+          positiveText: 'Xác nhận',
+          negativeText: 'Lưu nháp',
+          onNegative: () {
+            print('Lưu nháp');
+            Get.back(result: resultAddedRecipe);
+          },
+      ).buildDialog(context).show(context);
+    }
+  }
+
+  void executeAddRecipe(BuildContext context) async {
     newRecipe.ingredientList = ingredientList.value;
     newRecipe.stepList = stepList.value;
     newRecipe.imageUrl = imageUrl.value;
     bool result = await RecipeData.instance().addRecipe(newRecipe);
-    print('result ' + (result == true ? 'success' : 'fail'));
+    if (result == true) {
+      Get.back(result: resultAddedRecipe);
+    }
   }
 }

@@ -8,16 +8,17 @@ enum RecipeStatus {
 @JsonSerializable()
 class RecipeModel {
   late String recipeId;
-  late String? title;
-  late String? description;
-  late int? cookTime;
-  late int? prepareTime;
-  late int? serveNum;
+  late String? title; // require
+  late String? description; // require
+  late int? cookTime; // require
+  late int? prepareTime; // require
+  late int? serveNum; // require
   late UserModel? author;
-  late String? imageUrl;
+  late String? imageUrl; // require
   late String? videoUrl;
-  late List<RecipeStepModel>? stepList;
-  late List<RecipeIngredientModel>? ingredientList;
+  late List<RecipeStepModel>? stepList; // require
+  late List<RecipeIngredientModel>? ingredientList; // require
+  // late List<IngredientTagModel>? ingredientTagList; //TODO: add ingredient tag
   late String status;
 
   RecipeModel({
@@ -54,6 +55,18 @@ class RecipeModel {
   }
 
   String getStepImageKey(int index) {
+    //TODO: '<userId>/stepImages/$recipeId/<stepIndex>'
     return '2lyT6s0vzFDrDlwzFPil/stepImages/$recipeId/$index';
+  }
+
+  bool canBePublic() {
+    return title != null &&
+        description != null &&
+        cookTime != null &&
+        prepareTime != null &&
+        serveNum != null &&
+        imageUrl != null &&
+        stepList != null &&
+        ingredientList != null;
   }
 }
