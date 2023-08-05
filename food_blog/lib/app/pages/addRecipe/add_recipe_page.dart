@@ -30,7 +30,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
               icon: const Icon(Icons.save_outlined),
               color: AppColors.blackColor(),
               onPressed: () {
-                controller.executeAddRecipe();
+                controller.showDialogAddRecipe(context);
               },
             )
           ],

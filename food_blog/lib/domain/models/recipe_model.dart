@@ -1,5 +1,10 @@
 part of 'base_model.dart';
 
+enum RecipeStatus {
+  draft,
+  public;
+}
+
 @JsonSerializable()
 class RecipeModel {
   late String recipeId;
@@ -13,6 +18,7 @@ class RecipeModel {
   late String? videoUrl;
   late List<RecipeStepModel>? stepList;
   late List<RecipeIngredientModel>? ingredientList;
+  late String status;
 
   RecipeModel({
     this.title,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_blog/app/components/dialog/app_dialog_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
 import 'package:food_blog/data/recipe_data.dart';
@@ -58,8 +59,7 @@ class AddRecipeController extends GetxController {
         ),
       );
       addIngredient();
-    }
-    else {
+    } else {
       ingredientList.refresh();
     }
   }
@@ -89,8 +89,7 @@ class AddRecipeController extends GetxController {
         ),
       );
       addStep();
-    }
-    else {
+    } else {
       stepList.refresh();
     }
   }
@@ -119,6 +118,20 @@ class AddRecipeController extends GetxController {
         ),
       );
     }
+  }
+
+  void showDialogAddRecipe(BuildContext context) {
+    AppDialogWidget(
+      title: 'Tạo công thức thành công',
+      content: 'Giờ đây mọi người đều có thể xem được công thức của bạn.',
+      positiveText: 'Xác nhận',
+      appDialogType: AppDialogType.success,
+      onPositive: () {
+        print('Tạo công thức');
+        // executeAddRecipe();
+      },
+      negativeText: 'Hủy'
+    ).buildDialog(context).show(context);
   }
 
   void executeAddRecipe() async {
