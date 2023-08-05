@@ -15,24 +15,35 @@ class RecipeData {
   Future<bool> addRecipe(RecipeModel recipe) async {
     bool result = false;
     // init param
-    final param = {
-      ...recipe.toJson(),
-      RecipeCollection.fieldUserId: '2lyT6s0vzFDrDlwzFPil'
-    };
-    param[RecipeCollection.fieldIngredientList] =
-        recipe.ingredientList?.map((e) => e.toJson()).toList();
-    param[RecipeCollection.fieldStepList] =
-        recipe.stepList?.map((e) => e.toJson()).toList();
-    param.remove(RecipeCollection.fieldAuthor);
-    // execute add
-    String recipeId = '';
+    final param = recipe.toAddRecipeParam();
+    // add basic info
     await recipeDbRef.add(param).then((value) {
       result = true;
-      recipeId = value.id;
+      recipe.recipeId = value.id;
     });
-    // upload file
+    // upload images
     if (result == true) {
-      await FileData.instance().uploadFile(filePath: recipe.imageUrl, fileKey: '2lyT6s0vzFDrDlwzFPil/recipeImages/$recipeId');
+      // recipe image
+      bool uploadRecipeImgResult = await FileData.instance().uploadFile(
+        filePath: recipe.imageUrl,
+        fileKey: recipe.getRecipeImageKey(),
+      );
+      recipeDbRef.doc(recipe.recipeId).update({
+        RecipeCollection.fieldImageUrl: uploadRecipeImgResult == true ? recipe.getRecipeImageKey() : null
+      });
+      // step images
+      for (int index = 0; index < recipe.stepList!.length; index++) {
+        if (recipe.stepList![index].imageUrl != null) {
+          bool uploadStepImgResult = await FileData.instance().uploadFile(
+            filePath: recipe.stepList![index].imageUrl,
+            fileKey: recipe.getStepImageKey(index),
+          );
+          recipe.stepList![index].imageUrl = uploadStepImgResult == true ? recipe.getStepImageKey(index) : null;
+        }
+      }
+      recipeDbRef.doc(recipe.recipeId).update({
+        RecipeCollection.fieldStepList: recipe.stepList!.map((e) => e.toJson()).toList()
+      });
     }
     return result;
   }
