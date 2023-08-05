@@ -47,6 +47,9 @@ class AppDialogWidget {
     }
     dialog = Dialog(
       insetPadding: const EdgeInsets.all(16),
+      shape: const BeveledRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(16))
+      ),
       child: Stack(
         children: [
           Container(
@@ -60,11 +63,11 @@ class AppDialogWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                // const SizedBox(height: 8),
+                const SizedBox(height: 8),
                 if (icon != null) icon!,
                 if (title != null)
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     child: AppTextBody1Widget()
                         .setText(title)
                         .setTextStyle(
@@ -80,6 +83,7 @@ class AppDialogWidget {
                 const SizedBox(height: 24),
                 if (textField != null) textField!,
                 if (textField != null) const SizedBox(height: 24),
+                const SizedBox(height: 8,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
