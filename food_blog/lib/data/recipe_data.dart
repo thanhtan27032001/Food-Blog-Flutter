@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
 import 'package:food_blog/data/file_data.dart';
+import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 
 class RecipeData {
@@ -51,10 +52,9 @@ class RecipeData {
       //   RecipeCollection.fieldStepList: recipe.stepList!.map((e) => e.toJson()).toList()
       // });
       updateRecipe(
-        recipeId: recipe.recipeId,
-        field: RecipeCollection.fieldStepList,
-        value: recipe.stepList!.map((e) => e.toJson()).toList()
-      );
+          recipeId: recipe.recipeId,
+          field: RecipeCollection.fieldStepList,
+          value: recipe.stepList!.map((e) => e.toJson()).toList());
     }
     return result;
   }
@@ -84,14 +84,8 @@ class RecipeData {
       final data = value.data() as Map<String, dynamic>;
       print(data);
       recipe = RecipeModel.fromJson(data);
-      // recipe.imageUrl =
-      //     await FileData.instance().getImageUrl(recipe.imageUrl ?? '');
-      // for (int index = 0; index < recipe.stepList!.length; index++) {
-      //   if (recipe.stepList![index].imageUrl != null) {
-      //     recipe.stepList![index].imageUrl = await FileData.instance()
-      //         .getImageUrl(recipe.stepList![index].imageUrl ?? '');
-      //   }
-      // }
+      recipe.author = await UserData.instance()
+          .getUserById(userId: data[RecipeCollection.fieldUserId]);
     });
     return recipe;
   }

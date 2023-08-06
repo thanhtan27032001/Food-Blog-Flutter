@@ -36,7 +36,8 @@ class UserData {
     }
   }
 
-  Future<UserModel?> getUserById(String userId) async {
-    // final data = userDbRef.
+  Future<UserModel?> getUserById({required String userId}) async {
+    final data = await userDbRef.doc(userId).get();
+    return data.data() != null ? UserModel.fromJson(data.data()!) : null;
   }
 }

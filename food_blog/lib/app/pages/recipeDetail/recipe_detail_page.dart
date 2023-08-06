@@ -61,9 +61,7 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                       child: Row(
                         children: [
                           AppAvatarWidget(
-                              avtUrl:
-                              'https://znews-photo.zingcdn.me/w660/Uploaded/spiv'
-                                  'ovxi/2021_06_12/thoi_diem_nguy_hiem_traderviet3.jpg',
+                              avtUrl: controller.recipeModel.value?.author?.avatarUrl,
                               size: 48,
                               onPress: () {}),
                           const SizedBox(
@@ -74,7 +72,7 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AppTextBody2Widget()
-                                    .setText('Nguyễn Thành Tân')
+                                    .setText(controller.recipeModel.value?.author?.nickname)
                                     .setTextStyle(const TextStyle(
                                     fontWeight: FontWeight.bold))
                                     .build(context),

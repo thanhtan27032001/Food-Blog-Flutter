@@ -30,10 +30,10 @@ class RecipeDetailController extends GetxController {
     if (recipeId != null) {
       recipeModel.value =
           await RecipeData.instance().getRecipeDetail(recipeId: recipeId!);
-      if (recipeModel.value!.canBePublic() == true) {
-        print('yessssssssssssssss');
-        return;
-      }
+      // if (recipeModel.value!.canBePublic() == true) {
+      //   print('yessssssssssssssss');
+      //   return;
+      // }
     }
   }
 }
