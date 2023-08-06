@@ -37,11 +37,11 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                         AppTextBody1Widget()
                             .setText(controller.recipeModel.value?.title!)
                             .setTextStyle(
-                          const TextStyle(
-                            // fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        )
+                              const TextStyle(
+                                // fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            )
                             .build(context),
                       ],
                     ),
@@ -61,7 +61,8 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                       child: Row(
                         children: [
                           AppAvatarWidget(
-                              avtUrl: controller.recipeModel.value?.author?.avatarUrl,
+                              avtUrl: controller
+                                  .recipeModel.value?.author?.avatarUrl,
                               size: 48,
                               onPress: () {}),
                           const SizedBox(
@@ -72,9 +73,10 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 AppTextBody2Widget()
-                                    .setText(controller.recipeModel.value?.author?.nickname)
+                                    .setText(controller
+                                        .recipeModel.value?.author?.nickname)
                                     .setTextStyle(const TextStyle(
-                                    fontWeight: FontWeight.bold))
+                                        fontWeight: FontWeight.bold))
                                     .build(context),
                                 const SizedBox(
                                   height: 4,
@@ -86,7 +88,9 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                                         color: AppColors.grayColor(level: 2)),
                                     const SizedBox(width: 4),
                                     AppTextBody2Widget()
-                                        .setText('1 giờ trước')
+                                        .setText(controller
+                                            .recipeModel.value?.updateDate
+                                            ?.toString())
                                         .setColor(AppColors.grayColor(level: 2))
                                         .build(context),
                                   ],
@@ -117,17 +121,22 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         RecipeSummaryCard(
-                            icon: SvgPicture.asset('assets/svgs/meal_serving.svg'),
+                            icon: SvgPicture.asset(
+                                'assets/svgs/meal_serving.svg'),
                             title: 'Khẩu phần',
-                            body: '${controller.recipeModel.value?.serveNum} người'),
+                            body:
+                                '${controller.recipeModel.value?.serveNum} người'),
                         RecipeSummaryCard(
-                            icon: SvgPicture.asset('assets/svgs/prepare_time.svg'),
+                            icon: SvgPicture.asset(
+                                'assets/svgs/prepare_time.svg'),
                             title: 'Chuẩn bị',
-                            body: '${controller.recipeModel.value?.prepareTime} phút'),
+                            body:
+                                '${controller.recipeModel.value?.prepareTime} phút'),
                         RecipeSummaryCard(
                             icon: SvgPicture.asset('assets/svgs/cook_time.svg'),
                             title: 'Thực hiện',
-                            body: '${controller.recipeModel.value?.cookTime} phút'),
+                            body:
+                                '${controller.recipeModel.value?.cookTime} phút'),
                       ],
                     ),
                   ),
@@ -139,7 +148,8 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: RecipeIngredientListWidget(
-                      ingredientList: controller.recipeModel.value!.ingredientList!,
+                      ingredientList:
+                          controller.recipeModel.value!.ingredientList!,
                     ),
                   ),
 
@@ -149,12 +159,14 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: RecipeStepWidget(recipeStepList: controller.recipeModel.value!.stepList!),
+                    child: RecipeStepWidget(
+                        recipeStepList:
+                            controller.recipeModel.value!.stepList!),
                   ),
 
                   Container(
-                    margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 40),
                     child: const Divider(
                       thickness: 1,
                     ),
@@ -199,7 +211,9 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
             CircularProgressIndicator(
               color: AppColors.secondaryColor(level: 2),
             ),
-            const SizedBox(height: 8,),
+            const SizedBox(
+              height: 8,
+            ),
             AppTextBody1Widget().setText('Đang tải').build(context),
           ],
         );

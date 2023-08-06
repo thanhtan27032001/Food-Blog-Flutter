@@ -7,7 +7,7 @@ enum RecipeStatus {
 
 @JsonSerializable()
 class RecipeModel {
-  late String recipeId;
+  late String? recipeId;
   late String? title; // require
   late String? description; // require
   late int? cookTime; // require
@@ -19,9 +19,11 @@ class RecipeModel {
   late List<RecipeStepModel>? stepList; // require
   late List<RecipeIngredientModel>? ingredientList; // require
   // late List<IngredientTagModel>? ingredientTagList; //TODO: add ingredient tag
-  late String status;
+  late String? status;
+  late DateTime? updateDate;
 
   RecipeModel({
+    this.recipeId,
     this.title,
     this.description,
     this.cookTime,
@@ -32,6 +34,8 @@ class RecipeModel {
     this.videoUrl,
     this.stepList,
     this.ingredientList,
+    this.status,
+    this.updateDate
   });
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);

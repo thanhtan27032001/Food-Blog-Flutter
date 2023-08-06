@@ -178,6 +178,7 @@ class AddRecipeController extends GetxController {
     newRecipe.ingredientList = ingredientList.value;
     newRecipe.stepList = stepList.value;
     newRecipe.imageUrl = imageUrl.value;
+    newRecipe.updateDate = DateTime.now();
     bool result = await RecipeData.instance().addRecipe(newRecipe);
     if (result == true) {
       Get.back(result: resultAddedRecipe);

@@ -40,7 +40,7 @@ class HomeSuggestionWidget extends GetWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(() => RecipeDetailPage(), arguments: 'CtE0VHlxFgeyO2hhy0DX');
+                    Get.to(() => RecipeDetailPage(), arguments: 'ai7b6ZfyPOZchIJlXCJi');
                   },
                   child: RecipePreviewCardWidget(
                     RecipeModel(

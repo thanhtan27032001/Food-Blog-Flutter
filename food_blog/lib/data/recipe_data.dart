@@ -34,7 +34,7 @@ class RecipeData {
       //       uploadRecipeImgResult == true ? recipe.getRecipeImageKey() : null
       // });
       updateRecipe(
-        recipeId: recipe.recipeId,
+        recipeId: recipe.recipeId ?? '',
         field: RecipeCollection.fieldImageUrl,
         value: uploadRecipeImgResult,
       );
@@ -52,7 +52,7 @@ class RecipeData {
       //   RecipeCollection.fieldStepList: recipe.stepList!.map((e) => e.toJson()).toList()
       // });
       updateRecipe(
-          recipeId: recipe.recipeId,
+          recipeId: recipe.recipeId ?? '',
           field: RecipeCollection.fieldStepList,
           value: recipe.stepList!.map((e) => e.toJson()).toList());
     }
