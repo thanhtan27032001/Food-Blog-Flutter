@@ -46,7 +46,7 @@ class AppMainPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // _customStatusBar();
+    _customStatusBar();
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: MaterialApp(

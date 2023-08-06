@@ -36,7 +36,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
           ],
           backgroundColor: AppColors.primaryColor(level: 2),
         ).build(context),
-        pageBackgroundColor: AppColors.whiteColor(),
+        pageBackgroundColor: Colors.white10,
         pageBody: _body(context));
   }
 
@@ -68,6 +68,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                       'assets/images/pick_image.png',
                       height: 100,
                       fit: BoxFit.cover,
+                      color: AppColors.grayColor(level: 3),
                     ),
                   );
                 }),
@@ -312,15 +313,17 @@ class AddRecipePage extends GetView<AddRecipeController> {
                                   controller.updateStep(index, value);
                                 },
                               ).build(context),
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 4),
+                              Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                elevation: 2,
                                 child: GestureDetector(
                                   onTap: () {
                                     controller.pickStepImage(context, index);
                                   },
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(6),
                                     child: controller.stepList.value[index]
                                                 .imageUrl !=
                                             null
@@ -333,7 +336,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                                             width: double.infinity,
                                             height: 100,
                                             color:
-                                                AppColors.grayColor(level: 0),
+                                                AppColors.whiteColor(),
                                             child: Center(
                                               child: AppTextBody3Widget()
                                                   .setText(
