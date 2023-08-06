@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 
 class RecipeIngredientListWidget extends StatelessWidget {
-  final List<String> ingredientList;
+  final List<RecipeIngredientModel> ingredientList;
 
   const RecipeIngredientListWidget({super.key, required this.ingredientList});
 
@@ -33,7 +34,7 @@ class RecipeIngredientListWidget extends StatelessWidget {
                         : AppColors.whiteColor(),
                     borderRadius: const BorderRadius.all(Radius.circular(8))),
                 child: AppTextBody2Widget()
-                    .setText(ingredientList[index])
+                    .setText(ingredientList[index].description)
                     .build(context),
               );
             },

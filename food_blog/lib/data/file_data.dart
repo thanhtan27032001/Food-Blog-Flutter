@@ -26,4 +26,8 @@ class FileData {
     }
     return result;
   }
+
+  Future<String> getImageUrl(String imageKey) async {
+    return await storageRef.child(imageKey).getDownloadURL();
+  }
 }

@@ -81,7 +81,21 @@ class RecipeData {
     return null;
   }
 
-  Future<RecipeModel?> getRecipeDetail() async {
-    return null;
+  Future<RecipeModel?> getRecipeDetail({required String recipeId}) async {
+    var recipe = RecipeModel();
+    await recipeDbRef.doc(recipeId).get().then((value) async {
+      final data = value.data() as Map<String, dynamic>;
+      print(data);
+      recipe = RecipeModel.fromJson(data);
+      recipe.imageUrl =
+          await FileData.instance().getImageUrl(recipe.imageUrl ?? '');
+      for (int index = 0; index < recipe.stepList!.length; index++) {
+        if (recipe.stepList![index].imageUrl != null) {
+          recipe.stepList![index].imageUrl = await FileData.instance()
+              .getImageUrl(recipe.stepList![index].imageUrl ?? '');
+        }
+      }
+    });
+    return recipe;
   }
 }

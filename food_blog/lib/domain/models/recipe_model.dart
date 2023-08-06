@@ -36,6 +36,9 @@ class RecipeModel {
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);
 
+  factory RecipeModel.fromJson(Map<String, dynamic> json) =>
+      _$RecipeModelFromJson(json);
+
   Map<String, dynamic> toAddRecipeParam() {
     final param = {
       ...toJson(),
