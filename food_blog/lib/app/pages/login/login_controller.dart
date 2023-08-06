@@ -7,6 +7,7 @@ import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/main/main_controller.dart';
+import 'package:food_blog/app/pages/register/register_controller.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';

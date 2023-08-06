@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/pages/main/main_controller.dart';
+import 'package:food_blog/app/pages/register/register_controller.dart';
 import 'package:get/get.dart';
 
 import 'app/pages/addRecipe/add_recipe_controller.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/login',
             page: () => LoginPage()),
+        GetPage(
+            name: '/register',
+            page: () => RegisterPage()),
         GetPage(
             name: '/main',
             page: () => MainPage()),

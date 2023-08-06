@@ -12,6 +12,7 @@ class LoginPage extends GetView<LoginController> {
     return AppMainPageWidget(
       statusBarColor: AppColors.whiteColor(),
       pageBackgroundColor: AppColors.whiteColor(),
+      resizeToAvoidBottomInset: false,
       pageBody: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -59,12 +60,17 @@ class LoginPage extends GetView<LoginController> {
           Container(
             width: double.infinity,
             margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: GestureDetector(
-              child: AppTextBody2Widget()
-                  .setText('Quên mật khẩu?')
-                  .setTextAlign(TextAlign.right)
-                  .build(context),
-              onTap: () => print('forgot password'),
+            child: Row(
+              children: [
+                const Spacer(),
+                GestureDetector(
+                  child: AppTextBody2Widget()
+                      .setText('Quên mật khẩu?')
+                      .setTextAlign(TextAlign.right)
+                      .build(context),
+                  onTap: () => print('forgot password'),
+                )
+              ],
             ),
           ),
           // login with username password button
@@ -114,28 +120,27 @@ class LoginPage extends GetView<LoginController> {
             }),
           ),
           // register suggestion
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 32),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: 'Bạn chưa có tài khoản? ',
-                            style: TextStyle(color: AppColors.blackColor())),
-                        TextSpan(
-                          text: 'Đăng ký',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor()),
-                        ),
-                      ],
+          const Spacer(),
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: GestureDetector(
+              onTap: () {
+                Get.to(() => RegisterPage());
+              },
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Bạn chưa có tài khoản? ',
+                        style: TextStyle(color: AppColors.blackColor())),
+                    TextSpan(
+                      text: 'Đăng ký',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor()),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
