@@ -74,8 +74,41 @@ class RecipeData {
     return result;
   }
 
-  Future<List<RecipeModel>?> getRecipeList() async {
-    return null;
+  Future<List<RecipeModel>> getNewestRecipeList() async {
+    final List<RecipeModel> result = [];
+    await recipeDbRef
+        .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
+        .limit(20)
+        .get()
+        .then(
+      (value) {
+        for (var doc in value.docs) {
+          var recipe = RecipeModel.fromJson(doc.data());
+          recipe.recipeId = doc.id;
+          result.add(recipe);
+        }
+      },
+    );
+    return result;
+  }
+
+  Future<List<RecipeModel>> getPopularRecipeList() async {
+    final List<RecipeModel> result = [];
+    await recipeDbRef
+        .orderBy(RecipeCollection.fieldNumOfLike, descending: true)
+        .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
+        .limit(20)
+        .get()
+        .then(
+          (value) {
+        for (var doc in value.docs) {
+          var recipe = RecipeModel.fromJson(doc.data());
+          recipe.recipeId = doc.id;
+          result.add(recipe);
+        }
+      },
+    );
+    return result;
   }
 
   Future<RecipeModel?> getRecipeDetail({required String recipeId}) async {

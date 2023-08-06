@@ -21,6 +21,8 @@ class RecipeModel {
   // late List<IngredientTagModel>? ingredientTagList; //TODO: add ingredient tag
   late String? status;
   late DateTime? updateDate;
+  late int? numOfLike;
+  late int? numOfComment;
 
   RecipeModel({
     this.recipeId,
@@ -35,7 +37,9 @@ class RecipeModel {
     this.stepList,
     this.ingredientList,
     this.status,
-    this.updateDate
+    this.updateDate,
+    this.numOfLike,
+    this.numOfComment,
   });
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);

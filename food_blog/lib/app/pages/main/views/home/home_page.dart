@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
-import 'package:food_blog/app/components/text/app_text_base_builder.dart';
-import 'package:food_blog/app/configs/app_colors.dart';
-import 'package:food_blog/app/pages/main/views/home/widget/home_suggestion_widget.dart';
-import 'package:get/get.dart';
+part of 'home_controller.dart';
 
-class HomeView extends GetWidget {
-  const HomeView({super.key});
+class HomePage extends GetWidget<HomeController> {
+  HomePage({super.key});
+
+  @override
+  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,28 +47,34 @@ class HomeView extends GetWidget {
                 ),
               ),
             ),
-            // receipt season suggest
-            HomeSuggestionWidget(
-              pageContext: context,
-              title: 'Các nguyên liệu đang trong mùa',
+            // // receipt season suggest
+            // HomeSuggestionWidget(
+            //   title: 'Các nguyên liệu đang trong mùa',
+            // ),
+            //
+            // // receipt following suggest
+            // HomeSuggestionWidget(
+            //   title: 'Các công thức từ người bạn đang theo dõi',
+            // ),
+            //
+            // receipt popular suggest
+            Obx(
+              () => controller.recipePopularList.value != null
+                  ? HomeSuggestionWidget(
+                      title: 'Các công thức phổ biến',
+                      recipeList: controller.recipePopularList.value!,
+                    )
+                  : AppTextBody1Widget().setText('Đang tải...').build(context),
             ),
 
-            // receipt season suggest
-            HomeSuggestionWidget(
-              pageContext: context,
-              title: 'Các công thức từ người bạn đang theo dõi',
-            ),
-
-            // receipt season suggest
-            HomeSuggestionWidget(
-              pageContext: context,
-              title: 'Các công thức phổ biến',
-            ),
-
-            // receipt season suggest
-            HomeSuggestionWidget(
-              pageContext: context,
-              title: 'Các công thức mới nhất',
+            // receipt newest suggest
+            Obx(
+              () => controller.recipeNewestList.value != null
+                  ? HomeSuggestionWidget(
+                      title: 'Các công thức mới nhất',
+                      recipeList: controller.recipeNewestList.value!,
+                    )
+                  : AppTextBody1Widget().setText('Đang tải...').build(context),
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 
@@ -39,7 +40,7 @@ class _RecipePreviewCardWidgetState extends State<RecipePreviewCardWidget> {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                 child: Image.network(
-                    'https://file.hstatic.net/200000303304/article/steak_10_b1b1397477ea4c8ca1f215989632a614_1024x1024.jpg',
+                    recipe.imageUrl ?? '',
                     fit: BoxFit.fill),
               ),
             ),
@@ -69,7 +70,9 @@ class _RecipePreviewCardWidgetState extends State<RecipePreviewCardWidget> {
                             const SizedBox(
                               width: 2,
                             ),
-                            const Text('12')
+                            AppTextBody3Widget()
+                                .setText(recipe.numOfLike.toString())
+                                .build(context)
                           ],
                         ),
                       ),
