@@ -129,7 +129,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
               inputType: const TextInputType.numberWithOptions(
                   decimal: false, signed: false),
               onChange: (value) {
-                controller.newRecipe.serveNum = int.parse(value);
+                controller.newRecipe.serveNum =
+                    value.trim() != '' ? int.parse(value) : null;
               },
             ),
 
@@ -153,7 +154,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
                     inputType: const TextInputType.numberWithOptions(
                         decimal: false, signed: false),
                     onChange: (value) {
-                      controller.newRecipe.prepareTime = int.parse(value);
+                      controller.newRecipe.prepareTime =
+                          value.trim() != '' ? int.parse(value) : null;
                     },
                   ),
                 ),
@@ -166,7 +168,8 @@ class AddRecipePage extends GetView<AddRecipeController> {
                     inputType: const TextInputType.numberWithOptions(
                         decimal: false, signed: false),
                     onChange: (value) {
-                      controller.newRecipe.cookTime = int.parse(value);
+                      controller.newRecipe.cookTime =
+                          value.trim() != '' ? int.parse(value) : null;
                     },
                   ),
                 ),

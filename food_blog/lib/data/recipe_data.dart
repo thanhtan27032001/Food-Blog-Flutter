@@ -24,7 +24,7 @@ class RecipeData {
     // upload images
     if (result == true) {
       // recipe image
-      bool uploadRecipeImgResult = await FileData.instance().uploadFile(
+      String? uploadRecipeImgResult = await FileData.instance().uploadFile(
         filePath: recipe.imageUrl,
         fileKey: recipe.getRecipeImageKey(),
       );
@@ -35,19 +35,16 @@ class RecipeData {
       updateRecipe(
         recipeId: recipe.recipeId,
         field: RecipeCollection.fieldImageUrl,
-        value:
-            uploadRecipeImgResult == true ? recipe.getRecipeImageKey() : null,
+        value: uploadRecipeImgResult,
       );
       // step images
       for (int index = 0; index < recipe.stepList!.length; index++) {
         if (recipe.stepList![index].imageUrl != null) {
-          bool uploadStepImgResult = await FileData.instance().uploadFile(
+          String? uploadStepImgResult = await FileData.instance().uploadFile(
             filePath: recipe.stepList![index].imageUrl,
             fileKey: recipe.getStepImageKey(index),
           );
-          recipe.stepList![index].imageUrl = (uploadStepImgResult == true
-              ? recipe.getStepImageKey(index)
-              : null);
+          recipe.stepList![index].imageUrl = uploadStepImgResult;
         }
       }
       // recipeDbRef.doc(recipe.recipeId).update({
@@ -87,14 +84,14 @@ class RecipeData {
       final data = value.data() as Map<String, dynamic>;
       print(data);
       recipe = RecipeModel.fromJson(data);
-      recipe.imageUrl =
-          await FileData.instance().getImageUrl(recipe.imageUrl ?? '');
-      for (int index = 0; index < recipe.stepList!.length; index++) {
-        if (recipe.stepList![index].imageUrl != null) {
-          recipe.stepList![index].imageUrl = await FileData.instance()
-              .getImageUrl(recipe.stepList![index].imageUrl ?? '');
-        }
-      }
+      // recipe.imageUrl =
+      //     await FileData.instance().getImageUrl(recipe.imageUrl ?? '');
+      // for (int index = 0; index < recipe.stepList!.length; index++) {
+      //   if (recipe.stepList![index].imageUrl != null) {
+      //     recipe.stepList![index].imageUrl = await FileData.instance()
+      //         .getImageUrl(recipe.stepList![index].imageUrl ?? '');
+      //   }
+      // }
     });
     return recipe;
   }

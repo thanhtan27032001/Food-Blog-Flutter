@@ -12,19 +12,20 @@ class FileData {
     return _instance;
   }
 
-  Future<bool> uploadFile({String? filePath, String? fileKey}) async {
-    bool result = false;
+  Future<String?> uploadFile({String? filePath, String? fileKey}) async {
+    // bool result = false;
     if (filePath != null && fileKey != null) {
       try {
         await storageRef.child(fileKey).putFile(File(filePath));
-        result = true;
+        // result = true;
       }
       catch (e) {
         e.printError();
-        result = false;
+        // result = false;
       }
+      return storageRef.child(fileKey).getDownloadURL();
     }
-    return result;
+    return null;
   }
 
   Future<String> getImageUrl(String imageKey) async {

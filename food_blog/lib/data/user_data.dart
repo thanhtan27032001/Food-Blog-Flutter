@@ -35,4 +35,8 @@ class UserData {
       print('Email tồn tại');
     }
   }
+
+  Future<UserModel?> getUserById(String userId) async {
+    // final data = userDbRef.
+  }
 }

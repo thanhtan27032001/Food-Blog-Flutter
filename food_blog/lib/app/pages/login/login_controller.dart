@@ -43,10 +43,12 @@ class LoginController extends GetxController {
 
   Future<void> signInWithGoogle(BuildContext context) async {
     UserCredential userCredential = await executeSignInWithGoogle();
+    print('avatar: ${userCredential.user?.photoURL}');
     UserData.instance().addUser(
       UserModel(
         email: userCredential.user?.email ?? '',
         nickname: userCredential.user?.displayName ?? 'No name',
+        avatarUrl: userCredential.user?.photoURL
       ),
     );
     Get.off(MainPage());
