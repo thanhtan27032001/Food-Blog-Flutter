@@ -205,18 +205,7 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
             ),
           );
         }
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(
-              color: AppColors.secondaryColor(level: 2),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            AppTextBody1Widget().setText('Đang tải').build(context),
-          ],
-        );
+        return const AppLoadingWidget().build(context);
       }),
     );
   }

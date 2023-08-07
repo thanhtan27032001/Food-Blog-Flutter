@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
+import 'package:food_blog/app/components/loading/app_loading_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';

@@ -10,7 +10,7 @@ class HomePage extends GetWidget<HomeController> {
   Widget build(BuildContext context) {
     return AppMainPageWidget(
       statusBarColor: AppColors.primaryColor(level: 2),
-      pageBackgroundColor: AppColors.whiteColor(),
+      pageBackgroundColor: Colors.white10,
       pageBody: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(

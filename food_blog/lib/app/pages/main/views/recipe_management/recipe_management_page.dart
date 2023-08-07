@@ -10,7 +10,7 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
   Widget build(BuildContext context) {
     return AppMainPageWidget(
       statusBarColor: AppColors.primaryColor(level: 2),
-      pageBackgroundColor: AppColors.whiteColor(),
+      pageBackgroundColor: Colors.white10,
       appbar: AppBarWidget(
         title: 'Quản lý công thức',
         actions: [
@@ -27,12 +27,60 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
   }
 
   Widget _body(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: [
-
-        ],
-      ),
+    return Obx(
+      () {
+        if (controller.myRecipeList.value != null) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(6),
+              child: Wrap(
+                children: List.generate(
+                  controller.myRecipeList.value!.length,
+                  (index) => FractionallySizedBox(
+                    widthFactor: 0.5,
+                    child: LayoutBuilder(
+                      builder: (context, constraints) => Padding(
+                        padding: const EdgeInsets.all(2),
+                        child: MyRecipePreviewCardWidget(
+                          controller.myRecipeList.value![index],
+                          optionList: (BuildContext context) => <PopupMenuEntry>[
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.editRecipe(index);
+                              },
+                              child: AppTextBody1Widget()
+                                  .setText('Chỉnh sửa')
+                                  .build(context),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.editRecipe(index);
+                              },
+                              child: AppTextBody1Widget()
+                                  .setText('Đổi trạng thái')
+                                  .build(context),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                controller.editRecipe(index);
+                              },
+                              child: AppTextBody1Widget()
+                                  .setText('Lưu trữ')
+                                  .build(context),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        } else {
+          return const AppLoadingWidget().build(context);
+        }
+      },
     );
   }
 }
