@@ -60,7 +60,7 @@ class RegisterPage extends GetView<RegisterController> {
                 margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: AppCornerCardTextFieldWidget(
                   hintText: 'Email',
-                  onChange: (value) => controller.username = value,
+                  onChange: (value) => controller.email = value,
                   leadingIcon: Icon(
                     Icons.account_circle_outlined,
                     color: AppColors.grayColor(level: 2),
@@ -137,7 +137,7 @@ class RegisterPage extends GetView<RegisterController> {
               text: "Đăng ký",
               textColor: AppColors.whiteColor(),
               buttonColor: AppColors.primaryColor(),
-              onPressed: () {},
+              onPressed: () {controller.showDialogRegisterAccount();},
             ),
           ),
         ),

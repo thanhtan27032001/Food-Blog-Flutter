@@ -8,10 +8,10 @@ import 'package:food_blog/app/components/textField/app_corner_card_text_field_wi
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/main/main_controller.dart';
 import 'package:food_blog/app/pages/register/register_controller.dart';
+import 'package:food_blog/data/auth_data.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 part 'login_page.dart';
 
@@ -20,38 +20,28 @@ part 'widget/login_logo_widget.dart';
 part 'widget/login_subtitle_widget.dart';
 
 class LoginController extends GetxController {
-  String username = "";
+  String email = "";
   String password = "";
   RxBool isObscurePassword = true.obs;
 
-  Future<UserCredential> executeSignInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+  Future<void> signInWithGoogle(BuildContext context) async {
+    UserCredential userCredential = await AuthData.instance().signInWithGoogle();
+    if (userCredential.user != null) {
+      UserData.instance().addUser(
+        UserModel(
+            email: userCredential.user?.email ?? '',
+            nickname: userCredential.user?.displayName ?? 'No name',
+            avatarUrl: userCredential.user?.photoURL
+        ),
+      );
+      Get.off(MainPage());
+    }
   }
 
-  Future<void> signInWithGoogle(BuildContext context) async {
-    UserCredential userCredential = await executeSignInWithGoogle();
-    print('avatar: ${userCredential.user?.photoURL}');
-    UserData.instance().addUser(
-      UserModel(
-        email: userCredential.user?.email ?? '',
-        nickname: userCredential.user?.displayName ?? 'No name',
-        avatarUrl: userCredential.user?.photoURL
-      ),
-    );
-    Get.off(MainPage());
+  Future<void> loginWithAccount() async {
+    UserCredential? userCredential = await AuthData.instance().loginWithAccount(email, password);
+    if (userCredential != null) {
+      Get.off(MainPage());
+    }
   }
 }

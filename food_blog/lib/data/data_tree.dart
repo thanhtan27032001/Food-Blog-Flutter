@@ -26,3 +26,8 @@ class RecipeCollection {
 
   static const String fieldAuthor = 'author';
 }
+
+class AuthCollection {
+  static const String fieldUsername = 'username';
+  static const String fieldPassword = 'password';
+}
