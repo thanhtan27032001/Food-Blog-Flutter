@@ -61,13 +61,11 @@ class RecipeModel {
   }
 
   String getRecipeImageKey() {
-    //TODO: '<userId>/recipeImages/$recipeId'
-    return '2lyT6s0vzFDrDlwzFPil/recipeImages/$recipeId';
+    return '${UserData.instance().getUserLogin()!.id}/recipeImages/$recipeId';
   }
 
   String getStepImageKey(int index) {
-    //TODO: '<userId>/stepImages/$recipeId/<stepIndex>'
-    return '2lyT6s0vzFDrDlwzFPil/stepImages/$recipeId/$index';
+    return '${UserData.instance().getUserLogin()!.id}/stepImages/$recipeId/$index';
   }
 
   bool canBePublic() {

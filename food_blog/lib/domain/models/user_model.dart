@@ -2,6 +2,7 @@ part of 'base_model.dart';
 
 @JsonSerializable()
 class UserModel {
+  late String? id;
   late String email;
   late String nickname;
   late String? city;
@@ -9,6 +10,7 @@ class UserModel {
   late String? avatarUrl;
 
   UserModel({
+    this.id,
     required this.email,
     required this.nickname,
     this.city,

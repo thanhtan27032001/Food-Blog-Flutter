@@ -27,7 +27,7 @@ class LoginController extends GetxController {
   Future<void> signInWithGoogle(BuildContext context) async {
     UserCredential userCredential = await AuthData.instance().signInWithGoogle();
     if (userCredential.user != null) {
-      UserData.instance().addUser(
+      await UserData.instance().addUser(
         UserModel(
             email: userCredential.user?.email ?? '',
             nickname: userCredential.user?.displayName ?? 'No name',
@@ -35,6 +35,9 @@ class LoginController extends GetxController {
         ),
       );
       Get.off(MainPage());
+    }
+    else {
+      print('đang nhập google thất bại');
     }
   }
 

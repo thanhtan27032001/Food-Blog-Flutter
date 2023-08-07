@@ -19,8 +19,8 @@ class AuthData {
           email: email,
           password: password,
         );
+        result = true;
       }
-      result = true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');

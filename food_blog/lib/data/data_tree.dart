@@ -1,5 +1,6 @@
 class UserCollection {
   static const String collectionName = 'users';
+  static const String fieldId = 'id';
   static const String fieldEmail = 'email';
   static const String fieldNickname = 'nickname';
   static const String fieldCity = 'city';

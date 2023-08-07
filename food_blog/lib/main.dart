@@ -3,6 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/pages/main/main_controller.dart';
 import 'package:food_blog/app/pages/register/register_controller.dart';
+import 'package:food_blog/data/user_data.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
 
 import 'app/pages/addRecipe/add_recipe_controller.dart';
@@ -14,12 +16,17 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      runApp(const MyApp(initRoute: '/login'));
-    } else {
-      runApp(const MyApp(initRoute: '/main'));
+  FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+    if (user != null) {
+      UserModel? userLogin =
+          await UserData.instance().getUserByEmail(email: user.email ?? '');
+      if (userLogin != null) {
+        UserData.instance().setUserLogin(userLogin);
+        runApp(const MyApp(initRoute: '/main'));
+      }
+      // runApp(const MyApp(initRoute: '/main'));
     }
+    runApp(const MyApp(initRoute: '/login'));
   });
 }
 

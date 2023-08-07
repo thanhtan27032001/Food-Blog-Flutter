@@ -4,7 +4,8 @@ import 'package:food_blog/domain/models/base_model.dart';
 
 class UserData {
   static final UserData _instance = UserData();
-  static final userDbRef = FirebaseFirestore.instance.collection(UserCollection.collectionName);
+  final userDbRef = FirebaseFirestore.instance.collection(UserCollection.collectionName);
+  late UserModel userLogin;
 
   static UserData instance() {
     return _instance;
@@ -39,5 +40,23 @@ class UserData {
   Future<UserModel?> getUserById({required String userId}) async {
     final data = await userDbRef.doc(userId).get();
     return data.data() != null ? UserModel.fromJson(data.data()!) : null;
+  }
+
+  Future<UserModel?> getUserByEmail({required String email}) async {
+    final data = await userDbRef
+        .where(UserCollection.fieldEmail, isEqualTo: email)
+        .get();
+    return data.docs.isNotEmpty
+        ? UserModel.fromJson(
+            {...data.docs[0].data(), UserCollection.fieldId: data.docs[0].id})
+        : null;
+  }
+
+  void setUserLogin(UserModel userModel) {
+    userLogin = userModel;
+  }
+
+  UserModel? getUserLogin() {
+    return userLogin;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:food_blog/data/data_tree.dart';
+import 'package:food_blog/data/user_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'base_model.g.dart';
