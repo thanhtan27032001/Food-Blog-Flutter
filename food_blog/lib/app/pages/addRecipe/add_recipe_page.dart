@@ -12,32 +12,44 @@ class AddRecipePage extends GetView<AddRecipeController> {
 
   @override
   Widget build(BuildContext context) {
-    return AppMainPageWidget(
-        statusBarColor: AppColors.primaryColor(level: 2),
-        appbar: AppBarWidget(
-          title: 'Công thức mới',
-          titleColor: AppColors.whiteColor(),
-          isCenterTitle: true,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new_outlined),
-            color: AppColors.whiteColor(),
-            onPressed: () {
-              Get.back();
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.save_outlined),
-              color: AppColors.whiteColor(),
-              onPressed: () {
-                controller.showDialogAddRecipe(context);
-              },
-            )
-          ],
-          backgroundColor: AppColors.primaryColor(level: 2),
-        ).build(context),
-        pageBackgroundColor: Colors.white10,
-        pageBody: _body(context));
+    return Stack(
+      children: [
+        AppMainPageWidget(
+            statusBarColor: AppColors.primaryColor(level: 2),
+            appbar: AppBarWidget(
+              title: 'Công thức mới',
+              titleColor: AppColors.whiteColor(),
+              isCenterTitle: true,
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_outlined),
+                color: AppColors.whiteColor(),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.save_outlined),
+                  color: AppColors.whiteColor(),
+                  onPressed: () {
+                    controller.showDialogAddRecipe(context);
+                  },
+                )
+              ],
+              backgroundColor: AppColors.primaryColor(level: 2),
+            ).build(context),
+            pageBackgroundColor: Colors.white10,
+            pageBody: _body(context)),
+        Obx(() {
+          if (controller.isSearchingIngredient.value == true) {
+            return const SearchIngredientTagView();
+          }
+          else {
+            return const SizedBox();
+          }
+        })
+      ],
+    );
   }
 
   Widget _body(BuildContext context) {
@@ -186,15 +198,13 @@ class AddRecipePage extends GetView<AddRecipeController> {
                     .build(context),
                 const Spacer(),
                 InkWell(
-                  onTap: () {controller.addIngredientTag();},
+                  onTap: () {controller.startSearchIngredientTag();},
                   child: const Icon(Icons.add_circle_outline_rounded),
                 )
               ],
             ),
             Obx(() => Wrap(
               direction: Axis.horizontal,
-              spacing: 4,
-              runSpacing: 4,
               children: List.generate(
                 controller.ingredientTagList.value.length,
                     (index) {
@@ -221,6 +231,15 @@ class AddRecipePage extends GetView<AddRecipeController> {
                           AppTextBody2Widget()
                               .setText(controller.ingredientTagList.value[index].name)
                               .build(context),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.removeIngredientTag(index);
+                            },
+                            child: const Icon(Icons.clear_rounded, size: 16,),
+                          )
                         ],
                       ),
                     ),

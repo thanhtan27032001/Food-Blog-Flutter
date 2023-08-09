@@ -15,13 +15,16 @@ class IngredientData {
     List<IngredientTagModel> result = [];
     await _ingredientDbRef.get().then((value) {
       for (var doc in value.docs) {
+        print(doc.id);
         if (doc.id.toString().contains(keyword.toLowerCase()) ||
             doc
                 .data()[IngredientCollection.fieldName]
                 .toString()
                 .toLowerCase()
                 .contains(keyword.toLowerCase())) {
-          result.add(IngredientTagModel.fromJson(doc.data()));
+          final tag = IngredientTagModel.fromJson(doc.data());
+          tag.tag = doc.id;
+          result.add(tag);
         }
       }
     });

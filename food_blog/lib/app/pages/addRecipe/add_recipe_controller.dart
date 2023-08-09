@@ -3,6 +3,7 @@ import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/dialog/app_dialog_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
+import 'package:food_blog/data/ingredient_data.dart';
 import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,8 @@ import 'package:food_blog/app/configs/app_colors.dart';
 
 part 'add_recipe_page.dart';
 
+part 'view/search_ingredient_tag_view.dart';
+
 class AddRecipeController extends GetxController {
   static String resultAddedRecipe = 'resultAddedRecipe';
 
@@ -21,7 +24,13 @@ class AddRecipeController extends GetxController {
   late XFile? imageFile;
   final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
   final Rx<List<RecipeStepModel>> stepList = Rx([]);
+
   final Rx<List<IngredientTagModel>> ingredientTagList = Rx([]);
+  final Rx<List<IngredientTagModel>> ingredientTagStoredList = Rx([]);
+  final Rx<List<IngredientTagModel>> ingredientTagFilteredList = Rx([]);
+  RxBool isSearchingIngredient = false.obs;
+  Rx<TextEditingController> searchController = Rx(TextEditingController());
+
   ScrollController scrollController = ScrollController();
 
   RecipeModel newRecipe = RecipeModel();
@@ -150,28 +159,29 @@ class AddRecipeController extends GetxController {
     String? error = validate();
     if (error == null) {
       AppDialogWidget(
-          title: 'Xác nhận tạo công thức',
-          content: 'Bạn có chắc chắn muốn tạo và công khai công thức mới của mình? Mọi người sẽ có thể xem được công thức mà bạn đăng.',
-          appDialogType: AppDialogType.confirm,
-          positiveText: 'Xác nhận',
-          onPositive: () {
-            print('Tạo công thức');
-            executeAddRecipe(context);
-          },
-          negativeText: 'Hủy'
-      ).buildDialog(context).show(context);
-    }
-    else {
+              title: 'Xác nhận tạo công thức',
+              content:
+                  'Bạn có chắc chắn muốn tạo và công khai công thức mới của mình? Mọi người sẽ có thể xem được công thức mà bạn đăng.',
+              appDialogType: AppDialogType.confirm,
+              positiveText: 'Xác nhận',
+              onPositive: () {
+                print('Tạo công thức');
+                executeAddRecipe(context);
+              },
+              negativeText: 'Hủy')
+          .buildDialog(context)
+          .show(context);
+    } else {
       AppDialogWidget(
-          title: 'Công thức chưa đủ thông tin',
-          content: 'Bạn không thể công khai công thức ngay bây giờ. $error',
-          appDialogType: AppDialogType.error,
-          positiveText: 'Xác nhận',
-          negativeText: 'Lưu nháp',
-          onNegative: () {
-            print('Lưu nháp');
-            Get.back(result: resultAddedRecipe);
-          },
+        title: 'Công thức chưa đủ thông tin',
+        content: 'Bạn không thể công khai công thức ngay bây giờ. $error',
+        appDialogType: AppDialogType.error,
+        positiveText: 'Xác nhận',
+        negativeText: 'Lưu nháp',
+        onNegative: () {
+          print('Lưu nháp');
+          Get.back(result: resultAddedRecipe);
+        },
       ).buildDialog(context).show(context);
     }
   }
@@ -189,8 +199,40 @@ class AddRecipeController extends GetxController {
     }
   }
 
-  void addIngredientTag() {
-    ingredientTagList.value.add(IngredientTagModel(name: 'Dưa leo', imageUrl: ''));
+  void addIngredientTag(int index) {
+    ingredientTagList.value.add(ingredientTagFilteredList.value[index]);
     ingredientTagList.refresh();
+    cancelSearchIngredientTag();
+  }
+
+  void removeIngredientTag(int index) {
+    ingredientTagList.value.removeAt(index);
+    ingredientTagList.refresh();
+  }
+
+  void startSearchIngredientTag() async {
+    isSearchingIngredient.value = true;
+    if (ingredientTagStoredList.value.isEmpty) {
+      ingredientTagStoredList.value.addAll(
+          await IngredientData.instance().searchTagByKeyword(keyword: ''));
+    }
+  }
+
+  void cancelSearchIngredientTag() {
+    isSearchingIngredient.value = false;
+    searchController.value.clear();
+    ingredientTagFilteredList.value.clear();
+    ingredientTagFilteredList.refresh();
+  }
+
+  void searchIngredientTag() {
+    ingredientTagFilteredList.value.clear();
+    final keyword = searchController.value.text.toLowerCase();
+    ingredientTagFilteredList.value.addAll(ingredientTagStoredList.value.where(
+        (element) =>
+            (element.tag!.toLowerCase().contains(keyword) ||
+                element.name!.toLowerCase().contains(keyword)) &&
+            (ingredientTagList.value.contains(element) == false)));
+    ingredientTagFilteredList.refresh();
   }
 }
