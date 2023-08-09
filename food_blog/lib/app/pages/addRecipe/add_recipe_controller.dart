@@ -188,4 +188,9 @@ class AddRecipeController extends GetxController {
       Get.back(result: resultAddedRecipe);
     }
   }
+
+  void addIngredientTag() {
+    ingredientTagList.value.add(IngredientTagModel(name: 'Dưa leo', imageUrl: ''));
+    ingredientTagList.refresh();
+  }
 }

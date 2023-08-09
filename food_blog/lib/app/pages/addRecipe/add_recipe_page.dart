@@ -178,42 +178,56 @@ class AddRecipePage extends GetView<AddRecipeController> {
 
             // ingredient tags
             const SizedBox(height: 32),
-            AppTextBody2Widget()
-                .setText('Tag nguyên liệu')
-                .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
-                .build(context),
-            const SizedBox(height: 16),
-            Wrap(
+            Row(
+              children: [
+                AppTextBody2Widget()
+                    .setText('Tag nguyên liệu')
+                    .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                    .build(context),
+                const Spacer(),
+                InkWell(
+                  onTap: () {controller.addIngredientTag();},
+                  child: const Icon(Icons.add_circle_outline_rounded),
+                )
+              ],
+            ),
+            Obx(() => Wrap(
               direction: Axis.horizontal,
               spacing: 4,
               runSpacing: 4,
               children: List.generate(
-                10,
-                (index) {
+                controller.ingredientTagList.value.length,
+                    (index) {
                   return Card(
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(16))
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(16))),
                     elevation: 2,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
                         color: AppColors.whiteColor(),
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(16)),
                       ),
                       child: Wrap(
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          const AppAvatarWidget(avtUrl: 'avtUrl', size: 24).build(context),
-                          const SizedBox(width: 8,),
-                          AppTextBody2Widget().setText('Cà chua').build(context),
+                          AppAvatarWidget(avtUrl: controller.ingredientTagList.value[index].imageUrl, size: 24)
+                              .build(context),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          AppTextBody2Widget()
+                              .setText(controller.ingredientTagList.value[index].name)
+                              .build(context),
                         ],
                       ),
                     ),
                   );
                 },
               ),
-            ),
+            )),
 
             // ingredients
             Obx(

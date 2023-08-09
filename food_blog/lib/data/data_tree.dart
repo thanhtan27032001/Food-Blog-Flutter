@@ -32,3 +32,9 @@ class AuthCollection {
   static const String fieldUsername = 'username';
   static const String fieldPassword = 'password';
 }
+
+class IngredientCollection {
+  static const String collectionName = 'ingredientTags';
+  static const String fieldName = 'name';
+  static const String fieldImageUrl = 'imageUrl';
+}
