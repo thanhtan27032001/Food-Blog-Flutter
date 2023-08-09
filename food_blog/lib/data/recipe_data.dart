@@ -82,8 +82,7 @@ class RecipeData {
             recipe.author = await UserData.instance()
                 .getUserById(userId: doc.data()[RecipeCollection.fieldUserId]);
             result.add(recipe);
-          }
-          else {
+          } else {
             result.add(recipe);
           }
         }
@@ -109,8 +108,7 @@ class RecipeData {
             recipe.author = await UserData.instance()
                 .getUserById(userId: doc.data()[RecipeCollection.fieldUserId]);
             result.add(recipe);
-          }
-          else {
+          } else {
             result.add(recipe);
           }
         }
@@ -123,10 +121,11 @@ class RecipeData {
     final List<RecipeModel> result = [];
     await recipeDbRef
         .orderBy(RecipeCollection.fieldUserId)
-        .where(RecipeCollection.fieldUserId, isEqualTo: UserData.instance().getUserLogin()!.id)
+        .where(RecipeCollection.fieldUserId,
+            isEqualTo: UserData.instance().getUserLogin()!.id)
         .get()
         .then(
-          (value) async {
+      (value) async {
         for (var doc in value.docs) {
           var recipe = RecipeModel.fromJson(doc.data());
           recipe.recipeId = doc.id;
@@ -147,5 +146,27 @@ class RecipeData {
           .getUserById(userId: data[RecipeCollection.fieldUserId]);
     });
     return recipe;
+  }
+
+  Future<List<RecipeModel>> searchRecipeByTitle(String title) async {
+    print('start search');
+    final List<RecipeModel> result = [];
+    await recipeDbRef.orderBy(RecipeCollection.fieldTitle).get().then((value) async {
+      for (var doc in value.docs) {
+        if (doc.data()[RecipeCollection.fieldTitle].toString().toLowerCase().contains(title.toLowerCase())) {
+          var recipe = RecipeModel.fromJson(doc.data());
+          recipe.recipeId = doc.id;
+          if (doc.data()[RecipeCollection.fieldUserId] != null) {
+            print(doc.data()[UserCollection.fieldId]);
+            recipe.author = await UserData.instance()
+                .getUserById(userId: doc.data()[RecipeCollection.fieldUserId]);
+            result.add(recipe);
+          } else {
+            result.add(recipe);
+          }
+        }
+      }
+    });
+    return result;
   }
 }

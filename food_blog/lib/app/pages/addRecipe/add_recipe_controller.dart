@@ -179,6 +179,8 @@ class AddRecipeController extends GetxController {
     newRecipe.stepList = stepList.value;
     newRecipe.imageUrl = imageUrl.value;
     newRecipe.updateDate = DateTime.now();
+    newRecipe.numOfLike = 0;
+    newRecipe.numOfComment = 0;
     bool result = await RecipeData.instance().addRecipe(newRecipe);
     if (result == true) {
       Get.back(result: resultAddedRecipe);

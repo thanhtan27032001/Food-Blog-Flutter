@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
+import 'package:get/get.dart';
 
-class AppCornerCardTextFieldWidget extends StatelessWidget {
+class AppCornerCardTextFieldWidget extends GetView {
   late final ValueChanged<String> _onChange;
   late final bool? _autofocus;
   late final FocusNode? _focusNode;
@@ -9,7 +10,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final bool? _obscureText;
   late final ValueChanged<String>? _onFieldSubmitted;
   late final Icon? _leadingIcon;
-  late final Icon? _suffixIcon;
+  late final Widget? _suffixIcon;
   late final VoidCallback? _suffixIconOnPress;
   late final TextInputType? _inputType;
   late final double? _elevation;
@@ -19,6 +20,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
   late final int? _maxLine;
   late final String? _text;
   late final String? Function(String?)? _validator;
+  late final TextEditingController? _controller;
 
   AppCornerCardTextFieldWidget({
     super.key,
@@ -29,7 +31,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     bool? obscureText,
     ValueChanged<String>? onFieldSubmitted,
     Icon? leadingIcon,
-    Icon? suffixIcon,
+    Widget? suffixIcon,
     VoidCallback? suffixIconOnPress,
     TextInputType? inputType,
     double? elevation,
@@ -39,6 +41,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     int? maxLine,
     String? text,
     String? Function(String?)? validator,
+    TextEditingController? controller,
   }) {
     _onChange = onChange;
     _autofocus = autofocus;
@@ -57,6 +60,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
     _maxLine = maxLine;
     _text = text;
     _validator = validator;
+    _controller = controller;
   }
 
   @override
@@ -78,6 +82,7 @@ class AppCornerCardTextFieldWidget extends StatelessWidget {
                 : const SizedBox(width: 8),
             Expanded(
               child: TextFormField(
+                controller: _controller,
                 initialValue: _text,
                 onChanged: _onChange,
                 autofocus: (_autofocus != null) ? _autofocus! : false,

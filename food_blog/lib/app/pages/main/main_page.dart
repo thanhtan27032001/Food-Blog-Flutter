@@ -14,6 +14,7 @@ class MainPage extends GetView<MainController> {
       statusBarColor: AppColors.primaryColor(level: 2),
       pageBackgroundColor: AppColors.whiteColor(),
       pageBody: controller._page[controller._currentIndex.value],
+      resizeToAvoidBottomInset: false,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: controller._currentIndex.value,
         items: const [
