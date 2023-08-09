@@ -43,7 +43,8 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
                         padding: const EdgeInsets.all(2),
                         child: MyRecipePreviewCardWidget(
                           controller.myRecipeList.value![index],
-                          optionList: (BuildContext context) => <PopupMenuEntry>[
+                          optionList: (BuildContext context) =>
+                              <PopupMenuEntry>[
                             PopupMenuItem(
                               onTap: () {
                                 controller.editRecipe(index);
@@ -57,7 +58,11 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
                                 controller.editRecipe(index);
                               },
                               child: AppTextBody1Widget()
-                                  .setText('Đổi trạng thái')
+                                  .setText(controller.myRecipeList.value?[index]
+                                              .status ==
+                                          RecipeStatus.public.value
+                                      ? 'Lưu nháp'
+                                      : 'Công khai')
                                   .build(context),
                             ),
                             PopupMenuItem(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/dialog/app_dialog_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
@@ -20,6 +21,7 @@ class AddRecipeController extends GetxController {
   late XFile? imageFile;
   final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
   final Rx<List<RecipeStepModel>> stepList = Rx([]);
+  final Rx<List<IngredientTagModel>> ingredientTagList = Rx([]);
   ScrollController scrollController = ScrollController();
 
   RecipeModel newRecipe = RecipeModel();

@@ -1,8 +1,12 @@
 part of 'base_model.dart';
 
 enum RecipeStatus {
-  draft,
-  public;
+  draft('draft'),
+  public('public');
+
+  const RecipeStatus(this.value);
+
+  final String value;
 }
 
 @JsonSerializable()
@@ -18,7 +22,7 @@ class RecipeModel {
   late String? videoUrl;
   late List<RecipeStepModel>? stepList; // require
   late List<RecipeIngredientModel>? ingredientList; // require
-  // late List<IngredientTagModel>? ingredientTagList; //TODO: add ingredient tag
+  late List<IngredientTagModel>? ingredientTagList;
   late String? status;
   late DateTime? updateDate;
   late int? numOfLike;
@@ -50,7 +54,7 @@ class RecipeModel {
   Map<String, dynamic> toAddRecipeParam() {
     final param = {
       ...toJson(),
-      RecipeCollection.fieldUserId: '2lyT6s0vzFDrDlwzFPil'
+      RecipeCollection.fieldUserId: UserData.instance().getUserLogin()!.id
     };
     param[RecipeCollection.fieldIngredientList] =
         ingredientList?.map((e) => e.toJson()).toList();

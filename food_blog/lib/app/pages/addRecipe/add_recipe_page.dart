@@ -176,6 +176,45 @@ class AddRecipePage extends GetView<AddRecipeController> {
               ],
             ),
 
+            // ingredient tags
+            const SizedBox(height: 32),
+            AppTextBody2Widget()
+                .setText('Tag nguyên liệu')
+                .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                .build(context),
+            const SizedBox(height: 16),
+            Wrap(
+              direction: Axis.horizontal,
+              spacing: 4,
+              runSpacing: 4,
+              children: List.generate(
+                10,
+                (index) {
+                  return Card(
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(16))
+                    ),
+                    elevation: 2,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: AppColors.whiteColor(),
+                        borderRadius: const BorderRadius.all(Radius.circular(16)),
+                      ),
+                      child: Wrap(
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          const AppAvatarWidget(avtUrl: 'avtUrl', size: 24).build(context),
+                          const SizedBox(width: 8,),
+                          AppTextBody2Widget().setText('Cà chua').build(context),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
             // ingredients
             Obx(
               () => Column(
@@ -338,8 +377,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                                         : Container(
                                             width: double.infinity,
                                             height: 100,
-                                            color:
-                                                AppColors.whiteColor(),
+                                            color: AppColors.whiteColor(),
                                             child: Center(
                                               child: AppTextBody3Widget()
                                                   .setText(

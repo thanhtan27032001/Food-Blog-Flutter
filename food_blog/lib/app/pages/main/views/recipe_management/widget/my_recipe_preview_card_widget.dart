@@ -30,7 +30,7 @@ class MyRecipePreviewCardWidget extends GetView {
                         topLeft: Radius.circular(8),
                         topRight: Radius.circular(8)),
                     child:
-                    Image.network(recipe.imageUrl ?? '', fit: BoxFit.cover),
+                        Image.network(recipe.imageUrl ?? '', fit: BoxFit.cover),
                   ),
                 ),
                 Padding(
@@ -42,13 +42,20 @@ class MyRecipePreviewCardWidget extends GetView {
                       AppTextBody1Widget()
                           .setText(recipe.title)
                           .setTextStyle(
-                          const TextStyle(fontWeight: FontWeight.bold))
+                              const TextStyle(fontWeight: FontWeight.bold))
                           .build(context),
                       const SizedBox(
                         height: 4,
                       ),
                       Row(
                         children: [
+                          Icon(
+                            recipe.status == RecipeStatus.public.value
+                                ? Icons.public_rounded
+                                : Icons.lock_outline_rounded,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 2,),
                           Expanded(
                             flex: 1,
                             child: AppTextBody3Widget()
@@ -59,7 +66,7 @@ class MyRecipePreviewCardWidget extends GetView {
                           Container(
                             decoration: BoxDecoration(
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(16)),
+                                  const BorderRadius.all(Radius.circular(16)),
                               color: AppColors.grayColor(level: 0),
                             ),
                             child: Padding(
@@ -98,8 +105,7 @@ class MyRecipePreviewCardWidget extends GetView {
                     color: Colors.white,
                   ),
                   itemBuilder: optionList,
-                )
-            ),
+                )),
           ],
         ),
       ),
