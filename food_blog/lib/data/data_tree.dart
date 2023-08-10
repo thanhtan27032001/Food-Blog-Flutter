@@ -38,3 +38,9 @@ class IngredientCollection {
   static const String fieldName = 'name';
   static const String fieldImageUrl = 'imageUrl';
 }
+
+class RecipeIngredientTagCollection {
+  static const String collectionName = 'recipeIngredientTags';
+  static const String fieldTag = 'tag';
+  static const String fieldRecipeId = 'recipeId';
+}

@@ -22,6 +22,7 @@ class RecipeModel {
   late String? videoUrl;
   late List<RecipeStepModel>? stepList; // require
   late List<RecipeIngredientModel>? ingredientList; // require
+  @JsonKey(includeToJson: false)
   late List<IngredientTagModel>? ingredientTagList;
   late String? status;
   late DateTime? updateDate;

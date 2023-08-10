@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
 import 'package:food_blog/data/file_data.dart';
+import 'package:food_blog/data/recipe_ingredient_data.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 
@@ -22,6 +23,11 @@ class RecipeData {
       result = true;
       recipe.recipeId = value.id;
     });
+    // save tag
+    for (var tag in recipe.ingredientTagList!) {
+      RecipeIngredientTagData.instance()
+          .addRecipeIngredientTag(tag: tag.tag, recipeId: recipe.recipeId);
+    }
     // upload images
     if (result == true) {
       // recipe image
@@ -151,9 +157,16 @@ class RecipeData {
   Future<List<RecipeModel>> searchRecipeByTitle(String title) async {
     print('start search');
     final List<RecipeModel> result = [];
-    await recipeDbRef.orderBy(RecipeCollection.fieldTitle).get().then((value) async {
+    await recipeDbRef
+        .orderBy(RecipeCollection.fieldTitle)
+        .get()
+        .then((value) async {
       for (var doc in value.docs) {
-        if (doc.data()[RecipeCollection.fieldTitle].toString().toLowerCase().contains(title.toLowerCase())) {
+        if (doc
+            .data()[RecipeCollection.fieldTitle]
+            .toString()
+            .toLowerCase()
+            .contains(title.toLowerCase())) {
           var recipe = RecipeModel.fromJson(doc.data());
           recipe.recipeId = doc.id;
           if (doc.data()[RecipeCollection.fieldUserId] != null) {

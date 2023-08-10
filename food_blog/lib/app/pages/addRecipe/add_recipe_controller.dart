@@ -190,6 +190,7 @@ class AddRecipeController extends GetxController {
     newRecipe.ingredientList = ingredientList.value;
     newRecipe.stepList = stepList.value;
     newRecipe.imageUrl = imageUrl.value;
+    newRecipe.ingredientTagList = ingredientTagList.value;
     newRecipe.updateDate = DateTime.now();
     newRecipe.numOfLike = 0;
     newRecipe.numOfComment = 0;
