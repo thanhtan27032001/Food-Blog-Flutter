@@ -73,6 +73,21 @@ class RecipeData {
     return result;
   }
 
+  Future<RecipeModel?> getRecipeById(String recipeId) async {
+    late RecipeModel result;
+    await recipeDbRef.doc(recipeId).get().then((value) async {
+      if (value.data() != null) {
+        result = RecipeModel.fromJson(value.data()!);
+        result.recipeId = value.id;
+        if (value.data()?[RecipeCollection.fieldUserId] != null) {
+          result.author = await UserData.instance()
+              .getUserById(userId: value.data()?[RecipeCollection.fieldUserId]);
+        }
+      }
+    });
+    return result;
+  }
+
   Future<List<RecipeModel>> getNewestRecipeList() async {
     final List<RecipeModel> result = [];
     await recipeDbRef
@@ -180,6 +195,19 @@ class RecipeData {
         }
       }
     });
+    return result;
+  }
+
+  Future<List<RecipeModel>> getRecipeByIngredientList(String tag) async {
+    final List<RecipeModel> result = [];
+    final recipeIdList =
+        await RecipeIngredientTagData.instance().getRecipeIdListByTag(tag);
+    for (var recipeId in recipeIdList) {
+      final recipe = await getRecipeById(recipeId);
+      if (recipe != null) {
+        result.add(recipe);
+      }
+    }
     return result;
   }
 }

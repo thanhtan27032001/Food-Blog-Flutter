@@ -27,7 +27,7 @@ class RecipeIngredientTagData {
           .orderBy(RecipeIngredientTagCollection.fieldRecipeId)
           .get()
           .then(
-            (value) async {
+        (value) async {
           for (var doc in value.docs) {
             if (doc.data()[RecipeIngredientTagCollection.fieldTag] == tag &&
                 doc.data()[RecipeIngredientTagCollection.fieldRecipeId] ==
@@ -39,5 +39,21 @@ class RecipeIngredientTagData {
         },
       );
     }
+  }
+
+  Future<List<String>> getRecipeIdListByTag(String tag) async {
+    List<String> result = [];
+    await _dbRef
+        .orderBy(RecipeIngredientTagCollection.fieldTag)
+        .where(RecipeIngredientTagCollection.fieldTag, isEqualTo: tag)
+        .get()
+        .then(
+      (value) {
+        for (var doc in value.docs) {
+          result.add(doc.data()[RecipeIngredientTagCollection.fieldRecipeId]);
+        }
+      },
+    );
+    return result;
   }
 }

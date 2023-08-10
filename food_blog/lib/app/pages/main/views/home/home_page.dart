@@ -47,10 +47,45 @@ class HomePage extends GetWidget<HomeController> {
                 ),
               ),
             ),
-            // // receipt season suggest
-            // HomeSuggestionWidget(
-            //   title: 'Các nguyên liệu đang trong mùa',
-            // ),
+            // receipt season suggest
+            Obx(() => controller.ingredientTagList.value != null
+                ? HomeSuggestionWithTagListWidget(
+                    title: 'Các nguyên liệu đang trong mùa',
+                    ingredientTagList: controller.ingredientTagList.value!,
+                    recipeList: controller.recipeByIngredientList.value ?? [],
+                    onTagPressed: (p0) {
+                      controller.getRecipeIngredientTagList(p0);
+                    },
+                  )
+                : AppTextBody1Widget().setText('Đang tải...').build(context)),
+            Obx(() => controller.recipeByIngredientList.value != null
+                ? Container(
+                    width: double.infinity,
+                    height: 200,
+                    margin: const EdgeInsets.only(top: 16),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      shrinkWrap: true,
+                      itemCount:
+                          controller.recipeByIngredientList.value!.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => RecipeDetailPage(),
+                                arguments: controller.recipeByIngredientList
+                                    .value?[index].recipeId);
+                          },
+                          child: RecipePreviewCardLv2Widget(
+                            controller.recipeByIngredientList.value![index],
+                            cardWidth: 200,
+                            cardHeight: 200,
+                          ),
+                        );
+                      },
+                      scrollDirection: Axis.horizontal,
+                    ),
+                  )
+                : AppTextBody1Widget().setText('Đang tải...').build(context)),
             //
             // // receipt following suggest
             // HomeSuggestionWidget(

@@ -11,6 +11,7 @@ enum RecipeStatus {
 
 @JsonSerializable()
 class RecipeModel {
+  @JsonKey(includeToJson: false)
   late String? recipeId;
   late String? title; // require
   late String? description; // require
