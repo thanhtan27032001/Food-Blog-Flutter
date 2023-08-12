@@ -34,6 +34,8 @@ class LoginController extends GetxController {
             avatarUrl: userCredential.user?.photoURL
         ),
       );
+      UserModel? userLogin = await UserData.instance().getUserByEmail(email: userCredential.user?.email ?? '');
+      UserData.instance().setUserLogin(userLogin!);
       Get.off(MainPage());
     }
     else {
@@ -44,6 +46,8 @@ class LoginController extends GetxController {
   Future<void> loginWithAccount() async {
     UserCredential? userCredential = await AuthData.instance().loginWithAccount(email, password);
     if (userCredential != null) {
+      UserModel? userLogin = await UserData.instance().getUserByEmail(email: userCredential.user?.email ?? '');
+      UserData.instance().setUserLogin(userLogin!);
       Get.off(MainPage());
     }
   }

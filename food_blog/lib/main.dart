@@ -24,7 +24,6 @@ void main() async {
         UserData.instance().setUserLogin(userLogin);
         runApp(const MyApp(initRoute: '/main'));
       }
-      // runApp(const MyApp(initRoute: '/main'));
     }
     runApp(const MyApp(initRoute: '/login'));
   });
