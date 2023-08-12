@@ -3,6 +3,7 @@ import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/dialog/app_dialog_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
+import 'package:food_blog/app/components/videoPlayer/app_video_player_widget.dart';
 import 'package:food_blog/data/ingredient_data.dart';
 import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
@@ -12,6 +13,7 @@ import 'dart:io';
 import 'package:food_blog/app/components/appBar/app_bar_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
+import 'package:video_player/video_player.dart';
 
 part 'add_recipe_page.dart';
 
@@ -21,7 +23,12 @@ class AddRecipeController extends GetxController {
   static String resultAddedRecipe = 'resultAddedRecipe';
 
   RxnString imageUrl = RxnString();
+  String? videoUrl;
   late XFile? imageFile;
+  late XFile? videoFile;
+  late VideoPlayerController videoPlayerController;
+  RxBool isVideoInitialized = false.obs;
+
   final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
   final Rx<List<RecipeStepModel>> stepList = Rx([]);
 
@@ -43,9 +50,49 @@ class AddRecipeController extends GetxController {
   }
 
   void pickRecipeImage(BuildContext context) async {
+    AppDialogWidget(
+      title: 'Chọn ảnh cho công thức',
+      content: 'Baạn muốn chọn ảnh bằng phương thức nào?',
+      appDialogType: AppDialogType.confirm,
+      positiveText: 'Chọn từ thư viện',
+      negativeText: 'Chụp ảnh mới',
+      onPositive: () async {
+        try {
+          imageFile =
+              await ImagePicker().pickImage(source: ImageSource.gallery);
+          imageUrl.value = imageFile != null ? imageFile!.path : imageUrl.value;
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.toString()),
+            ),
+          );
+        }
+      },
+      onNegative: () async {
+        try {
+          imageFile = await ImagePicker().pickImage(source: ImageSource.camera);
+          imageUrl.value = imageFile != null ? imageFile!.path : imageUrl.value;
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(e.toString()),
+            ),
+          );
+        }
+      },
+    ).buildDialog(context).show(context);
+  }
+
+  void pickRecipeVideo(BuildContext context) async {
     try {
-      imageFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-      imageUrl.value = imageFile != null ? imageFile!.path : imageUrl.value;
+      videoFile = await ImagePicker().pickVideo(source: ImageSource.gallery);
+      videoUrl = videoFile != null ? videoFile!.path : videoUrl;
+      videoPlayerController = VideoPlayerController.file(File(videoUrl!));
+      await videoPlayerController.initialize().then((value) {
+        videoPlayerController.play();
+        isVideoInitialized.value = true;
+      });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -53,6 +100,12 @@ class AddRecipeController extends GetxController {
         ),
       );
     }
+  }
+
+  void removeRecipeVideo(BuildContext context) {
+    videoUrl = null;
+    videoPlayerController.dispose();
+    isVideoInitialized.value = false;
   }
 
   void addIngredient() {
@@ -190,6 +243,7 @@ class AddRecipeController extends GetxController {
     newRecipe.ingredientList = ingredientList.value;
     newRecipe.stepList = stepList.value;
     newRecipe.imageUrl = imageUrl.value;
+    newRecipe.videoUrl = videoUrl;
     newRecipe.ingredientTagList = ingredientTagList.value;
     newRecipe.updateDate = DateTime.now();
     newRecipe.numOfLike = 0;

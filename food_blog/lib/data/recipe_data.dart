@@ -54,6 +54,16 @@ class RecipeData {
           recipeId: recipe.recipeId ?? '',
           field: RecipeCollection.fieldStepList,
           value: recipe.stepList!.map((e) => e.toJson()).toList());
+      // upload video
+      String? uploadRecipeVideoResult = await FileData.instance().uploadFile(
+        filePath: recipe.videoUrl,
+        fileKey: recipe.getRecipeVideoKey(),
+      );
+      updateRecipe(
+        recipeId: recipe.recipeId ?? '',
+        field: RecipeCollection.fieldVideoUrl,
+        value: uploadRecipeVideoResult,
+      );
     }
     return result;
   }

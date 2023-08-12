@@ -74,6 +74,10 @@ class RecipeModel {
     return '${UserData.instance().getUserLogin()!.id}/stepImages/$recipeId/$index';
   }
 
+  String getRecipeVideoKey() {
+    return '${UserData.instance().getUserLogin()!.id}/recipeVideos/$recipeId';
+  }
+
   bool canBePublic() {
     return title != null &&
         description != null &&

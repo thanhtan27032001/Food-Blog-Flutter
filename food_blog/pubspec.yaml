@@ -49,6 +49,7 @@ dependencies:
   build_runner: ^2.4.6
   json_annotation: ^4.8.1
   firebase_storage: ^11.2.5
+  video_player: ^2.7.0
 
 dev_dependencies:
   flutter_test:

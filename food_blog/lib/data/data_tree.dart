@@ -14,6 +14,7 @@ class RecipeCollection {
   static const String fieldTitle = 'title';
   static const String fieldDescription = 'description';
   static const String fieldImageUrl = 'imageUrl';
+  static const String fieldVideoUrl = 'videoUrl';
   static const String fieldIngredientList = 'ingredientList';
   static const String fieldStepList = 'stepList';
   static const String fieldUserId = 'userId';

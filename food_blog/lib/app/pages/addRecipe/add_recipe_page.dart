@@ -61,6 +61,13 @@ class AddRecipePage extends GetView<AddRecipeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // image demo
+            Container(
+              margin: const EdgeInsets.only(left: 2, top: 8, bottom: 8),
+              child: AppTextBody2Widget()
+                  .setText('Ảnh công thức*')
+                  .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                  .build(context),
+            ),
             GestureDetector(
               onTap: () {
                 controller.pickRecipeImage(context);
@@ -87,11 +94,58 @@ class AddRecipePage extends GetView<AddRecipeController> {
               ),
             ),
 
+            // video
+            Container(
+              margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
+              child: Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 2),
+                    child: AppTextBody2Widget()
+                        .setText(
+                        'Video hướng dẫn')
+                        .setTextStyle(
+                        const TextStyle(fontWeight: FontWeight.bold))
+                        .build(context),
+                  ),
+                  const Spacer(),
+                  Obx(() {
+                    if (controller.isVideoInitialized.value == false) {
+                      return InkWell(
+                        onTap: () {
+                          controller.pickRecipeVideo(context);
+                        },
+                        child: const Icon(
+                            Icons.add_circle_outline_rounded
+                        ),
+                      );
+                    }
+                    else {
+                      return InkWell(
+                        onTap: () {
+                          controller.removeRecipeVideo(context);
+                        },
+                        child: const Icon(
+                            Icons.remove_circle_outline_rounded
+                        ),
+                      );
+                    }
+                  })
+                ],
+              ),
+            ),
+            Obx(() {
+              if (controller.isVideoInitialized.value == true) {
+                return AppVideoPlayerWidget(controller.videoPlayerController).build();
+              }
+              return const SizedBox();
+            }),
+
             // title
             Container(
               margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
-                  .setText('Tên công thức')
+                  .setText('Tên công thức*')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
                   .build(context),
             ),
@@ -109,7 +163,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
             Container(
               margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
-                  .setText('Mô tả công thức')
+                  .setText('Mô tả công thức*')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
                   .build(context),
             ),
@@ -130,7 +184,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
             Container(
               margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
-                  .setText('Khẩu phần (người)')
+                  .setText('Khẩu phần (người)*')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
                   .build(context),
             ),
@@ -150,7 +204,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
             Container(
               margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
               child: AppTextBody2Widget()
-                  .setText('Thời gian ước tính (phút)')
+                  .setText('Thời gian ước tính (phút)*')
                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
                   .build(context),
             ),
@@ -162,7 +216,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                   child: AppCornerCardTextFieldWidget(
                     borderRadius: 6,
                     elevation: 2,
-                    hintText: 'Chuẩn bị',
+                    hintText: 'Chuẩn bị*',
                     inputType: const TextInputType.numberWithOptions(
                         decimal: false, signed: false),
                     onChange: (value) {
@@ -176,7 +230,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                   child: AppCornerCardTextFieldWidget(
                     borderRadius: 6,
                     elevation: 2,
-                    hintText: 'Thực hiện',
+                    hintText: 'Thực hiện*',
                     inputType: const TextInputType.numberWithOptions(
                         decimal: false, signed: false),
                     onChange: (value) {
@@ -261,7 +315,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                           margin: const EdgeInsets.only(left: 2),
                           child: AppTextBody2Widget()
                               .setText(
-                                  'Nguyên liệu (${controller.ingredientList.value.length})')
+                                  'Nguyên liệu (${controller.ingredientList.value.length})*')
                               .setTextStyle(
                                   const TextStyle(fontWeight: FontWeight.bold))
                               .build(context),
@@ -338,7 +392,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                           margin: const EdgeInsets.only(left: 2),
                           child: AppTextBody2Widget()
                               .setText(
-                                  'Thực hiện (${controller.stepList.value.length})')
+                                  'Thực hiện (${controller.stepList.value.length})*')
                               .setTextStyle(
                                   const TextStyle(fontWeight: FontWeight.bold))
                               .build(context),
@@ -414,7 +468,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                                             child: Center(
                                               child: AppTextBody3Widget()
                                                   .setText(
-                                                      'Ảnh hướng dẫn\n- Không bắt buộc -')
+                                                      'Ảnh hướng dẫn')
                                                   .setTextAlign(
                                                       TextAlign.center)
                                                   .build(context),

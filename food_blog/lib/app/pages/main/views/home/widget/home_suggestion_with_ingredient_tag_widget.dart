@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
-import 'package:food_blog/app/pages/main/views/home/widget/recipe_preview_card_lv2_widget.dart';
-import 'package:food_blog/app/pages/recipeDetail/recipe_detail_controller.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
 
