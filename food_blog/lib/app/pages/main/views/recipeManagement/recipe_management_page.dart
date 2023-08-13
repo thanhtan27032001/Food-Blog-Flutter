@@ -55,7 +55,7 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
                             ),
                             PopupMenuItem(
                               onTap: () {
-                                controller.editRecipe(index);
+                                controller.changeRecipeStatus(index);
                               },
                               child: AppTextBody1Widget()
                                   .setText(controller.myRecipeList.value?[index]
@@ -67,7 +67,7 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
                             ),
                             PopupMenuItem(
                               onTap: () {
-                                controller.editRecipe(index);
+                                controller.archiveRecipe(index);
                               },
                               child: AppTextBody1Widget()
                                   .setText('Lưu trữ')

@@ -87,22 +87,30 @@ class RecipeData {
     bool result = false;
     // replace image
     if (newRecipe.imageLocalPath != null) {
-      FileData.instance().uploadFile(fileKey: newRecipe.getRecipeImageKey(), filePath: newRecipe.imageLocalPath);
+      FileData.instance().uploadFile(
+          fileKey: newRecipe.getRecipeImageKey(),
+          filePath: newRecipe.imageLocalPath);
     }
     // replace video
     if (newRecipe.videoLocalPath != null) {
       if (newRecipe.videoUrl == null) {
-        final videoUrl = await FileData.instance().uploadFile(fileKey: newRecipe.getRecipeVideoKey(), filePath: newRecipe.videoLocalPath);
+        final videoUrl = await FileData.instance().uploadFile(
+            fileKey: newRecipe.getRecipeVideoKey(),
+            filePath: newRecipe.videoLocalPath);
         newRecipe.videoUrl = videoUrl;
-      }
-      else {
-        FileData.instance().uploadFile(fileKey: newRecipe.getRecipeVideoKey(), filePath: newRecipe.videoLocalPath);
+      } else {
+        FileData.instance().uploadFile(
+            fileKey: newRecipe.getRecipeVideoKey(),
+            filePath: newRecipe.videoLocalPath);
       }
     }
     // init param
     final param = newRecipe.toAddRecipeParam();
     // replace info
-    await recipeDbRef.doc(newRecipe.recipeId).set(param).then((value) => result = true);
+    await recipeDbRef
+        .doc(newRecipe.recipeId)
+        .set(param)
+        .then((value) => result = true);
     // step
     for (int index = 0; index < newRecipe.stepList!.length; index++) {
       if (newRecipe.stepList![index].imageLocalPath != null) {
@@ -190,11 +198,13 @@ class RecipeData {
     await recipeDbRef
         .orderBy(RecipeCollection.fieldUserId)
         .where(RecipeCollection.fieldUserId,
-            isEqualTo: UserData.instance().getUserLogin()!.id)
+            isEqualTo: UserData.instance().getUserLogin()!.id,
+            isNotEqualTo: RecipeStatus.archive.value)
         .get()
         .then(
       (value) async {
         for (var doc in value.docs) {
+          print(doc.data());
           var recipe = RecipeModel.fromJson(doc.data());
           recipe.recipeId = doc.id;
           result.add(recipe);
@@ -216,7 +226,8 @@ class RecipeData {
     return recipe;
   }
 
-  Future<RecipeModel?> getRecipeDetailWithAuthor({required String recipeId}) async {
+  Future<RecipeModel?> getRecipeDetailWithAuthor(
+      {required String recipeId}) async {
     var recipe = RecipeModel();
     await recipeDbRef.doc(recipeId).get().then((value) async {
       final data = value.data() as Map<String, dynamic>;

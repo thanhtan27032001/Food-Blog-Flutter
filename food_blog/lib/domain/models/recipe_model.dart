@@ -2,7 +2,8 @@ part of 'base_model.dart';
 
 enum RecipeStatus {
   draft('draft'),
-  public('public');
+  public('public'),
+  archive('archive');
 
   const RecipeStatus(this.value);
 
