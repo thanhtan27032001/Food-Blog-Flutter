@@ -51,3 +51,11 @@ class FavoriteRecipeCollection {
   static const String fieldUserId = 'userId';
   static const String fieldRecipeId = 'recipeId';
 }
+
+class CommentRecipeCollection {
+  static const String collectionName = 'commentRecipe';
+  static const String fieldUserId = 'userId';
+  static const String fieldRecipeId = 'recipeId';
+  static const String fieldComment = 'comment';
+  static const String fieldUpdateDate = 'updateDate';
+}

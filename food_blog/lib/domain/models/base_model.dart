@@ -8,6 +8,7 @@ part 'recipe_model.dart';
 part 'recipe_step_model.dart';
 part 'recipe_ingredient_model.dart';
 part 'ingredient_tag_model.dart';
+part 'recipe_comment_model.dart';
 
 class BaseModel {
 

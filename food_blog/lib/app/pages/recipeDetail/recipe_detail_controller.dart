@@ -6,6 +6,7 @@ import 'package:food_blog/app/components/loading/app_loading_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
+import 'package:food_blog/data/comment_recipe_data.dart';
 import 'package:food_blog/data/favorite_recipe_data.dart';
 import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
@@ -20,6 +21,7 @@ part 'recipe_detail_page.dart';
 
 class RecipeDetailController extends GetxController {
   Rxn<RecipeModel> recipeModel = Rxn();
+  List<RecipeCommentModel> commentList = [];
   late final String? recipeId;
 
   @override
@@ -31,12 +33,9 @@ class RecipeDetailController extends GetxController {
 
   Future<void> getRecipeDetail() async {
     if (recipeId != null) {
+      commentList.addAll(await CommentRecipeData.instance().getRecipeCommentList(recipeId));
       recipeModel.value = await RecipeData.instance()
           .getRecipeDetailWithAuthor(recipeId: recipeId!);
-      // if (recipeModel.value!.canBePublic() == true) {
-      //   print('yessssssssssssssss');
-      //   return;
-      // }
     }
   }
 

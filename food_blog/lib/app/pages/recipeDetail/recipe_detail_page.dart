@@ -45,9 +45,12 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                             .build(context),
                         const Spacer(),
                         AppIconButtonWidget(
-                          onPressed: () {controller.changeFavoriteStatus();},
+                          onPressed: () {
+                            controller.changeFavoriteStatus();
+                          },
                           icon: Icon(
-                            controller.recipeModel.value?.favoriteRecipeId != null
+                            controller.recipeModel.value?.favoriteRecipeId !=
+                                    null
                                 ? Icons.favorite_rounded
                                 : Icons.favorite_border_rounded,
                             color: AppColors.whiteColor(),
@@ -208,7 +211,8 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: const RecipeCommentListWidget([]),
+                    child: RecipeReactWidget(
+                        controller.commentList, controller.recipeModel.value!),
                   )
                 ],
               ),

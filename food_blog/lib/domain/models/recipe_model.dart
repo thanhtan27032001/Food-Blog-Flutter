@@ -39,6 +39,8 @@ class RecipeModel {
   late String? videoLocalPath;
   @JsonKey(includeToJson: false)
   late String? favoriteRecipeId;
+  @JsonKey(includeToJson: false)
+  late String? commentRecipeId;
 
   RecipeModel({
     this.recipeId,
