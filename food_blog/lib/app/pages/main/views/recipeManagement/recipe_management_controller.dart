@@ -24,8 +24,9 @@ class RecipeManagementController extends GetxController {
     getMyRecipeList();
   }
 
-  void getMyRecipeList() async {
+  Future<void> getMyRecipeList() async {
     myRecipeList.value = await RecipeData.instance().getMyRecipeList();
+    myRecipeList.refresh();
   }
 
   Future<void> gotoAddRecipePage() async {

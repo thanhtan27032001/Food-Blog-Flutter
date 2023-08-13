@@ -22,20 +22,24 @@ class FavoriteRecipePage extends GetView<FavoriteRecipeController> {
     return Obx(
       () {
         if (controller.myFavoriteRecipeList.value != null) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(6),
-              child: Wrap(
-                children: List.generate(
-                  controller.myFavoriteRecipeList.value!.length,
-                  (index) => FractionallySizedBox(
-                    widthFactor: 0.5,
-                    child: LayoutBuilder(
-                      builder: (context, constraints) => Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: RecipePreviewCardLv2Widget(
-                          controller.myFavoriteRecipeList.value![index],
-                          onPressed: () => controller.gotoRecipeDetail(index),
+          return RefreshIndicator(
+            onRefresh: controller.getMyRecipeList,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Wrap(
+                  children: List.generate(
+                    controller.myFavoriteRecipeList.value!.length,
+                    (index) => FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: RecipePreviewCardLv2Widget(
+                            controller.myFavoriteRecipeList.value![index],
+                            onPressed: () => controller.gotoRecipeDetail(index),
+                          ),
                         ),
                       ),
                     ),

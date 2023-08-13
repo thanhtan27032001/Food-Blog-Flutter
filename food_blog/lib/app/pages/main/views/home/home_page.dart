@@ -86,13 +86,7 @@ class HomePage extends GetWidget<HomeController> {
                     ),
                   )
                 : AppTextBody1Widget().setText('Đang tải...').build(context)),
-            //
-            // // receipt following suggest
-            // HomeSuggestionWidget(
-            //   title: 'Các công thức từ người bạn đang theo dõi',
-            // ),
-            //
-            // receipt popular suggest
+
             Obx(
               () => controller.recipePopularList.value != null
                   ? HomeSuggestionWidget(

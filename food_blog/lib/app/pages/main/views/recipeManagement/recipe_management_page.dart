@@ -30,50 +30,54 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
     return Obx(
       () {
         if (controller.myRecipeList.value != null) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(6),
-              child: Wrap(
-                children: List.generate(
-                  controller.myRecipeList.value!.length,
-                  (index) => FractionallySizedBox(
-                    widthFactor: 0.5,
-                    child: LayoutBuilder(
-                      builder: (context, constraints) => Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: MyRecipePreviewCardWidget(
-                          controller.myRecipeList.value![index],
-                          optionList: (BuildContext context) =>
-                              <PopupMenuEntry>[
-                            PopupMenuItem(
-                              onTap: () {
-                                controller.editRecipe(index);
-                              },
-                              child: AppTextBody1Widget()
-                                  .setText('Chỉnh sửa')
-                                  .build(context),
-                            ),
-                            PopupMenuItem(
-                              onTap: () {
-                                controller.changeRecipeStatus(index);
-                              },
-                              child: AppTextBody1Widget()
-                                  .setText(controller.myRecipeList.value?[index]
-                                              .status ==
-                                          RecipeStatus.public.value
-                                      ? 'Lưu nháp'
-                                      : 'Công khai')
-                                  .build(context),
-                            ),
-                            PopupMenuItem(
-                              onTap: () {
-                                controller.archiveRecipe(index);
-                              },
-                              child: AppTextBody1Widget()
-                                  .setText('Lưu trữ')
-                                  .build(context),
-                            ),
-                          ],
+          return RefreshIndicator(
+            onRefresh: controller.getMyRecipeList,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Wrap(
+                  children: List.generate(
+                    controller.myRecipeList.value!.length,
+                    (index) => FractionallySizedBox(
+                      widthFactor: 0.5,
+                      child: LayoutBuilder(
+                        builder: (context, constraints) => Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: MyRecipePreviewCardWidget(
+                            controller.myRecipeList.value![index],
+                            optionList: (BuildContext context) =>
+                                <PopupMenuEntry>[
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.editRecipe(index);
+                                },
+                                child: AppTextBody1Widget()
+                                    .setText('Chỉnh sửa')
+                                    .build(context),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.changeRecipeStatus(index);
+                                },
+                                child: AppTextBody1Widget()
+                                    .setText(controller.myRecipeList
+                                                .value?[index].status ==
+                                            RecipeStatus.public.value
+                                        ? 'Lưu nháp'
+                                        : 'Công khai')
+                                    .build(context),
+                              ),
+                              PopupMenuItem(
+                                onTap: () {
+                                  controller.archiveRecipe(index);
+                                },
+                                child: AppTextBody1Widget()
+                                    .setText('Lưu trữ')
+                                    .build(context),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

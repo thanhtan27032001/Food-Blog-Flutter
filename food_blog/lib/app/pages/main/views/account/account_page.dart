@@ -21,7 +21,7 @@ class AccountPage extends GetView<AccountController> {
           height: 32,
         ),
         AppAvatarWidget(
-            avtUrl: UserData.instance().getUserLogin()?.avatarUrl ?? '',
+            avtUrl: UserData.instance().getUserLogin()?.avatarUrl,
             size: 120),
         const SizedBox(height: 16),
         AppTextHeading3Widget()

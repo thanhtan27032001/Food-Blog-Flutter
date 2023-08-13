@@ -28,54 +28,57 @@ class HomeSuggestionWithTagListWidget extends GetWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             child: AppTextBody2Widget()
                 .setText(title)
                 .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
                 .build(context),
           ),
-          Wrap(
-            direction: Axis.horizontal,
-            children: List.generate(
-              ingredientTagList.length,
-              (index) {
-                return InkWell(
-                  onTap: () {
-                    onTagPressed?.call(ingredientTagList[index].tag ?? '');
-                  },
-                  child: Card(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16))),
-                    elevation: 2,
-                    child: Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: AppColors.whiteColor(),
-                        borderRadius: const BorderRadius.all(Radius.circular(16)),
-                      ),
-                      child: Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          AppAvatarWidget(
-                                  avtUrl: ingredientTagList[index].imageUrl,
-                                  size: 24)
-                              .build(context),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          AppTextBody2Widget()
-                              .setText(ingredientTagList[index].name)
-                              .build(context),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                        ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Wrap(
+              direction: Axis.horizontal,
+              children: List.generate(
+                ingredientTagList.length,
+                (index) {
+                  return InkWell(
+                    onTap: () {
+                      onTagPressed?.call(ingredientTagList[index].tag ?? '');
+                    },
+                    child: Card(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16))),
+                      elevation: 2,
+                      child: Container(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: AppColors.whiteColor(),
+                          borderRadius: const BorderRadius.all(Radius.circular(16)),
+                        ),
+                        child: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            AppAvatarWidget(
+                                    avtUrl: ingredientTagList[index].imageUrl,
+                                    size: 24)
+                                .build(context),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            AppTextBody2Widget()
+                                .setText(ingredientTagList[index].name)
+                                .build(context),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           ),
         ],

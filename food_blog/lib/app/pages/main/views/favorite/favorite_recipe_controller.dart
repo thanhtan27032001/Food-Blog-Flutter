@@ -20,8 +20,9 @@ class FavoriteRecipeController extends GetxController{
     getMyRecipeList();
   }
 
-  void getMyRecipeList() async {
+  Future<void> getMyRecipeList() async {
     myFavoriteRecipeList.value = await FavoriteRecipeData.instance().getMyFavoriteRecipeList();
+    myFavoriteRecipeList.refresh();
   }
 
   void gotoRecipeDetail(int index) {
