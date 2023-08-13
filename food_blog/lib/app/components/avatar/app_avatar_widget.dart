@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppAvatarWidget extends StatelessWidget {
   final String? avtUrl;
@@ -16,10 +16,10 @@ class AppAvatarWidget extends StatelessWidget {
         height: size,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(size/2)),
-          child: Image.network(
-            avtUrl ?? '',
+          child: avtUrl != null ? Image.network(
+            avtUrl!,
             fit: BoxFit.cover,
-          ),
+          ) : Icon(Icons.account_circle_rounded, size: size,),
         ),
       ),
     );

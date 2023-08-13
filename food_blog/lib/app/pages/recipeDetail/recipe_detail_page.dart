@@ -185,22 +185,61 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                     ),
                   ),
 
-                  // add comment button
-                  FilledButton(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                  // my comment
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.add_comment_rounded,
-                          size: 18,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
                         AppTextBody2Widget()
-                            .setText('Thêm bình luận')
+                            .setText('Bình luận của tôi')
+                            .setTextStyle(
+                                const TextStyle(fontWeight: FontWeight.bold))
                             .build(context),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Obx(
+                          () {
+                            if (controller.myComment.value != null) {}
+                            return AppCornerCardTextFieldWidget(
+                              maxLine: 5,
+                              hintText:
+                                  'Hãy để lại lời cổ vũ hay góp ý cho công thức này',
+                              text: controller.myComment.value?.comment,
+                              borderRadius: 4,
+                              backgroundColor: AppColors.grayColor(level: 0),
+                              elevation: 0,
+                              inputType: TextInputType.multiline,
+                              onChange: (value) {
+                                controller.myComment.value?.comment = value;
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              FilledButton(
+                                onPressed: () {controller.updateMyComment();},
+                                style: ButtonStyle(
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(AppColors.primaryColor())
+                                ),
+                                child: AppTextBody2Widget()
+                                    .setText('Đăng bình luận')
+                                    .build(context),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -211,8 +250,15 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 16),
-                    child: RecipeReactWidget(
-                        controller.commentList, controller.recipeModel.value!),
+                    child: Obx(() {
+                      if (controller.commentList.value != null) {
+                        return RecipeReactWidget(
+                            controller.commentList.value!, controller.recipeModel.value!);
+                      }
+                      else {
+                        return AppTextBody2Widget().setText('Chưa có bình luận nào').build(context);
+                      }
+                    }),
                   )
                 ],
               ),

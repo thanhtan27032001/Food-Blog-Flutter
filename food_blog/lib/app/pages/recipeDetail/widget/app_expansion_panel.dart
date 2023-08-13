@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
+import 'package:food_blog/app/configs/app_colors.dart';
 
 class AppRecipeExpansion extends StatefulWidget {
   final String description;
@@ -56,6 +57,7 @@ class AppRecipeExpansionState extends State<AppRecipeExpansion> {
           onPressed: () => _changeExpandStatus(),
           child: AppTextBody2Widget()
               .setText(isExpanded ? 'Thu gọn' : 'Xem chi tiết')
+              .setColor(AppColors.secondaryColor(level: 2))
               .build(context),
         ),
       ],
