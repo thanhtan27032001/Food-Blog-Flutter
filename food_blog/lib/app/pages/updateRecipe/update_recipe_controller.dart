@@ -29,8 +29,8 @@ class UpdateRecipeController extends GetxController {
   late VideoPlayerController videoPlayerController;
   RxBool isVideoInitialized = false.obs;
 
-  final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
-  final Rx<List<RecipeStepModel>> stepList = Rx([]);
+  // final Rx<List<RecipeIngredientModel>> ingredientList = Rx([]);
+  // final Rx<List<RecipeStepModel>> stepList = Rx([]);
 
   final Rx<List<IngredientTagModel>> ingredientTagList = Rx([]);
   final Rx<List<IngredientTagModel>> ingredientTagStoredList = Rx([]);
@@ -55,7 +55,7 @@ class UpdateRecipeController extends GetxController {
   Future<void> getRecipeDetail(String? recipeId) async {
     if (recipeId != null) {
       newRecipe.value =
-      await RecipeData.instance().getRecipeDetail(recipeId: recipeId);
+      await RecipeData.instance().getMyRecipeDetail(recipeId: recipeId);
       if (newRecipe.value?.videoUrl != null) {
         initVideoController(url: newRecipe.value?.videoUrl);
       }
@@ -132,18 +132,19 @@ class UpdateRecipeController extends GetxController {
 
   void removeRecipeVideo(BuildContext context) {
     newRecipe.value?.videoLocalPath = null;
+    newRecipe.value?.videoUrl = null;
     videoPlayerController.dispose();
     isVideoInitialized.value = false;
   }
 
   void addIngredient() {
-    ingredientList.value.add(RecipeIngredientModel(''));
-    ingredientList.refresh();
+    newRecipe.value?.ingredientList?.add(RecipeIngredientModel(''));
+    newRecipe.refresh();
   }
 
   void removeIngredient(BuildContext context, int index) {
-    ingredientList.value.removeAt(index);
-    if (ingredientList.value.isEmpty) {
+    newRecipe.value?.ingredientList?.removeAt(index);
+    if (newRecipe.value!.ingredientList!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: AppTextBody2Widget()
@@ -154,26 +155,26 @@ class UpdateRecipeController extends GetxController {
       );
       addIngredient();
     } else {
-      ingredientList.refresh();
+      newRecipe.refresh();
     }
   }
 
   void updateIngredient(int index, String ingredientDescription) {
-    ingredientList.value[index].description = ingredientDescription;
+    newRecipe.value?.ingredientList?[index].description = ingredientDescription;
   }
 
   void addStep() {
-    stepList.value.add(RecipeStepModel(
-        index: stepList.value.length + 1, description: '', imageUrl: null));
-    stepList.refresh();
+    newRecipe.value?.stepList?.add(RecipeStepModel(
+        index: newRecipe.value!.stepList!.length + 1, description: '', imageUrl: null));
+    newRecipe.refresh();
   }
 
   void removeStep(BuildContext context, int index) {
-    stepList.value.removeAt(index);
-    for (int i = 0; i < stepList.value.length; i++) {
-      stepList.value[i].index = i + 1;
+    newRecipe.value?.stepList?.removeAt(index);
+    for (int i = 0; i < newRecipe.value!.stepList!.length; i++) {
+      newRecipe.value?.stepList?[i].index = i + 1;
     }
-    if (stepList.value.isEmpty) {
+    if (newRecipe.value!.stepList!.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: AppTextBody2Widget()
@@ -184,12 +185,12 @@ class UpdateRecipeController extends GetxController {
       );
       addStep();
     } else {
-      stepList.refresh();
+      newRecipe.refresh();
     }
   }
 
   void updateStep(int index, String description) {
-    stepList.value[index].description = description;
+    newRecipe.value?.stepList?[index].description = description;
   }
 
   void pickStepImage(BuildContext context, int index) async {
@@ -198,9 +199,9 @@ class UpdateRecipeController extends GetxController {
           await ImagePicker().pickImage(source: ImageSource.gallery);
       String? imageUrl = imageFile?.path;
       if (imageUrl != null) {
-        stepList.value[index].imageUrl = imageUrl;
-        stepList.refresh();
-        if (index == stepList.value.length - 1) {
+        newRecipe.value?.stepList?[index].imageUrl = imageUrl;
+        newRecipe.refresh();
+        if (index == newRecipe.value!.stepList!.length - 1) {
           scrollController
               .jumpTo(scrollController.position.maxScrollExtent + 500);
         }
@@ -240,13 +241,13 @@ class UpdateRecipeController extends GetxController {
     String? error = validate();
     if (error == null) {
       AppDialogWidget(
-              title: 'Xác nhận tạo công thức',
+              title: 'Xác nhận cập nhật công thức',
               content:
-                  'Bạn có chắc chắn muốn tạo và công khai công thức mới của mình? Mọi người sẽ có thể xem được công thức mà bạn đăng.',
+                  'Bạn có chắc chắn muốn cập nhật và công khai công thức mới của mình? Mọi người sẽ có thể xem được công thức mà bạn đăng.',
               appDialogType: AppDialogType.confirm,
               positiveText: 'Xác nhận',
               onPositive: () {
-                print('Tạo công thức');
+                print('Cập nhật công thức');
                 executeUpdateRecipe(context);
               },
               negativeText: 'Hủy')
@@ -255,7 +256,7 @@ class UpdateRecipeController extends GetxController {
     } else {
       AppDialogWidget(
         title: 'Công thức chưa đủ thông tin',
-        content: 'Bạn không thể công khai công thức ngay bây giờ. $error',
+        content: 'Bạn không thể cập nhật công khai công thức ngay bây giờ. $error',
         appDialogType: AppDialogType.error,
         positiveText: 'Xác nhận',
         negativeText: 'Lưu nháp',
@@ -284,6 +285,12 @@ class UpdateRecipeController extends GetxController {
     // if (result == true) {
     //   Get.back(result: resultAddedRecipe);
     // }
+
+    newRecipe.value?.updateDate = DateTime.now();
+    bool result = await RecipeData.instance().replaceRecipe(newRecipe.value!);
+    if (result == true) {
+      Get.back(result: resultAddedRecipe);
+    }
   }
 
   void addIngredientTag(int index) {

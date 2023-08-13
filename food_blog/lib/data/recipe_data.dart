@@ -83,6 +83,29 @@ class RecipeData {
     return result;
   }
 
+  Future<bool> replaceRecipe(RecipeModel newRecipe) async {
+    bool result = false;
+    // replace image
+    if (newRecipe.imageLocalPath != null) {
+      FileData.instance().uploadFile(fileKey: newRecipe.getRecipeImageKey(), filePath: newRecipe.imageLocalPath);
+    }
+    // replace video
+    if (newRecipe.videoLocalPath != null) {
+      if (newRecipe.videoUrl == null) {
+        final videoUrl = await FileData.instance().uploadFile(fileKey: newRecipe.getRecipeVideoKey(), filePath: newRecipe.videoLocalPath);
+        newRecipe.videoUrl = videoUrl;
+      }
+      else {
+        FileData.instance().uploadFile(fileKey: newRecipe.getRecipeVideoKey(), filePath: newRecipe.videoLocalPath);
+      }
+    }
+    // init param
+    final param = newRecipe.toAddRecipeParam();
+    // replace info
+    await recipeDbRef.doc(newRecipe.recipeId).set(param);
+    return result;
+  }
+
   Future<RecipeModel?> getRecipeById(String recipeId) async {
     late RecipeModel result;
     await recipeDbRef.doc(recipeId).get().then((value) async {
@@ -167,12 +190,13 @@ class RecipeData {
     return result;
   }
 
-  Future<RecipeModel?> getRecipeDetail({required String recipeId}) async {
+  Future<RecipeModel?> getMyRecipeDetail({required String recipeId}) async {
     var recipe = RecipeModel();
     await recipeDbRef.doc(recipeId).get().then((value) async {
       final data = value.data() as Map<String, dynamic>;
       print(data);
       recipe = RecipeModel.fromJson(data);
+      recipe.recipeId = value.id;
       recipe.ingredientTagList = []; //TODO: get ingredient tag list
     });
     return recipe;
@@ -184,6 +208,7 @@ class RecipeData {
       final data = value.data() as Map<String, dynamic>;
       print(data);
       recipe = RecipeModel.fromJson(data);
+      recipe.recipeId = value.id;
       recipe.author = await UserData.instance()
           .getUserById(userId: data[RecipeCollection.fieldUserId]);
     });
