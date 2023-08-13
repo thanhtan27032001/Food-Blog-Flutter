@@ -21,51 +21,21 @@ class FavoriteRecipePage extends GetView<FavoriteRecipeController> {
   Widget _body(BuildContext context) {
     return Obx(
       () {
-        if (controller.myRecipeList.value != null) {
+        if (controller.myFavoriteRecipeList.value != null) {
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(6),
               child: Wrap(
                 children: List.generate(
-                  controller.myRecipeList.value!.length,
+                  controller.myFavoriteRecipeList.value!.length,
                   (index) => FractionallySizedBox(
                     widthFactor: 0.5,
                     child: LayoutBuilder(
                       builder: (context, constraints) => Padding(
                         padding: const EdgeInsets.all(2),
-                        child: MyRecipePreviewCardWidget(
-                          controller.myRecipeList.value![index],
-                          optionList: (BuildContext context) =>
-                              <PopupMenuEntry>[
-                            PopupMenuItem(
-                              onTap: () {
-                                controller.editRecipe(index);
-                              },
-                              child: AppTextBody1Widget()
-                                  .setText('Chỉnh sửa')
-                                  .build(context),
-                            ),
-                            PopupMenuItem(
-                              onTap: () {
-                                controller.editRecipe(index);
-                              },
-                              child: AppTextBody1Widget()
-                                  .setText(controller.myRecipeList.value?[index]
-                                              .status ==
-                                          RecipeStatus.public.value
-                                      ? 'Lưu nháp'
-                                      : 'Công khai')
-                                  .build(context),
-                            ),
-                            PopupMenuItem(
-                              onTap: () {
-                                controller.editRecipe(index);
-                              },
-                              child: AppTextBody1Widget()
-                                  .setText('Lưu trữ')
-                                  .build(context),
-                            ),
-                          ],
+                        child: RecipePreviewCardLv2Widget(
+                          controller.myFavoriteRecipeList.value![index],
+                          onPressed: () => controller.gotoRecipeDetail(index),
                         ),
                       ),
                     ),

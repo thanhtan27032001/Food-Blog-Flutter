@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
+import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/data/user_data.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 
 class FavoriteRecipeData {
   static final FavoriteRecipeData _instance = FavoriteRecipeData();
@@ -51,6 +53,19 @@ class FavoriteRecipeData {
     int result = 0;
     await _dbRef.orderBy(FavoriteRecipeCollection.fieldRecipeId).where(FavoriteRecipeCollection.fieldRecipeId, isEqualTo: recipeId).get().then((value) {
       result = value.docs.length;
+    });
+    return result;
+  }
+
+  Future<List<RecipeModel>> getMyFavoriteRecipeList() async {
+    final List<RecipeModel> result = [];
+    await _dbRef.orderBy(FavoriteRecipeCollection.fieldUserId).where(FavoriteRecipeCollection.fieldUserId, isEqualTo: UserData.instance().userLogin.id).get().then((value) async {
+      for (var doc in value.docs) {
+        final recipe = await RecipeData.instance().getRecipeById(doc.data()[FavoriteRecipeCollection.fieldRecipeId]);
+        if (recipe != null) {
+          result.add(recipe);
+        }
+      }
     });
     return result;
   }
