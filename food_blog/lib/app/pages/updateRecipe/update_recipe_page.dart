@@ -54,7 +54,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
 
   Widget _body(BuildContext context) {
     return Obx(() {
-      if (controller.oldRecipe.value != null) {
+      if (controller.newRecipe.value != null) {
         return SingleChildScrollView(
           controller: controller.scrollController,
           child: Padding(
@@ -77,16 +77,16 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Obx(() {
-                      if (controller.imageUrl.value != null) {
+                      if (controller.newRecipe.value?.imageLocalPath != null) {
                         return Image.file(
-                          File(controller.imageUrl.value!),
+                          File(controller.newRecipe.value!.imageLocalPath!),
                           width: double.infinity,
                           fit: BoxFit.cover,
                         );
                       }
-                      else if (controller.oldRecipe.value?.imageUrl != null) {
+                      else if (controller.newRecipe.value?.imageUrl != null) {
                         return Image.network(
-                          controller.oldRecipe.value!.imageUrl!,
+                          controller.newRecipe.value!.imageUrl!,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         );
@@ -163,9 +163,9 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   elevation: 2,
                   backgroundColor: AppColors.whiteColor(),
                   hintText: 'Vd: Gà nướng, beefsteak...',
-                  text: controller.oldRecipe.value?.title,
+                  text: controller.newRecipe.value?.title,
                   onChange: (value) {
-                    controller.newRecipe.title = value;
+                    controller.newRecipe.value?.title = value;
                   },
                 ),
 
@@ -181,13 +181,13 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   borderRadius: 6,
                   elevation: 2,
                   backgroundColor: AppColors.whiteColor(),
-                  text: controller.oldRecipe.value?.description,
+                  text: controller.newRecipe.value?.description,
                   hintText:
                   'Nêu lên ý tưởng tạo ra công thức, điều gì mang lại cảm hứng cho bạn,...',
                   maxLine: 5,
                   inputType: TextInputType.multiline,
                   onChange: (value) {
-                    controller.newRecipe.description = value;
+                    controller.newRecipe.value?.description = value;
                   },
                 ),
 
@@ -202,12 +202,12 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                 AppCornerCardTextFieldWidget(
                   borderRadius: 6,
                   elevation: 2,
-                  text: controller.oldRecipe.value?.serveNum.toString(),
+                  text: controller.newRecipe.value?.serveNum.toString(),
                   hintText: 'Vd: 1',
                   inputType: const TextInputType.numberWithOptions(
                       decimal: false, signed: false),
                   onChange: (value) {
-                    controller.newRecipe.serveNum =
+                    controller.newRecipe.value?.serveNum =
                     value.trim() != '' ? int.parse(value) : null;
                   },
                 ),
@@ -228,12 +228,12 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       child: AppCornerCardTextFieldWidget(
                         borderRadius: 6,
                         elevation: 2,
-                        text: controller.oldRecipe.value?.prepareTime.toString(),
+                        text: controller.newRecipe.value?.prepareTime.toString(),
                         hintText: 'Chuẩn bị*',
                         inputType: const TextInputType.numberWithOptions(
                             decimal: false, signed: false),
                         onChange: (value) {
-                          controller.newRecipe.prepareTime =
+                          controller.newRecipe.value?.prepareTime =
                           value.trim() != '' ? int.parse(value) : null;
                         },
                       ),
@@ -243,12 +243,12 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       child: AppCornerCardTextFieldWidget(
                         borderRadius: 6,
                         elevation: 2,
-                        text: controller.oldRecipe.value?.cookTime.toString(),
+                        text: controller.newRecipe.value?.cookTime.toString(),
                         hintText: 'Thực hiện*',
                         inputType: const TextInputType.numberWithOptions(
                             decimal: false, signed: false),
                         onChange: (value) {
-                          controller.newRecipe.cookTime =
+                          controller.newRecipe.value?.cookTime =
                           value.trim() != '' ? int.parse(value) : null;
                         },
                       ),
@@ -274,7 +274,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                 Obx(() => Wrap(
                   direction: Axis.horizontal,
                   children: List.generate(
-                    controller.oldRecipe.value!.ingredientTagList!.length,
+                    controller.newRecipe.value!.ingredientTagList!.length,
                         (index) {
                       return Card(
                         shape: const RoundedRectangleBorder(
@@ -291,13 +291,13 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                           child: Wrap(
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: [
-                              AppAvatarWidget(avtUrl: controller.oldRecipe.value!.ingredientTagList![index].imageUrl, size: 24)
+                              AppAvatarWidget(avtUrl: controller.newRecipe.value!.ingredientTagList![index].imageUrl, size: 24)
                                   .build(context),
                               const SizedBox(
                                 width: 8,
                               ),
                               AppTextBody2Widget()
-                                  .setText(controller.oldRecipe.value!.ingredientTagList![index].name)
+                                  .setText(controller.newRecipe.value!.ingredientTagList![index].name)
                                   .build(context),
                               const SizedBox(
                                 width: 4,
@@ -329,7 +329,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                               margin: const EdgeInsets.only(left: 2),
                               child: AppTextBody2Widget()
                                   .setText(
-                                  'Nguyên liệu (${controller.oldRecipe.value?.ingredientList!.length})*')
+                                  'Nguyên liệu (${controller.newRecipe.value?.ingredientList!.length})*')
                                   .setTextStyle(
                                   const TextStyle(fontWeight: FontWeight.bold))
                                   .build(context),
@@ -349,13 +349,13 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       SizedBox(
                         width: double.infinity,
                         child: ListView.builder(
-                          itemCount: controller.oldRecipe.value?.ingredientList!.length,
+                          itemCount: controller.newRecipe.value?.ingredientList!.length,
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Dismissible(
                               key:
-                              ObjectKey(controller.oldRecipe.value?.ingredientList![index]),
+                              ObjectKey(controller.newRecipe.value?.ingredientList![index]),
                               onDismissed: (details) {
                                 controller.removeIngredient(context, index);
                               },
@@ -363,7 +363,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                                 borderRadius: 6,
                                 elevation: 2,
                                 hintText: '1 quả cà chua',
-                                text: controller.oldRecipe.value!
+                                text: controller.newRecipe.value!
                                     .ingredientList![index].description,
                                 onChange: (value) {
                                   controller.updateIngredient(index, value);
@@ -406,7 +406,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                               margin: const EdgeInsets.only(left: 2),
                               child: AppTextBody2Widget()
                                   .setText(
-                                  'Thực hiện (${controller.oldRecipe.value?.stepList!.length})*')
+                                  'Thực hiện (${controller.newRecipe.value?.stepList!.length})*')
                                   .setTextStyle(
                                   const TextStyle(fontWeight: FontWeight.bold))
                                   .build(context),
@@ -426,12 +426,12 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       SizedBox(
                         width: double.infinity,
                         child: ListView.builder(
-                          itemCount: controller.oldRecipe.value?.stepList!.length,
+                          itemCount: controller.newRecipe.value?.stepList!.length,
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Dismissible(
-                              key: ObjectKey(controller.oldRecipe.value?.stepList![index]),
+                              key: ObjectKey(controller.newRecipe.value?.stepList![index]),
                               onDismissed: (details) {
                                 controller.removeStep(context, index);
                               },
@@ -443,14 +443,14 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                                         left: 4, top: index > 0 ? 16 : 0),
                                     child: AppTextBody2Widget()
                                         .setText(
-                                        'Bước ${controller.oldRecipe.value?.stepList![index].index}')
+                                        'Bước ${controller.newRecipe.value?.stepList![index].index}')
                                         .build(context),
                                   ),
                                   AppCornerCardTextFieldWidget(
                                     borderRadius: 6,
                                     elevation: 2,
                                     hintText: 'Mô tả bước thực hiện của bạn',
-                                    text: controller.oldRecipe.value!
+                                    text: controller.newRecipe.value!
                                         .stepList![index].description,
                                     onChange: (value) {
                                       controller.updateStep(index, value);
@@ -467,11 +467,11 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                                       },
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(6),
-                                        child: controller.oldRecipe.value?.stepList![index]
+                                        child: controller.newRecipe.value?.stepList![index]
                                             .imageUrl !=
                                             null
                                             ? Image.network(
-                                            controller.oldRecipe.value!.stepList![index].imageUrl!,
+                                            controller.newRecipe.value!.stepList![index].imageUrl!,
                                             width: double.infinity,
                                             fit: BoxFit.cover)
                                             : Container(

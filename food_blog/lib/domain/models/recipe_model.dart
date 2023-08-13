@@ -30,6 +30,11 @@ class RecipeModel {
   late int? numOfLike;
   late int? numOfComment;
 
+  @JsonKey(includeToJson: false)
+  late String? imageLocalPath;
+  @JsonKey(includeToJson: false)
+  late String? videoLocalPath;
+
   RecipeModel({
     this.recipeId,
     this.title,

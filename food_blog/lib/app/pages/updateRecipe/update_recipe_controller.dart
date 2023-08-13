@@ -22,8 +22,8 @@ part 'view/search_ingredient_tag_view.dart';
 class UpdateRecipeController extends GetxController {
   static String resultAddedRecipe = 'resultAddedRecipe';
 
-  RxnString imageUrl = RxnString();
-  String? videoUrl;
+  // RxnString imageUrl = RxnString();
+  // String? videoUrl;
   late XFile? imageFile;
   late XFile? videoFile;
   late VideoPlayerController videoPlayerController;
@@ -40,8 +40,8 @@ class UpdateRecipeController extends GetxController {
 
   ScrollController scrollController = ScrollController();
 
-  Rxn<RecipeModel> oldRecipe = Rxn();
-  RecipeModel newRecipe = RecipeModel();
+  Rxn<RecipeModel> newRecipe = Rxn();
+  // RecipeModel newRecipe = RecipeModel();
 
   @override
   void onInit() {
@@ -54,8 +54,11 @@ class UpdateRecipeController extends GetxController {
 
   Future<void> getRecipeDetail(String? recipeId) async {
     if (recipeId != null) {
-      oldRecipe.value =
+      newRecipe.value =
       await RecipeData.instance().getRecipeDetail(recipeId: recipeId);
+      if (newRecipe.value?.videoUrl != null) {
+        initVideoController(url: newRecipe.value?.videoUrl);
+      }
     }
   }
 
@@ -70,7 +73,8 @@ class UpdateRecipeController extends GetxController {
         try {
           imageFile =
               await ImagePicker().pickImage(source: ImageSource.gallery);
-          imageUrl.value = imageFile != null ? imageFile!.path : imageUrl.value;
+          newRecipe.value?.imageLocalPath = (imageFile != null) ? imageFile!.path : newRecipe.value?.imageLocalPath;
+          newRecipe.refresh();
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -82,7 +86,8 @@ class UpdateRecipeController extends GetxController {
       onNegative: () async {
         try {
           imageFile = await ImagePicker().pickImage(source: ImageSource.camera);
-          imageUrl.value = imageFile != null ? imageFile!.path : imageUrl.value;
+          newRecipe.value?.imageLocalPath = imageFile != null ? imageFile!.path : newRecipe.value?.imageLocalPath;
+          newRecipe.refresh();
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -97,12 +102,10 @@ class UpdateRecipeController extends GetxController {
   void pickRecipeVideo(BuildContext context) async {
     try {
       videoFile = await ImagePicker().pickVideo(source: ImageSource.gallery);
-      videoUrl = videoFile != null ? videoFile!.path : videoUrl;
-      videoPlayerController = VideoPlayerController.file(File(videoUrl!));
-      await videoPlayerController.initialize().then((value) {
-        videoPlayerController.play();
-        isVideoInitialized.value = true;
-      });
+      if (videoFile != null) {
+        newRecipe.value?.videoLocalPath = videoFile!.path;
+        initVideoController(file: File(newRecipe.value!.videoLocalPath!));
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -112,8 +115,23 @@ class UpdateRecipeController extends GetxController {
     }
   }
 
+  Future<void> initVideoController({File? file, String? url}) async {
+    if (file != null || url != null) {
+      if (file != null) {
+        videoPlayerController = VideoPlayerController.file(file);
+      }
+      else {
+        videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(url!));
+      }
+      await videoPlayerController.initialize().then((value) {
+        videoPlayerController.play();
+        isVideoInitialized.value = true;
+      });
+    }
+  }
+
   void removeRecipeVideo(BuildContext context) {
-    videoUrl = null;
+    newRecipe.value?.videoLocalPath = null;
     videoPlayerController.dispose();
     isVideoInitialized.value = false;
   }
@@ -197,22 +215,22 @@ class UpdateRecipeController extends GetxController {
   }
 
   String? validate() {
-    if (imageUrl.value == null) {
-      return 'Vui lòng chọn ảnh cho công thức.';
-    }
-    if (newRecipe.title == null || newRecipe.title!.trim() == '') {
+    // if (imageUrl.value == null) {
+    //   return 'Vui lòng chọn ảnh cho công thức.';
+    // }
+    if (newRecipe.value?.title == null || newRecipe.value?.title!.trim() == '') {
       return 'Vui lòng nhập tên công thức.';
     }
-    if (newRecipe.description == null || newRecipe.description!.trim() == '') {
+    if (newRecipe.value?.description == null || newRecipe.value?.description!.trim() == '') {
       return 'Vui lòng nhập mô tả cho công thức.';
     }
-    if (newRecipe.serveNum == null) {
+    if (newRecipe.value?.serveNum == null) {
       return 'Vui lòng nhập khẩu phần.';
     }
-    if (newRecipe.prepareTime == null) {
+    if (newRecipe.value?.prepareTime == null) {
       return 'Vui lòng nhập thời gian chuẩn bị.';
     }
-    if (newRecipe.cookTime == null) {
+    if (newRecipe.value?.cookTime == null) {
       return 'Vui lòng nhập thơi gian thực hiện.';
     }
     return null;
