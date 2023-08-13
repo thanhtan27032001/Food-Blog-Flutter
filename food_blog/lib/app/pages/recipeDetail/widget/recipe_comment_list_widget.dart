@@ -3,6 +3,7 @@ import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/domain/models/base_model.dart';
+import 'package:food_blog/utils/format_time_facade.dart';
 
 class RecipeReactWidget extends StatelessWidget {
   final List<RecipeCommentModel> commentList;
@@ -106,11 +107,20 @@ class RecipeReactWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          AppTextBody2Widget()
-                              .setText(commentList[index].user?.nickname)
-                              .setTextStyle(
+                          Row(
+                            children: [
+                              AppTextBody2Widget()
+                                  .setText(commentList[index].user?.nickname)
+                                  .setTextStyle(
                                   const TextStyle(fontWeight: FontWeight.bold))
-                              .build(context),
+                                  .build(context),
+                              const SizedBox(width: 4,),
+                              AppTextBody2Widget()
+                                  .setText(FormatTimeFacade.getDisplayTime(commentList[index].updateDate))
+                                  .setColor(AppColors.grayColor(level: 1))
+                                  .build(context),
+                            ],
+                          ),
                           const SizedBox(
                             height: 2,
                           ),

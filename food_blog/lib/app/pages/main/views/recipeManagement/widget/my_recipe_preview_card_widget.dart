@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/domain/models/base_model.dart';
+import 'package:food_blog/utils/format_time_facade.dart';
 import 'package:get/get.dart';
 
 class MyRecipePreviewCardWidget extends GetView {
@@ -59,7 +60,7 @@ class MyRecipePreviewCardWidget extends GetView {
                           Expanded(
                             flex: 1,
                             child: AppTextBody3Widget()
-                                .setText(recipe.updateDate.toString())
+                                .setText(FormatTimeFacade.getDisplayTime(recipe.updateDate))
                                 .setTextOverFlow(TextOverflow.ellipsis)
                                 .build(context),
                           ),

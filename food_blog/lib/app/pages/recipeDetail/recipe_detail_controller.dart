@@ -16,6 +16,7 @@ import 'package:food_blog/app/pages/recipeDetail/widget/recipe_comment_list_widg
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_ingredient_list_widget.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_step_list_widget.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/recipe_summary_card.dart';
+import 'package:food_blog/utils/format_time_facade.dart';
 import 'package:get/get.dart';
 
 part 'recipe_detail_page.dart';

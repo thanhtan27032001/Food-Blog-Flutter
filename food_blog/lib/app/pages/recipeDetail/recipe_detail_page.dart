@@ -101,9 +101,10 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                                         color: AppColors.grayColor(level: 2)),
                                     const SizedBox(width: 4),
                                     AppTextBody2Widget()
-                                        .setText(controller
-                                            .recipeModel.value?.updateDate
-                                            ?.toString())
+                                        .setText(
+                                            FormatTimeFacade.getDisplayTime(
+                                                controller.recipeModel.value
+                                                    ?.updateDate))
                                         .setColor(AppColors.grayColor(level: 2))
                                         .build(context),
                                   ],
@@ -173,9 +174,8 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: RecipeStepWidget(
-                        recipeStepList:
-                            controller.recipeModel.value!.stepList!,
-                    videoUrl: controller.recipeModel.value?.videoUrl),
+                        recipeStepList: controller.recipeModel.value!.stepList!,
+                        videoUrl: controller.recipeModel.value?.videoUrl),
                   ),
 
                   Container(
@@ -225,15 +225,19 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               FilledButton(
-                                onPressed: () {controller.updateMyComment();},
+                                onPressed: () {
+                                  controller.updateMyComment();
+                                },
                                 style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                      ),
                                     ),
-                                  ),
-                                  backgroundColor: MaterialStateProperty.all(AppColors.primaryColor())
-                                ),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        AppColors.primaryColor())),
                                 child: AppTextBody2Widget()
                                     .setText('Đăng bình luận')
                                     .build(context),
@@ -253,11 +257,12 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     child: Obx(() {
                       if (controller.commentList.value != null) {
-                        return RecipeReactWidget(
-                            controller.commentList.value!, controller.recipeModel.value!);
-                      }
-                      else {
-                        return AppTextBody2Widget().setText('Chưa có bình luận nào').build(context);
+                        return RecipeReactWidget(controller.commentList.value!,
+                            controller.recipeModel.value!);
+                      } else {
+                        return AppTextBody2Widget()
+                            .setText('Chưa có bình luận nào')
+                            .build(context);
                       }
                     }),
                   )
