@@ -28,7 +28,7 @@ class RecipeData {
       RecipeIngredientTagData.instance()
           .addRecipeIngredientTag(tag: tag.tag, recipeId: recipe.recipeId);
     }
-    // upload images
+    // upload files
     if (result == true) {
       // recipe image
       String? uploadRecipeImgResult = await FileData.instance().uploadFile(
@@ -168,6 +168,17 @@ class RecipeData {
   }
 
   Future<RecipeModel?> getRecipeDetail({required String recipeId}) async {
+    var recipe = RecipeModel();
+    await recipeDbRef.doc(recipeId).get().then((value) async {
+      final data = value.data() as Map<String, dynamic>;
+      print(data);
+      recipe = RecipeModel.fromJson(data);
+      recipe.ingredientTagList = []; //TODO: get ingredient tag list
+    });
+    return recipe;
+  }
+
+  Future<RecipeModel?> getRecipeDetailWithAuthor({required String recipeId}) async {
     var recipe = RecipeModel();
     await recipeDbRef.doc(recipeId).get().then((value) async {
       final data = value.data() as Map<String, dynamic>;

@@ -6,7 +6,8 @@ import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/addRecipe/add_recipe_controller.dart';
-import 'package:food_blog/app/pages/main/views/recipe_management/widget/my_recipe_preview_card_widget.dart';
+import 'package:food_blog/app/pages/main/views/recipeManagement/widget/my_recipe_preview_card_widget.dart';
+import 'package:food_blog/app/pages/updateRecipe/update_recipe_controller.dart';
 import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
@@ -48,5 +49,7 @@ class RecipeManagementController extends GetxController{
     }
   }
 
-  void editRecipe(int index) {}
+  void editRecipe(int index) {
+    Get.to(()=>UpdateRecipePage(), arguments: myRecipeList.value?[index].recipeId);
+  }
 }

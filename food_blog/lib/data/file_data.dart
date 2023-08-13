@@ -13,17 +13,14 @@ class FileData {
   }
 
   Future<String?> uploadFile({String? filePath, String? fileKey}) async {
-    // bool result = false;
     if (filePath != null && fileKey != null) {
       try {
         await storageRef.child(fileKey).putFile(File(filePath));
-        // result = true;
+        return storageRef.child(fileKey).getDownloadURL();
       }
       catch (e) {
         e.printError();
-        // result = false;
       }
-      return storageRef.child(fileKey).getDownloadURL();
     }
     return null;
   }

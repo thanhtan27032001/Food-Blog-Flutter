@@ -30,7 +30,7 @@ class RecipeDetailController extends GetxController {
   Future<void> getRecipeDetail() async {
     if (recipeId != null) {
       recipeModel.value =
-          await RecipeData.instance().getRecipeDetail(recipeId: recipeId!);
+          await RecipeData.instance().getRecipeDetailWithAuthor(recipeId: recipeId!);
       // if (recipeModel.value!.canBePublic() == true) {
       //   print('yessssssssssssssss');
       //   return;
