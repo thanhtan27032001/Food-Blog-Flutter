@@ -5,7 +5,7 @@ import 'package:food_blog/domain/models/base_model.dart';
 class UserData {
   static final UserData _instance = UserData();
   final userDbRef = FirebaseFirestore.instance.collection(UserCollection.collectionName);
-  late UserModel userLogin;
+  late UserModel? userLogin;
 
   static UserData instance() {
     return _instance;
@@ -52,7 +52,7 @@ class UserData {
         : null;
   }
 
-  void setUserLogin(UserModel userModel) {
+  void setUserLogin(UserModel? userModel) {
     userLogin = userModel;
   }
 

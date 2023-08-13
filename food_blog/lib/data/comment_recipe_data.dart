@@ -37,7 +37,7 @@ class CommentRecipeData {
     RecipeCommentModel? result;
     await _dbRef
         .where(CommentRecipeCollection.fieldUserId,
-            isEqualTo: UserData.instance().userLogin.id)
+            isEqualTo: UserData.instance().userLogin?.id)
         .where(CommentRecipeCollection.fieldRecipeId, isEqualTo: recipeId)
         .get()
         .then(

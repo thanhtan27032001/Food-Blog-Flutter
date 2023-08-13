@@ -93,7 +93,7 @@ class AccountPage extends GetView<AccountController> {
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {controller.logout();},
             style: ElevatedButton.styleFrom(
                 elevation: 2, backgroundColor: AppColors.whiteColor()),
             child: Padding(

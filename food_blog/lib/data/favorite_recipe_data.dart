@@ -20,7 +20,7 @@ class FavoriteRecipeData {
           .orderBy(FavoriteRecipeCollection.fieldUserId)
           .orderBy(FavoriteRecipeCollection.fieldRecipeId)
           .where(FavoriteRecipeCollection.fieldUserId,
-              isEqualTo: UserData.instance().userLogin.id)
+              isEqualTo: UserData.instance().userLogin?.id)
           .where(FavoriteRecipeCollection.fieldRecipeId, isEqualTo: recipeId)
           .get()
           .then((value) {
@@ -59,7 +59,7 @@ class FavoriteRecipeData {
 
   Future<List<RecipeModel>> getMyFavoriteRecipeList() async {
     final List<RecipeModel> result = [];
-    await _dbRef.orderBy(FavoriteRecipeCollection.fieldUserId).where(FavoriteRecipeCollection.fieldUserId, isEqualTo: UserData.instance().userLogin.id).get().then((value) async {
+    await _dbRef.orderBy(FavoriteRecipeCollection.fieldUserId).where(FavoriteRecipeCollection.fieldUserId, isEqualTo: UserData.instance().userLogin?.id).get().then((value) async {
       for (var doc in value.docs) {
         final recipe = await RecipeData.instance().getRecipeById(doc.data()[FavoriteRecipeCollection.fieldRecipeId]);
         if (recipe != null) {

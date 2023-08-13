@@ -18,7 +18,7 @@ class RecipeCommentModel {
 
   Map<String, dynamic> toParam(String recipeId) {
     final param = toJson();
-    param[CommentRecipeCollection.fieldUserId] = UserData.instance().userLogin.id;
+    param[CommentRecipeCollection.fieldUserId] = UserData.instance().userLogin?.id;
     param[CommentRecipeCollection.fieldRecipeId] = recipeId;
     return param;
   }

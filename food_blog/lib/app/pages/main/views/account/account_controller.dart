@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
@@ -9,5 +10,10 @@ import 'package:get/get.dart';
 part 'account_page.dart';
 
 class AccountController extends GetxController {
-
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut().then((value) {
+      UserData.instance().setUserLogin(null);
+      Get.offAndToNamed('/login');
+    });
+  }
 }
