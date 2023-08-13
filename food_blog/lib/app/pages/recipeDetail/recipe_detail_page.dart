@@ -174,7 +174,8 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: RecipeStepWidget(
                         recipeStepList:
-                            controller.recipeModel.value!.stepList!),
+                            controller.recipeModel.value!.stepList!,
+                    videoUrl: controller.recipeModel.value?.videoUrl),
                   ),
 
                   Container(
