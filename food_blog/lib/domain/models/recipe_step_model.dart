@@ -9,7 +9,7 @@ class RecipeStepModel {
   @JsonKey(includeToJson: false)
   late String? imageLocalPath;
 
-  RecipeStepModel({required this.index, required this.description, this.imageUrl});
+  RecipeStepModel({required this.index, required this.description, this.imageUrl, this.imageLocalPath});
 
   Map<String, dynamic> toJson() => _$RecipeStepModelToJson(this);
 

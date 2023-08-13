@@ -17,6 +17,7 @@ import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:video_player/video_player.dart';
 
 part 'update_recipe_page.dart';
+
 part 'view/search_ingredient_tag_view.dart';
 
 class UpdateRecipeController extends GetxController {
@@ -41,6 +42,7 @@ class UpdateRecipeController extends GetxController {
   ScrollController scrollController = ScrollController();
 
   Rxn<RecipeModel> newRecipe = Rxn();
+
   // RecipeModel newRecipe = RecipeModel();
 
   @override
@@ -55,7 +57,7 @@ class UpdateRecipeController extends GetxController {
   Future<void> getRecipeDetail(String? recipeId) async {
     if (recipeId != null) {
       newRecipe.value =
-      await RecipeData.instance().getMyRecipeDetail(recipeId: recipeId);
+          await RecipeData.instance().getMyRecipeDetail(recipeId: recipeId);
       if (newRecipe.value?.videoUrl != null) {
         initVideoController(url: newRecipe.value?.videoUrl);
       }
@@ -73,7 +75,9 @@ class UpdateRecipeController extends GetxController {
         try {
           imageFile =
               await ImagePicker().pickImage(source: ImageSource.gallery);
-          newRecipe.value?.imageLocalPath = (imageFile != null) ? imageFile!.path : newRecipe.value?.imageLocalPath;
+          newRecipe.value?.imageLocalPath = (imageFile != null)
+              ? imageFile!.path
+              : newRecipe.value?.imageLocalPath;
           newRecipe.refresh();
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -86,7 +90,9 @@ class UpdateRecipeController extends GetxController {
       onNegative: () async {
         try {
           imageFile = await ImagePicker().pickImage(source: ImageSource.camera);
-          newRecipe.value?.imageLocalPath = imageFile != null ? imageFile!.path : newRecipe.value?.imageLocalPath;
+          newRecipe.value?.imageLocalPath = imageFile != null
+              ? imageFile!.path
+              : newRecipe.value?.imageLocalPath;
           newRecipe.refresh();
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -119,9 +125,9 @@ class UpdateRecipeController extends GetxController {
     if (file != null || url != null) {
       if (file != null) {
         videoPlayerController = VideoPlayerController.file(file);
-      }
-      else {
-        videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(url!));
+      } else {
+        videoPlayerController =
+            VideoPlayerController.networkUrl(Uri.parse(url!));
       }
       await videoPlayerController.initialize().then((value) {
         videoPlayerController.play();
@@ -165,7 +171,10 @@ class UpdateRecipeController extends GetxController {
 
   void addStep() {
     newRecipe.value?.stepList?.add(RecipeStepModel(
-        index: newRecipe.value!.stepList!.length + 1, description: '', imageUrl: null));
+        index: newRecipe.value!.stepList!.length + 1,
+        description: '',
+        imageUrl: null,
+        imageLocalPath: null));
     newRecipe.refresh();
   }
 
@@ -199,7 +208,7 @@ class UpdateRecipeController extends GetxController {
           await ImagePicker().pickImage(source: ImageSource.gallery);
       String? imageUrl = imageFile?.path;
       if (imageUrl != null) {
-        newRecipe.value?.stepList?[index].imageUrl = imageUrl;
+        newRecipe.value?.stepList?[index].imageLocalPath = imageUrl;
         newRecipe.refresh();
         if (index == newRecipe.value!.stepList!.length - 1) {
           scrollController
@@ -219,10 +228,12 @@ class UpdateRecipeController extends GetxController {
     // if (imageUrl.value == null) {
     //   return 'Vui lòng chọn ảnh cho công thức.';
     // }
-    if (newRecipe.value?.title == null || newRecipe.value?.title!.trim() == '') {
+    if (newRecipe.value?.title == null ||
+        newRecipe.value?.title!.trim() == '') {
       return 'Vui lòng nhập tên công thức.';
     }
-    if (newRecipe.value?.description == null || newRecipe.value?.description!.trim() == '') {
+    if (newRecipe.value?.description == null ||
+        newRecipe.value?.description!.trim() == '') {
       return 'Vui lòng nhập mô tả cho công thức.';
     }
     if (newRecipe.value?.serveNum == null) {
@@ -256,7 +267,8 @@ class UpdateRecipeController extends GetxController {
     } else {
       AppDialogWidget(
         title: 'Công thức chưa đủ thông tin',
-        content: 'Bạn không thể cập nhật công khai công thức ngay bây giờ. $error',
+        content:
+            'Bạn không thể cập nhật công khai công thức ngay bây giờ. $error',
         appDialogType: AppDialogType.error,
         positiveText: 'Xác nhận',
         negativeText: 'Lưu nháp',
@@ -269,23 +281,6 @@ class UpdateRecipeController extends GetxController {
   }
 
   void executeUpdateRecipe(BuildContext context) async {
-    // newRecipe.ingredientList = ingredientList.value;
-    // newRecipe.stepList = stepList.value;
-    // if (newRecipe.imageUrl != imageUrl.value && imageUrl.value != null) {
-    //   newRecipe.imageUrl = imageUrl.value;
-    // }
-    // if (newRecipe.videoUrl) {
-    //   newRecipe.videoUrl = videoUrl;
-    // }
-    // newRecipe.ingredientTagList = ingredientTagList.value;
-    // newRecipe.updateDate = DateTime.now();
-    // newRecipe.numOfLike = 0;
-    // newRecipe.numOfComment = 0;
-    // bool result = await RecipeData.instance().addRecipe(newRecipe);
-    // if (result == true) {
-    //   Get.back(result: resultAddedRecipe);
-    // }
-
     newRecipe.value?.updateDate = DateTime.now();
     bool result = await RecipeData.instance().replaceRecipe(newRecipe.value!);
     if (result == true) {

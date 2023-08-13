@@ -102,7 +102,21 @@ class RecipeData {
     // init param
     final param = newRecipe.toAddRecipeParam();
     // replace info
-    await recipeDbRef.doc(newRecipe.recipeId).set(param);
+    await recipeDbRef.doc(newRecipe.recipeId).set(param).then((value) => result = true);
+    // step
+    for (int index = 0; index < newRecipe.stepList!.length; index++) {
+      if (newRecipe.stepList![index].imageLocalPath != null) {
+        String? uploadStepImgResult = await FileData.instance().uploadFile(
+          filePath: newRecipe.stepList![index].imageLocalPath,
+          fileKey: newRecipe.getStepImageKey(index),
+        );
+        newRecipe.stepList![index].imageUrl = uploadStepImgResult;
+      }
+    }
+    updateRecipe(
+        recipeId: newRecipe.recipeId ?? '',
+        field: RecipeCollection.fieldStepList,
+        value: newRecipe.stepList!.map((e) => e.toJson()).toList());
     return result;
   }
 

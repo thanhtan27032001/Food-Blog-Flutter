@@ -43,8 +43,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
         Obx(() {
           if (controller.isSearchingIngredient.value == true) {
             return const SearchIngredientTagView();
-          }
-          else {
+          } else {
             return const SizedBox();
           }
         })
@@ -67,7 +66,8 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   margin: const EdgeInsets.only(left: 2, top: 8, bottom: 8),
                   child: AppTextBody2Widget()
                       .setText('Ảnh công thức*')
-                      .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                      .setTextStyle(
+                          const TextStyle(fontWeight: FontWeight.bold))
                       .build(context),
                 ),
                 GestureDetector(
@@ -83,8 +83,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                           width: double.infinity,
                           fit: BoxFit.cover,
                         );
-                      }
-                      else if (controller.newRecipe.value?.imageUrl != null) {
+                      } else if (controller.newRecipe.value?.imageUrl != null) {
                         return Image.network(
                           controller.newRecipe.value!.imageUrl!,
                           width: double.infinity,
@@ -111,10 +110,9 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       Container(
                         margin: const EdgeInsets.only(left: 2),
                         child: AppTextBody2Widget()
-                            .setText(
-                            'Video hướng dẫn')
+                            .setText('Video hướng dẫn')
                             .setTextStyle(
-                            const TextStyle(fontWeight: FontWeight.bold))
+                                const TextStyle(fontWeight: FontWeight.bold))
                             .build(context),
                       ),
                       const Spacer(),
@@ -124,19 +122,15 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                             onTap: () {
                               controller.pickRecipeVideo(context);
                             },
-                            child: const Icon(
-                                Icons.add_circle_outline_rounded
-                            ),
+                            child: const Icon(Icons.add_circle_outline_rounded),
                           );
-                        }
-                        else {
+                        } else {
                           return InkWell(
                             onTap: () {
                               controller.removeRecipeVideo(context);
                             },
-                            child: const Icon(
-                                Icons.remove_circle_outline_rounded
-                            ),
+                            child:
+                                const Icon(Icons.remove_circle_outline_rounded),
                           );
                         }
                       })
@@ -145,7 +139,9 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                 ),
                 Obx(() {
                   if (controller.isVideoInitialized.value == true) {
-                    return AppVideoPlayerWidget(controller.videoPlayerController).build();
+                    return AppVideoPlayerWidget(
+                            controller.videoPlayerController)
+                        .build();
                   }
                   return const SizedBox();
                 }),
@@ -155,7 +151,8 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
                   child: AppTextBody2Widget()
                       .setText('Tên công thức*')
-                      .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                      .setTextStyle(
+                          const TextStyle(fontWeight: FontWeight.bold))
                       .build(context),
                 ),
                 AppCornerCardTextFieldWidget(
@@ -174,7 +171,8 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
                   child: AppTextBody2Widget()
                       .setText('Mô tả công thức*')
-                      .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                      .setTextStyle(
+                          const TextStyle(fontWeight: FontWeight.bold))
                       .build(context),
                 ),
                 AppCornerCardTextFieldWidget(
@@ -183,7 +181,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   backgroundColor: AppColors.whiteColor(),
                   text: controller.newRecipe.value?.description,
                   hintText:
-                  'Nêu lên ý tưởng tạo ra công thức, điều gì mang lại cảm hứng cho bạn,...',
+                      'Nêu lên ý tưởng tạo ra công thức, điều gì mang lại cảm hứng cho bạn,...',
                   maxLine: 5,
                   inputType: TextInputType.multiline,
                   onChange: (value) {
@@ -196,7 +194,8 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
                   child: AppTextBody2Widget()
                       .setText('Khẩu phần (người)*')
-                      .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                      .setTextStyle(
+                          const TextStyle(fontWeight: FontWeight.bold))
                       .build(context),
                 ),
                 AppCornerCardTextFieldWidget(
@@ -208,7 +207,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       decimal: false, signed: false),
                   onChange: (value) {
                     controller.newRecipe.value?.serveNum =
-                    value.trim() != '' ? int.parse(value) : null;
+                        value.trim() != '' ? int.parse(value) : null;
                   },
                 ),
 
@@ -217,7 +216,8 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
                   child: AppTextBody2Widget()
                       .setText('Thời gian ước tính (phút)*')
-                      .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                      .setTextStyle(
+                          const TextStyle(fontWeight: FontWeight.bold))
                       .build(context),
                 ),
                 Row(
@@ -228,13 +228,14 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       child: AppCornerCardTextFieldWidget(
                         borderRadius: 6,
                         elevation: 2,
-                        text: controller.newRecipe.value?.prepareTime.toString(),
+                        text:
+                            controller.newRecipe.value?.prepareTime.toString(),
                         hintText: 'Chuẩn bị*',
                         inputType: const TextInputType.numberWithOptions(
                             decimal: false, signed: false),
                         onChange: (value) {
                           controller.newRecipe.value?.prepareTime =
-                          value.trim() != '' ? int.parse(value) : null;
+                              value.trim() != '' ? int.parse(value) : null;
                         },
                       ),
                     ),
@@ -249,7 +250,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                             decimal: false, signed: false),
                         onChange: (value) {
                           controller.newRecipe.value?.cookTime =
-                          value.trim() != '' ? int.parse(value) : null;
+                              value.trim() != '' ? int.parse(value) : null;
                         },
                       ),
                     ),
@@ -262,82 +263,97 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   children: [
                     AppTextBody2Widget()
                         .setText('Tag nguyên liệu')
-                        .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                        .setTextStyle(
+                            const TextStyle(fontWeight: FontWeight.bold))
                         .build(context),
                     const Spacer(),
                     InkWell(
-                      onTap: () {controller.startSearchIngredientTag();},
+                      onTap: () {
+                        controller.startSearchIngredientTag();
+                      },
                       child: const Icon(Icons.add_circle_outline_rounded),
                     )
                   ],
                 ),
                 Obx(() => Wrap(
-                  direction: Axis.horizontal,
-                  children: List.generate(
-                    controller.newRecipe.value!.ingredientTagList!.length,
+                      direction: Axis.horizontal,
+                      children: List.generate(
+                        controller.newRecipe.value!.ingredientTagList!.length,
                         (index) {
-                      return Card(
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(16))),
-                        elevation: 2,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: AppColors.whiteColor(),
-                            borderRadius:
-                            const BorderRadius.all(Radius.circular(16)),
-                          ),
-                          child: Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              AppAvatarWidget(avtUrl: controller.newRecipe.value!.ingredientTagList![index].imageUrl, size: 24)
-                                  .build(context),
-                              const SizedBox(
-                                width: 8,
+                          return Card(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(16))),
+                            elevation: 2,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: AppColors.whiteColor(),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(16)),
                               ),
-                              AppTextBody2Widget()
-                                  .setText(controller.newRecipe.value!.ingredientTagList![index].name)
-                                  .build(context),
-                              const SizedBox(
-                                width: 4,
+                              child: Wrap(
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  AppAvatarWidget(
+                                          avtUrl: controller
+                                              .newRecipe
+                                              .value!
+                                              .ingredientTagList![index]
+                                              .imageUrl,
+                                          size: 24)
+                                      .build(context),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  AppTextBody2Widget()
+                                      .setText(controller.newRecipe.value!
+                                          .ingredientTagList![index].name)
+                                      .build(context),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      controller.removeIngredientTag(index);
+                                    },
+                                    child: const Icon(
+                                      Icons.clear_rounded,
+                                      size: 16,
+                                    ),
+                                  )
+                                ],
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  controller.removeIngredientTag(index);
-                                },
-                                child: const Icon(Icons.clear_rounded, size: 16,),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                )),
+                            ),
+                          );
+                        },
+                      ),
+                    )),
 
                 // ingredients
                 Obx(
-                      () => Column(
+                  () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
+                        margin:
+                            const EdgeInsets.only(left: 2, top: 32, bottom: 8),
                         child: Row(
                           children: [
                             Container(
                               margin: const EdgeInsets.only(left: 2),
                               child: AppTextBody2Widget()
                                   .setText(
-                                  'Nguyên liệu (${controller.newRecipe.value?.ingredientList!.length})*')
-                                  .setTextStyle(
-                                  const TextStyle(fontWeight: FontWeight.bold))
+                                      'Nguyên liệu (${controller.newRecipe.value?.ingredientList!.length})*')
+                                  .setTextStyle(const TextStyle(
+                                      fontWeight: FontWeight.bold))
                                   .build(context),
                             ),
                             const Spacer(),
                             Tooltip(
                               message:
-                              'Bạn có thể vuốt sang trái để xóa nguyên liệu',
+                                  'Bạn có thể vuốt sang trái để xóa nguyên liệu',
                               child: Icon(
                                 Icons.info_outline_rounded,
                                 color: AppColors.secondaryColor(level: 2),
@@ -349,13 +365,14 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       SizedBox(
                         width: double.infinity,
                         child: ListView.builder(
-                          itemCount: controller.newRecipe.value?.ingredientList!.length,
+                          itemCount: controller
+                              .newRecipe.value?.ingredientList!.length,
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Dismissible(
-                              key:
-                              ObjectKey(controller.newRecipe.value?.ingredientList![index]),
+                              key: ObjectKey(controller
+                                  .newRecipe.value?.ingredientList![index]),
                               onDismissed: (details) {
                                 controller.removeIngredient(context, index);
                               },
@@ -381,7 +398,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   child: FilledButton(
                     style: ButtonStyle(
                       backgroundColor:
-                      MaterialStateProperty.all(AppColors.primaryColor()),
+                          MaterialStateProperty.all(AppColors.primaryColor()),
                     ),
                     child: AppTextBody2Widget()
                         .setText('Thêm nguyên liệu')
@@ -395,26 +412,27 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
 
                 // steps
                 Obx(
-                      () => Column(
+                  () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 2, top: 32, bottom: 8),
+                        margin:
+                            const EdgeInsets.only(left: 2, top: 32, bottom: 8),
                         child: Row(
                           children: [
                             Container(
                               margin: const EdgeInsets.only(left: 2),
                               child: AppTextBody2Widget()
                                   .setText(
-                                  'Thực hiện (${controller.newRecipe.value?.stepList!.length})*')
-                                  .setTextStyle(
-                                  const TextStyle(fontWeight: FontWeight.bold))
+                                      'Thực hiện (${controller.newRecipe.value?.stepList!.length})*')
+                                  .setTextStyle(const TextStyle(
+                                      fontWeight: FontWeight.bold))
                                   .build(context),
                             ),
                             const Spacer(),
                             Tooltip(
                               message:
-                              'Bạn có thể vuốt sang trái để xóa bước thực hiện',
+                                  'Bạn có thể vuốt sang trái để xóa bước thực hiện',
                               child: Icon(
                                 Icons.info_outline_rounded,
                                 color: AppColors.secondaryColor(level: 2),
@@ -426,12 +444,14 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       SizedBox(
                         width: double.infinity,
                         child: ListView.builder(
-                          itemCount: controller.newRecipe.value?.stepList!.length,
+                          itemCount:
+                              controller.newRecipe.value?.stepList!.length,
                           shrinkWrap: true,
                           physics: const ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Dismissible(
-                              key: ObjectKey(controller.newRecipe.value?.stepList![index]),
+                              key: ObjectKey(
+                                  controller.newRecipe.value?.stepList![index]),
                               onDismissed: (details) {
                                 controller.removeStep(context, index);
                               },
@@ -443,7 +463,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                                         left: 4, top: index > 0 ? 16 : 0),
                                     child: AppTextBody2Widget()
                                         .setText(
-                                        'Bước ${controller.newRecipe.value?.stepList![index].index}')
+                                            'Bước ${controller.newRecipe.value?.stepList![index].index}')
                                         .build(context),
                                   ),
                                   AppCornerCardTextFieldWidget(
@@ -463,30 +483,54 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                                     elevation: 2,
                                     child: GestureDetector(
                                       onTap: () {
-                                        controller.pickStepImage(context, index);
+                                        controller.pickStepImage(
+                                            context, index);
                                       },
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(6),
-                                        child: controller.newRecipe.value?.stepList![index]
-                                            .imageUrl !=
-                                            null
-                                            ? Image.network(
-                                            controller.newRecipe.value!.stepList![index].imageUrl!,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover)
+                                        child: (controller
+                                                        .newRecipe
+                                                        .value
+                                                        ?.stepList![index]
+                                                        .imageUrl !=
+                                                    null ||
+                                                controller
+                                                        .newRecipe
+                                                        .value
+                                                        ?.stepList![index]
+                                                        .imageLocalPath !=
+                                                    null)
+                                            ? (controller
+                                                        .newRecipe
+                                                        .value
+                                                        ?.stepList![index]
+                                                        .imageLocalPath !=
+                                                    null
+                                                ? Image.file(File(controller
+                                                    .newRecipe
+                                                    .value!
+                                                    .stepList![index]
+                                                    .imageLocalPath!))
+                                                : Image.network(
+                                                    controller
+                                                        .newRecipe
+                                                        .value!
+                                                        .stepList![index]
+                                                        .imageUrl!,
+                                                    width: double.infinity,
+                                                    fit: BoxFit.cover))
                                             : Container(
-                                          width: double.infinity,
-                                          height: 100,
-                                          color: AppColors.whiteColor(),
-                                          child: Center(
-                                            child: AppTextBody3Widget()
-                                                .setText(
-                                                'Ảnh hướng dẫn')
-                                                .setTextAlign(
-                                                TextAlign.center)
-                                                .build(context),
-                                          ),
-                                        ),
+                                                width: double.infinity,
+                                                height: 100,
+                                                color: AppColors.whiteColor(),
+                                                child: Center(
+                                                  child: AppTextBody3Widget()
+                                                      .setText('Ảnh hướng dẫn')
+                                                      .setTextAlign(
+                                                          TextAlign.center)
+                                                      .build(context),
+                                                ),
+                                              ),
                                       ),
                                     ),
                                   ),
@@ -505,7 +549,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                   child: FilledButton(
                     style: ButtonStyle(
                       backgroundColor:
-                      MaterialStateProperty.all(AppColors.primaryColor()),
+                          MaterialStateProperty.all(AppColors.primaryColor()),
                     ),
                     child: AppTextBody2Widget()
                         .setText('Thêm bước thực hiện')
@@ -520,8 +564,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
             ),
           ),
         );
-      }
-      else {
+      } else {
         return const AppLoadingWidget();
       }
     });
