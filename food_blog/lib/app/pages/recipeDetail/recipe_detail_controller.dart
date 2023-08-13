@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
+import 'package:food_blog/app/components/button/app_icon_button_widget.dart';
 import 'package:food_blog/app/components/loading/app_loading_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
+import 'package:food_blog/data/favorite_recipe_data.dart';
 import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:food_blog/app/pages/recipeDetail/widget/app_expansion_panel.dart';
@@ -29,12 +31,18 @@ class RecipeDetailController extends GetxController {
 
   Future<void> getRecipeDetail() async {
     if (recipeId != null) {
-      recipeModel.value =
-          await RecipeData.instance().getRecipeDetailWithAuthor(recipeId: recipeId!);
+      recipeModel.value = await RecipeData.instance()
+          .getRecipeDetailWithAuthor(recipeId: recipeId!);
       // if (recipeModel.value!.canBePublic() == true) {
       //   print('yessssssssssssssss');
       //   return;
       // }
     }
+  }
+
+  Future<void> changeFavoriteStatus() async {
+    recipeModel.value?.favoriteRecipeId = await FavoriteRecipeData.instance().changeFavoriteStatus(recipeId,
+        favoriteRecipeId: recipeModel.value?.favoriteRecipeId);
+    recipeModel.refresh();
   }
 }

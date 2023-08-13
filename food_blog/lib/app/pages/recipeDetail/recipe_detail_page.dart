@@ -43,6 +43,16 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                               ),
                             )
                             .build(context),
+                        const Spacer(),
+                        AppIconButtonWidget(
+                          onPressed: () {controller.changeFavoriteStatus();},
+                          icon: Icon(
+                            controller.recipeModel.value?.favoriteRecipeId != null
+                                ? Icons.favorite_rounded
+                                : Icons.favorite_border_rounded,
+                            color: AppColors.whiteColor(),
+                          ),
+                        )
                       ],
                     ),
                   ),

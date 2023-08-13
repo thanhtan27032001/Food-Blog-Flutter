@@ -45,3 +45,9 @@ class RecipeIngredientTagCollection {
   static const String fieldTag = 'tag';
   static const String fieldRecipeId = 'recipeId';
 }
+
+class FavoriteRecipeCollection {
+  static const String collectionName = 'favoriteRecipe';
+  static const String fieldUserId = 'userId';
+  static const String fieldRecipeId = 'recipeId';
+}

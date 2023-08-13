@@ -24,17 +24,21 @@ class RecipeModel {
   late String? videoUrl;
   late List<RecipeStepModel>? stepList; // require
   late List<RecipeIngredientModel>? ingredientList; // require
-  @JsonKey(includeToJson: false)
-  late List<IngredientTagModel>? ingredientTagList;
   late String? status;
   late DateTime? updateDate;
-  late int? numOfLike;
-  late int? numOfComment;
 
+  @JsonKey(includeToJson: false)
+  late int? numOfLike;
+  @JsonKey(includeToJson: false)
+  late int? numOfComment;
+  @JsonKey(includeToJson: false)
+  late List<IngredientTagModel>? ingredientTagList;
   @JsonKey(includeToJson: false)
   late String? imageLocalPath;
   @JsonKey(includeToJson: false)
   late String? videoLocalPath;
+  @JsonKey(includeToJson: false)
+  late String? favoriteRecipeId;
 
   RecipeModel({
     this.recipeId,
@@ -52,6 +56,7 @@ class RecipeModel {
     this.updateDate,
     this.numOfLike,
     this.numOfComment,
+    this.favoriteRecipeId,
   });
 
   Map<String, dynamic> toJson() => _$RecipeModelToJson(this);

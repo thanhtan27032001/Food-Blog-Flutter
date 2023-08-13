@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
+import 'package:food_blog/data/favorite_recipe_data.dart';
 import 'package:food_blog/data/file_data.dart';
 import 'package:food_blog/data/recipe_ingredient_data.dart';
 import 'package:food_blog/data/user_data.dart';
@@ -134,6 +135,7 @@ class RecipeData {
       if (value.data() != null) {
         result = RecipeModel.fromJson(value.data()!);
         result.recipeId = value.id;
+        result.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(result.recipeId);
         if (value.data()?[RecipeCollection.fieldUserId] != null) {
           result.author = await UserData.instance()
               .getUserById(userId: value.data()?[RecipeCollection.fieldUserId]);
@@ -157,6 +159,7 @@ class RecipeData {
           if (doc.data()[RecipeCollection.fieldUserId] != null) {
             recipe.author = await UserData.instance()
                 .getUserById(userId: doc.data()[RecipeCollection.fieldUserId]);
+            recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(doc.id);
             result.add(recipe);
           } else {
             result.add(recipe);
@@ -183,6 +186,7 @@ class RecipeData {
             print(doc.data()[UserCollection.fieldId]);
             recipe.author = await UserData.instance()
                 .getUserById(userId: doc.data()[RecipeCollection.fieldUserId]);
+            recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(doc.id);
             result.add(recipe);
           } else {
             result.add(recipe);
@@ -204,9 +208,9 @@ class RecipeData {
         .then(
       (value) async {
         for (var doc in value.docs) {
-          print(doc.data());
           var recipe = RecipeModel.fromJson(doc.data());
           recipe.recipeId = doc.id;
+          recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(doc.id);
           result.add(recipe);
         }
       },
@@ -236,6 +240,9 @@ class RecipeData {
       recipe.recipeId = value.id;
       recipe.author = await UserData.instance()
           .getUserById(userId: data[RecipeCollection.fieldUserId]);
+      recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(value.id);
+      recipe.favoriteRecipeId =
+          await FavoriteRecipeData.instance().isMyFavoriteRecipe(recipeId);
     });
     return recipe;
   }
@@ -259,6 +266,7 @@ class RecipeData {
             print(doc.data()[UserCollection.fieldId]);
             recipe.author = await UserData.instance()
                 .getUserById(userId: doc.data()[RecipeCollection.fieldUserId]);
+            recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(doc.id);
             result.add(recipe);
           } else {
             result.add(recipe);
