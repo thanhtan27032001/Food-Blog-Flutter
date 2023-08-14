@@ -225,9 +225,9 @@ class UpdateRecipeController extends GetxController {
   }
 
   String? validate() {
-    // if (imageUrl.value == null) {
-    //   return 'Vui lòng chọn ảnh cho công thức.';
-    // }
+    if (newRecipe.value?.imageUrl == null && newRecipe.value?.imageLocalPath == null) {
+      return 'Vui lòng chọn ảnh cho công thức.';
+    }
     if (newRecipe.value?.title == null ||
         newRecipe.value?.title!.trim() == '') {
       return 'Vui lòng nhập tên công thức.';
@@ -274,14 +274,16 @@ class UpdateRecipeController extends GetxController {
         negativeText: 'Lưu nháp',
         onNegative: () {
           print('Lưu nháp');
+          executeUpdateRecipe(context, isDraft: true);
           Get.back(result: resultAddedRecipe);
         },
       ).buildDialog(context).show(context);
     }
   }
 
-  void executeUpdateRecipe(BuildContext context) async {
+  void executeUpdateRecipe(BuildContext context, {bool isDraft = false}) async {
     newRecipe.value?.updateDate = DateTime.now();
+    newRecipe.value?.status = isDraft == true ? RecipeStatus.draft.value : RecipeStatus.public.value;
     bool result = await RecipeData.instance().replaceRecipe(newRecipe.value!);
     if (result == true) {
       Get.back(result: resultAddedRecipe);

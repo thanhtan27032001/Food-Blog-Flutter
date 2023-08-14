@@ -216,7 +216,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                   child: AppCornerCardTextFieldWidget(
                     borderRadius: 6,
                     elevation: 2,
-                    hintText: 'Chuẩn bị*',
+                    hintText: 'Chuẩn bị',
                     inputType: const TextInputType.numberWithOptions(
                         decimal: false, signed: false),
                     onChange: (value) {
@@ -230,7 +230,7 @@ class AddRecipePage extends GetView<AddRecipeController> {
                   child: AppCornerCardTextFieldWidget(
                     borderRadius: 6,
                     elevation: 2,
-                    hintText: 'Thực hiện*',
+                    hintText: 'Thực hiện',
                     inputType: const TextInputType.numberWithOptions(
                         decimal: false, signed: false),
                     onChange: (value) {

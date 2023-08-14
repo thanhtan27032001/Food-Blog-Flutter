@@ -201,7 +201,9 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                 AppCornerCardTextFieldWidget(
                   borderRadius: 6,
                   elevation: 2,
-                  text: controller.newRecipe.value?.serveNum.toString(),
+                  text: controller.newRecipe.value?.serveNum != null
+                      ? controller.newRecipe.value?.serveNum.toString()
+                      : '',
                   hintText: 'Vd: 1',
                   inputType: const TextInputType.numberWithOptions(
                       decimal: false, signed: false),
@@ -229,8 +231,10 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                         borderRadius: 6,
                         elevation: 2,
                         text:
-                            controller.newRecipe.value?.prepareTime.toString(),
-                        hintText: 'Chuẩn bị*',
+                        controller.newRecipe.value?.prepareTime != null
+                            ? controller.newRecipe.value?.prepareTime.toString()
+                            : '',
+                        hintText: 'Chuẩn bị',
                         inputType: const TextInputType.numberWithOptions(
                             decimal: false, signed: false),
                         onChange: (value) {
@@ -244,8 +248,10 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
                       child: AppCornerCardTextFieldWidget(
                         borderRadius: 6,
                         elevation: 2,
-                        text: controller.newRecipe.value?.cookTime.toString(),
-                        hintText: 'Thực hiện*',
+                        text: controller.newRecipe.value?.cookTime != null
+                            ? controller.newRecipe.value?.cookTime.toString()
+                            : '',
+                        hintText: 'Thực hiện',
                         inputType: const TextInputType.numberWithOptions(
                             decimal: false, signed: false),
                         onChange: (value) {
