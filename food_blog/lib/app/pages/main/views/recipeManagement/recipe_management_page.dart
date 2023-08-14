@@ -92,7 +92,7 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
             ),
           );
         } else {
-          return const AppLoadingWidget().build(context);
+          return AppLoadingWidget().build(context);
         }
       },
     );

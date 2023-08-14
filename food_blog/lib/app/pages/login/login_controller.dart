@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_blog/app/components/button/app_filled_corner_button_widget.dart';
+import 'package:food_blog/app/components/loading/app_loading_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
@@ -23,8 +24,10 @@ class LoginController extends GetxController {
   String email = "";
   String password = "";
   RxBool isObscurePassword = true.obs;
+  RxBool isLoading = false.obs;
 
   Future<void> signInWithGoogle(BuildContext context) async {
+    isLoading.value = true;
     UserCredential userCredential = await AuthData.instance().signInWithGoogle();
     if (userCredential.user != null) {
       await UserData.instance().addUser(
@@ -41,14 +44,17 @@ class LoginController extends GetxController {
     else {
       print('đang nhập google thất bại');
     }
+    isLoading.value = false;
   }
 
   Future<void> loginWithAccount() async {
+    isLoading.value = true;
     UserCredential? userCredential = await AuthData.instance().loginWithAccount(email, password);
     if (userCredential != null) {
       UserModel? userLogin = await UserData.instance().getUserByEmail(email: userCredential.user?.email ?? '');
       UserData.instance().setUserLogin(userLogin!);
       Get.off(MainPage());
     }
+    isLoading.value = false;
   }
 }

@@ -571,7 +571,7 @@ class UpdateRecipePage extends GetView<UpdateRecipeController> {
           ),
         );
       } else {
-        return const AppLoadingWidget();
+        return AppLoadingWidget();
       }
     });
   }

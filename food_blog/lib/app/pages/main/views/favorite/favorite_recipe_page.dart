@@ -11,8 +11,16 @@ class FavoriteRecipePage extends GetView<FavoriteRecipeController> {
     return AppMainPageWidget(
       statusBarColor: AppColors.primaryColor(level: 2),
       pageBackgroundColor: Colors.white10,
-      appbar: const AppBarWidget(
+      appbar: AppBarWidget(
         title: 'Công thức yêu thích',
+        actions: [
+          AppIconButtonWidget(
+            icon: const Icon(Icons.refresh, color: Colors.white,),
+            onPressed: () {
+              controller.getMyRecipeList();
+            },
+          )
+        ],
       ).build(context),
       pageBody: _body(context),
     );
@@ -49,7 +57,7 @@ class FavoriteRecipePage extends GetView<FavoriteRecipeController> {
             ),
           );
         } else {
-          return const AppLoadingWidget().build(context);
+          return AppLoadingWidget().build(context);
         }
       },
     );

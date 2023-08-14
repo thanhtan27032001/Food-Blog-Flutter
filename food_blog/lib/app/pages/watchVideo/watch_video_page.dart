@@ -16,7 +16,7 @@ class WatchVideoPage extends GetView<WatchVideoController> {
           return Chewie(controller: controller.chewieController!);
         }
         else {
-          return const AppLoadingWidget();
+          return AppLoadingWidget();
         }
       },),
     );

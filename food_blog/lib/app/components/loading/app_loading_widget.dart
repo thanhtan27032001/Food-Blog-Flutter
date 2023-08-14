@@ -3,7 +3,8 @@ import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 
 class AppLoadingWidget extends StatelessWidget {
-  const AppLoadingWidget({super.key});
+  final String? message;
+  const AppLoadingWidget({super.key, this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class AppLoadingWidget extends StatelessWidget {
         const SizedBox(
           height: 8,
         ),
-        AppTextBody1Widget().setText('Đang tải').build(context),
+        AppTextBody1Widget().setText(message ?? 'Đang tải').build(context),
       ],
     );
   }

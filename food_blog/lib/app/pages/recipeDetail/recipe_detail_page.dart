@@ -271,7 +271,7 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
             ),
           );
         }
-        return const AppLoadingWidget().build(context);
+        return AppLoadingWidget().build(context);
       }),
     );
   }
