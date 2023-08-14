@@ -5,8 +5,6 @@ import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/main/views/home/widget/home_suggestion_widget.dart';
 import 'package:food_blog/app/pages/main/views/home/widget/home_suggestion_with_ingredient_tag_widget.dart';
-import 'package:food_blog/app/pages/main/views/home/widget/recipe_preview_card_lv2_widget.dart';
-import 'package:food_blog/app/pages/recipeDetail/recipe_detail_controller.dart';
 import 'package:food_blog/data/ingredient_data.dart';
 import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
@@ -45,11 +43,14 @@ class HomeController extends GetxController {
   }
 
   Future<void> getRecipeNewestList() async {
-    recipeByIngredientList.value = null;
+    recipeNewestList.value = null;
     recipeNewestList.value = await RecipeData.instance().getNewestRecipeList();
   }
 
   Future<void> getRecipePopularList() async {
+    recipePopularList.value = null;
+    recipePopularList.refresh();
     recipePopularList.value = await RecipeData.instance().getPopularRecipeList();
+    recipePopularList.refresh();
   }
 }

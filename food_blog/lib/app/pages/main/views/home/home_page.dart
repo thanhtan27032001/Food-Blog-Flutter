@@ -47,6 +47,8 @@ class HomePage extends GetWidget<HomeController> {
                 ),
               ),
             ),
+
+            //
             Obx(() => controller.ingredientTagList.value != null
                 ? HomeSuggestionWithTagListWidget(
                     title: 'Các nguyên liệu đang trong mùa',
@@ -63,26 +65,8 @@ class HomePage extends GetWidget<HomeController> {
                         width: double.infinity,
                         height: 200,
                         margin: const EdgeInsets.only(top: 16),
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          shrinkWrap: true,
-                          itemCount:
-                              controller.recipeByIngredientList.value!.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Get.to(() => RecipeDetailPage(),
-                                    arguments: controller.recipeByIngredientList
-                                        .value?[index].recipeId);
-                              },
-                              child: RecipePreviewCardLv2Widget(
-                                controller.recipeByIngredientList.value![index],
-                                cardWidth: 200,
-                                cardHeight: 200,
-                              ),
-                            );
-                          },
-                          scrollDirection: Axis.horizontal,
+                        child: HomeSuggestionWidget(
+                          recipeList: controller.recipeByIngredientList.value!,
                         ),
                       )
                     : Column(
@@ -97,22 +81,44 @@ class HomePage extends GetWidget<HomeController> {
                       ))
                 : const AppLoadingWidget().build(context)),
 
+            // popular recipe
+            Container(
+              margin: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+              child: Row(
+                children: [
+                  AppTextBody2Widget()
+                  .setText('Các công thức phổ biến')
+                  .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                  .build(context),
+                  GestureDetector(onTap: controller.getRecipePopularList, child: const Icon(Icons.refresh, size: 20,)),
+                ],
+              ),
+            ),
             Obx(
               () => controller.recipePopularList.value != null
                   ? HomeSuggestionWidget(
-                      title: 'Các công thức phổ biến',
                       recipeList: controller.recipePopularList.value!,
                     )
                   : const AppLoadingWidget().build(context),
             ),
 
-            // receipt newest suggest
+            Container(
+              margin: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+              child: Row(
+                children: [
+                  AppTextBody2Widget()
+                      .setText('Các công thức mới')
+                      .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                      .build(context),
+                  GestureDetector(onTap: controller.getRecipeNewestList, child: const Icon(Icons.refresh, size: 20,)),
+                ],
+              ),
+            ),
             Obx(
-              () => controller.recipeNewestList.value != null
+                  () => controller.recipeNewestList.value != null
                   ? HomeSuggestionWidget(
-                      title: 'Các công thức mới nhất',
-                      recipeList: controller.recipeNewestList.value!,
-                    )
+                recipeList: controller.recipeNewestList.value!,
+              )
                   : const AppLoadingWidget().build(context),
             ),
           ],
