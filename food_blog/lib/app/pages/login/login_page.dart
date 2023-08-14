@@ -152,7 +152,7 @@ class LoginPage extends GetView<LoginController> {
             ],
           );
         } else {
-          return const AppLoadingWidget();
+          return const AppLoadingWidget(message: 'Đang đăng nhập',);
         }
       }),
     );

@@ -28,7 +28,7 @@ class LoginController extends GetxController {
   RxBool isLoading = false.obs;
 
   Future<void> signInWithGoogle(BuildContext context) async {
-    isLoading.value = true;
+    // isLoading.value = true;
     UserCredential userCredential =
         await AuthData.instance().signInWithGoogle();
     if (userCredential.user != null) {
@@ -36,7 +36,8 @@ class LoginController extends GetxController {
         UserModel(
             email: userCredential.user?.email ?? '',
             nickname: userCredential.user?.displayName ?? 'No name',
-            avatarUrl: userCredential.user?.photoURL),
+            avatarUrl: userCredential.user?.photoURL,
+            loginMethod: LoginMethod.google.value),
       );
       UserModel? userLogin = await UserData.instance()
           .getUserByEmail(email: userCredential.user?.email ?? '');
@@ -45,7 +46,7 @@ class LoginController extends GetxController {
     } else {
       print('đang nhập google thất bại');
     }
-    isLoading.value = false;
+    // isLoading.value = false;
   }
 
   Future<void> loginWithAccount() async {
@@ -75,7 +76,12 @@ class LoginController extends GetxController {
     // if (result[RegisterController.resultEmail] != null && result[RegisterController.resultPassword] != null) {
     //
     // }
-    Get.to(() => RegisterPage());
+    final result = await Get.to(() => RegisterPage());
+    if (result == RegisterController.resultOk) {
+      const GetSnackBar(
+        message: 'Đăng ký tài khoản thành công', duration: Duration(seconds: 2),
+      ).show();
+    }
   }
 
   bool isValidated() {

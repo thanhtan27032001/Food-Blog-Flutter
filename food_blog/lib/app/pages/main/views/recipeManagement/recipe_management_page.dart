@@ -15,7 +15,13 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
         title: 'Quản lý công thức',
         actions: [
           IconButton(
-            onPressed: () async {
+            onPressed: () {
+              controller.getMyRecipeList();
+            },
+            icon: const Icon(Icons.refresh),
+          ),
+          IconButton(
+            onPressed: () {
               controller.gotoAddRecipePage();
             },
             icon: const Icon(Icons.add_circle_outline_rounded),
@@ -92,7 +98,7 @@ class RecipeManagementPage extends GetView<RecipeManagementController> {
             ),
           );
         } else {
-          return AppLoadingWidget().build(context);
+          return const AppLoadingWidget().build(context);
         }
       },
     );

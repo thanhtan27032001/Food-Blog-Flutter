@@ -152,7 +152,7 @@ class RecipeData {
     final List<RecipeModel> result = [];
     await recipeDbRef
         .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
-        .orderBy(RecipeCollection.fieldStatus, descending: false)
+        // .orderBy(RecipeCollection.fieldStatus, descending: false)
         .where(RecipeCollection.fieldStatus, isEqualTo: RecipeStatus.public.value)
         .limit(20)
         .get()
@@ -170,9 +170,9 @@ class RecipeData {
             result.add(recipe);
           }
         }
-        result.sort((a, b) {
-          return a.updateDate!.compareTo(b.updateDate!);
-        },);
+        // result.sort((a, b) {
+        //   return a.updateDate!.compareTo(b.updateDate!);
+        // },);
       },
     ).onError((error, stackTrace) {
       printError(info: 'noooo \n ${error.toString()}');

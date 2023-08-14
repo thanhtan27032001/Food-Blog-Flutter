@@ -1,8 +1,8 @@
 part of 'base_model.dart';
 
 enum LoginMethod {
-  draft('google'),
-  public('email');
+  google('google'),
+  email('email');
 
   const LoginMethod(this.value);
 
