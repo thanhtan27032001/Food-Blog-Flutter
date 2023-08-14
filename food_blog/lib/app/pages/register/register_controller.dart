@@ -12,6 +12,9 @@ import 'package:get/get.dart';
 part 'register_page.dart';
 
 class RegisterController extends GetxController {
+  static const String resultEmail = 'resultEmail';
+  static const String resultPassword = 'resultPassword';
+
   String email = '';
   String password = '';
   String confirmPassword = '';

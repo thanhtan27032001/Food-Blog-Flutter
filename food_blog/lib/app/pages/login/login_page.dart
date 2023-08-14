@@ -127,7 +127,7 @@ class LoginPage extends GetView<LoginController> {
                 margin: const EdgeInsets.only(bottom: 16),
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => RegisterPage());
+                    controller.gotoRegisterPage();
                   },
                   child: RichText(
                     text: TextSpan(

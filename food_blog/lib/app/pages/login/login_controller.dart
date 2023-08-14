@@ -28,20 +28,20 @@ class LoginController extends GetxController {
 
   Future<void> signInWithGoogle(BuildContext context) async {
     isLoading.value = true;
-    UserCredential userCredential = await AuthData.instance().signInWithGoogle();
+    UserCredential userCredential =
+        await AuthData.instance().signInWithGoogle();
     if (userCredential.user != null) {
       await UserData.instance().addUser(
         UserModel(
             email: userCredential.user?.email ?? '',
             nickname: userCredential.user?.displayName ?? 'No name',
-            avatarUrl: userCredential.user?.photoURL
-        ),
+            avatarUrl: userCredential.user?.photoURL),
       );
-      UserModel? userLogin = await UserData.instance().getUserByEmail(email: userCredential.user?.email ?? '');
+      UserModel? userLogin = await UserData.instance()
+          .getUserByEmail(email: userCredential.user?.email ?? '');
       UserData.instance().setUserLogin(userLogin!);
       Get.off(MainPage());
-    }
-    else {
+    } else {
       print('đang nhập google thất bại');
     }
     isLoading.value = false;
@@ -49,12 +49,23 @@ class LoginController extends GetxController {
 
   Future<void> loginWithAccount() async {
     isLoading.value = true;
-    UserCredential? userCredential = await AuthData.instance().loginWithAccount(email, password);
+    UserCredential? userCredential =
+        await AuthData.instance().loginWithAccount(email, password);
     if (userCredential != null) {
-      UserModel? userLogin = await UserData.instance().getUserByEmail(email: userCredential.user?.email ?? '');
+      UserModel? userLogin = await UserData.instance()
+          .getUserByEmail(email: userCredential.user?.email ?? '');
       UserData.instance().setUserLogin(userLogin!);
       Get.off(MainPage());
     }
     isLoading.value = false;
+  }
+
+  Future<void> gotoRegisterPage() async {
+    //TODO: get email, password if register success
+    // final result = await Get.to(() => RegisterPage());
+    // if (result[RegisterController.resultEmail] != null && result[RegisterController.resultPassword] != null) {
+    //
+    // }
+    Get.to(() => RegisterPage());
   }
 }
