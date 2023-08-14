@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
+import 'package:get/get.dart';
 
 class CommentRecipeData {
   static final CommentRecipeData _instance = CommentRecipeData();
@@ -16,8 +17,7 @@ class CommentRecipeData {
       String? recipeId) async {
     final List<RecipeCommentModel> result = [];
     await _dbRef
-        // .orderBy(CommentRecipeCollection.fieldRecipeId)
-        // .orderBy(CommentRecipeCollection.fieldUpdateDate)
+        .orderBy(CommentRecipeCollection.fieldUpdateDate, descending: true)
         .where(CommentRecipeCollection.fieldRecipeId, isEqualTo: recipeId)
         .get()
         .then(
@@ -29,7 +29,9 @@ class CommentRecipeData {
           result.add(comment);
         }
       },
-    );
+    ).onError((error, stackTrace) {
+      error.printError();
+    });
     return result;
   }
 
@@ -51,8 +53,9 @@ class CommentRecipeData {
     return result;
   }
 
-  Future<void> addComment(String recipeId, RecipeCommentModel comment) async {
-    await _dbRef.add(comment.toParam(recipeId));
+  Future<String?> addComment(String recipeId, RecipeCommentModel comment) async {
+    final result = await _dbRef.add(comment.toParam(recipeId));
+    return result.id;
   }
 
   Future<void> deleteComment(RecipeCommentModel comment) async {
@@ -62,5 +65,13 @@ class CommentRecipeData {
   Future<void> updateComment(
       String recipeId, RecipeCommentModel comment) async {
     await _dbRef.doc(comment.id).set(comment.toParam(recipeId));
+  }
+
+  Future<int> countNumOfComment(String? recipeId) async {
+    int result = 0;
+    await _dbRef.orderBy(FavoriteRecipeCollection.fieldRecipeId).where(FavoriteRecipeCollection.fieldRecipeId, isEqualTo: recipeId).get().then((value) {
+      result = value.docs.length;
+    });
+    return result;
   }
 }

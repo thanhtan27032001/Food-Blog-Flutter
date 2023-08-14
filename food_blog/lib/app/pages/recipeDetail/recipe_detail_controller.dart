@@ -60,7 +60,7 @@ class RecipeDetailController extends GetxController {
       }
     }
     else { // add
-      await CommentRecipeData.instance().addComment(recipeId!, myComment.value!);
+      myComment.value?.id = await CommentRecipeData.instance().addComment(recipeId!, myComment.value!);
     }
     commentList.value = await CommentRecipeData.instance().getRecipeCommentList(recipeId);
     commentList.refresh();

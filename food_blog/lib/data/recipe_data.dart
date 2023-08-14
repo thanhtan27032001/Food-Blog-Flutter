@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:food_blog/data/comment_recipe_data.dart';
 import 'package:food_blog/data/data_tree.dart';
 import 'package:food_blog/data/favorite_recipe_data.dart';
 import 'package:food_blog/data/file_data.dart';
@@ -183,12 +184,13 @@ class RecipeData {
     final List<RecipeModel> result = [];
     await recipeDbRef
         // .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
-        .orderBy(RecipeCollection.fieldNumOfLike, descending: true)
+        // .orderBy(RecipeCollection.fieldNumOfLike, descending: true)
         .where(RecipeCollection.fieldStatus, isEqualTo: RecipeStatus.public.value)
-        .limit(20)
+        // .limit(20)
         .get()
         .then(
       (value) async {
+        print('lengt = ${value.size}');
         for (var doc in value.docs) {
           var recipe = RecipeModel.fromJson(doc.data());
           recipe.recipeId = doc.id;
@@ -202,6 +204,9 @@ class RecipeData {
             result.add(recipe);
           }
         }
+        result.sort((a, b) {
+          return -a.numOfLike!.compareTo(b.numOfLike!);
+        },);
       },
     ).onError((error, stackTrace) {
       error.printError();
@@ -253,6 +258,7 @@ class RecipeData {
       recipe.author = await UserData.instance()
           .getUserById(userId: data[RecipeCollection.fieldUserId]);
       recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(value.id);
+      recipe.numOfComment = await CommentRecipeData.instance().countNumOfComment(value.id);
       recipe.favoriteRecipeId =
           await FavoriteRecipeData.instance().isMyFavoriteRecipe(recipeId);
     });
@@ -292,15 +298,16 @@ class RecipeData {
 
   Future<List<RecipeModel>> getRecipeByIngredientList(String tag) async {
     final List<RecipeModel> result = [];
-
-        await RecipeIngredientTagData.instance().getRecipeIdListByTag(tag).then((value) async {
-          for (var recipeId in value) {
-            final recipe = await getRecipeById(recipeId);
-            if (recipe != null) {
-              result.add(recipe);
-            }
-          }
-        });
+    await RecipeIngredientTagData.instance()
+        .getRecipeIdListByTag(tag)
+        .then((value) async {
+      for (var recipeId in value) {
+        final recipe = await getRecipeById(recipeId);
+        if (recipe != null && recipe.status == RecipeStatus.public.value) {
+          result.add(recipe);
+        }
+      }
+    });
     return result;
   }
 }
