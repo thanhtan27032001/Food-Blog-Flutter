@@ -1,5 +1,14 @@
 part of 'base_model.dart';
 
+enum LoginMethod {
+  draft('google'),
+  public('email');
+
+  const LoginMethod(this.value);
+
+  final String value;
+}
+
 @JsonSerializable()
 class UserModel {
   late String? id;
@@ -8,6 +17,7 @@ class UserModel {
   late String? city;
   late String? intro;
   late String? avatarUrl;
+  late String? loginMethod;
 
   UserModel({
     this.id,
@@ -16,6 +26,7 @@ class UserModel {
     this.city,
     this.intro,
     this.avatarUrl,
+    this.loginMethod,
   });
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);

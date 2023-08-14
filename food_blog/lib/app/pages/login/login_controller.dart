@@ -13,6 +13,7 @@ import 'package:food_blog/data/auth_data.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
+import 'package:regexed_validator/regexed_validator.dart';
 
 part 'login_page.dart';
 
@@ -48,16 +49,24 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginWithAccount() async {
-    isLoading.value = true;
-    UserCredential? userCredential =
-        await AuthData.instance().loginWithAccount(email, password);
-    if (userCredential != null) {
-      UserModel? userLogin = await UserData.instance()
-          .getUserByEmail(email: userCredential.user?.email ?? '');
-      UserData.instance().setUserLogin(userLogin!);
-      Get.off(MainPage());
+    if (isValidated()) {
+      isLoading.value = true;
+      UserCredential? userCredential =
+      await AuthData.instance().loginWithAccount(email, password);
+      if (userCredential != null) {
+        UserModel? userLogin = await UserData.instance()
+            .getUserByEmail(email: userCredential.user?.email ?? '');
+        UserData.instance().setUserLogin(userLogin!);
+        Get.off(MainPage());
+      }
+      else {
+        const GetSnackBar(
+          message: 'Tài khoản hoặc mật khẩu không chính xác :(',
+          duration: Duration(seconds: 2),
+        ).show();
+      }
+      isLoading.value = false;
     }
-    isLoading.value = false;
   }
 
   Future<void> gotoRegisterPage() async {
@@ -67,5 +76,30 @@ class LoginController extends GetxController {
     //
     // }
     Get.to(() => RegisterPage());
+  }
+
+  bool isValidated() {
+    if (email.trim() == '') {
+      const GetSnackBar(
+        message: 'Vui lòng nhập email của bạn',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (!validator.email(email)) {
+      const GetSnackBar(
+        message: 'Email của bạn không hợp lệ',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (password.trim() == '') {
+      const GetSnackBar(
+        message: 'Vui lòng nhập mật khẩu của bạn',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    return true;
   }
 }

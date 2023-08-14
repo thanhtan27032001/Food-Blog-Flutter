@@ -8,6 +8,7 @@ import 'package:food_blog/data/auth_data.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
+import 'package:regexed_validator/regexed_validator.dart';
 
 part 'register_page.dart';
 
@@ -22,19 +23,72 @@ class RegisterController extends GetxController {
   RxBool isObscurePassword = true.obs;
   RxBool isObscureConfirmPassword = true.obs;
 
+  bool isValidated() {
+    if (nickname.trim() == '') {
+      const GetSnackBar(
+        message: 'Vui lòng nhập danh xưng của bạn',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (email.trim() == '') {
+      const GetSnackBar(
+        message: 'Vui lòng nhập email của bạn',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (!validator.email(email)) {
+      const GetSnackBar(
+        message: 'Email của bạn không hợp lệ',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (password.trim() == '') {
+      const GetSnackBar(
+        message: 'Vui lòng nhập mật khẩu của bạn',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (confirmPassword.trim() == '') {
+      const GetSnackBar(
+        message: 'Vui lòng nhập mật khẩu xác nhận của bạn',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    if (password != confirmPassword) {
+      const GetSnackBar(
+        message: 'Mật khẩu xác nhận của bạn không khớp',
+        duration: Duration(seconds: 2),
+      ).show();
+      return false;
+    }
+    return true;
+  }
+
   void showDialogRegisterAccount() async {
     final result = await executeRegisterAccount();
-    if (result == true){
+    if (result == true) {
       Get.back();
     }
   }
 
   Future<bool> executeRegisterAccount() async {
-    bool result = false;
-    result = await AuthData.instance().registerAccount(email, password);
-    if (result == true) {
-      UserData.instance().addUser(UserModel(email: email, nickname: nickname));
+    if (isValidated()) {
+      bool result = false;
+      result = await AuthData.instance().registerAccount(email, password);
+      if (result == true) {
+        UserData.instance().addUser(UserModel(email: email, nickname: nickname));
+      } else {
+        const GetSnackBar(
+          message: 'Email đã tồn tại', duration: Duration(seconds: 2),
+        ).show();
+      }
+      return result;
     }
-    return result;
+    return false;
   }
 }

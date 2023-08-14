@@ -62,7 +62,7 @@ class RegisterPage extends GetView<RegisterController> {
                   hintText: 'Email',
                   onChange: (value) => controller.email = value,
                   leadingIcon: Icon(
-                    Icons.account_circle_outlined,
+                    Icons.email_outlined,
                     color: AppColors.grayColor(level: 2),
                   ),
                 ),

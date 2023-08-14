@@ -150,7 +150,7 @@ class LoginPage extends GetView<LoginController> {
           );
         }
         else {
-          return AppLoadingWidget();
+          return const AppLoadingWidget();
         }
       }),
     );
