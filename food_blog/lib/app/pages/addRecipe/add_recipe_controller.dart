@@ -233,21 +233,23 @@ class AddRecipeController extends GetxController {
         negativeText: 'Lưu nháp',
         onNegative: () {
           print('Lưu nháp');
+          executeAddRecipe(context, isDraft: true);
           Get.back(result: resultAddedRecipe);
         },
       ).buildDialog(context).show(context);
     }
   }
 
-  void executeAddRecipe(BuildContext context) async {
+  void executeAddRecipe(BuildContext context, {bool isDraft = false}) async {
     newRecipe.ingredientList = ingredientList.value;
     newRecipe.stepList = stepList.value;
     newRecipe.imageUrl = imageUrl.value;
     newRecipe.videoUrl = videoUrl;
     newRecipe.ingredientTagList = ingredientTagList.value;
     newRecipe.updateDate = DateTime.now();
-    newRecipe.numOfLike = 0;
-    newRecipe.numOfComment = 0;
+    // newRecipe.numOfLike = 0;
+    // newRecipe.numOfComment = 0;
+    newRecipe.status = isDraft == true ? RecipeStatus.draft.value : RecipeStatus.public.value;
     bool result = await RecipeData.instance().addRecipe(newRecipe);
     if (result == true) {
       Get.back(result: resultAddedRecipe);

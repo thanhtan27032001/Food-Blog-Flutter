@@ -7,6 +7,7 @@ import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/addRecipe/add_recipe_controller.dart';
 import 'package:food_blog/app/pages/main/views/recipeManagement/widget/my_recipe_preview_card_widget.dart';
+import 'package:food_blog/app/pages/recipeDetail/recipe_detail_controller.dart';
 import 'package:food_blog/app/pages/updateRecipe/update_recipe_controller.dart';
 import 'package:food_blog/data/data_tree.dart';
 import 'package:food_blog/data/recipe_data.dart';
@@ -122,6 +123,19 @@ class RecipeManagementController extends GetxController {
           duration: Duration(seconds: 2),
         ).show();
       }
+    }
+  }
+
+  void gotoRecipeDetail(int index) {
+    if (myRecipeList.value?[index].canBePublic() == true) {
+      Get.to(() => RecipeDetailPage(),
+          arguments: myRecipeList.value?[index].recipeId);
+    } else {
+      const GetSnackBar(
+        message:
+            'Công thức chưa đủ thông tin để xem chi tiết, thay vào đó bạn có thể vào trang chỉnh sửa',
+        duration: Duration(seconds: 2),
+      ).show();
     }
   }
 }
