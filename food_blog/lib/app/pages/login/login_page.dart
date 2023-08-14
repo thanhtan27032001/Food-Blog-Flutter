@@ -1,7 +1,6 @@
 part of 'login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
-
   @override
   final LoginController controller = Get.put(LoginController());
 
@@ -14,7 +13,7 @@ class LoginPage extends GetView<LoginController> {
       pageBackgroundColor: AppColors.whiteColor(),
       resizeToAvoidBottomInset: false,
       pageBody: Obx(() {
-        if(controller.isLoading.value == false) {
+        if (controller.isLoading.value == false) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -27,6 +26,7 @@ class LoginPage extends GetView<LoginController> {
                 child: AppCornerCardTextFieldWidget(
                   hintText: 'Email',
                   onChange: (value) => controller.email = value,
+                  text: controller.email,
                   leadingIcon: Icon(
                     Icons.account_circle_outlined,
                     color: AppColors.grayColor(level: 2),
@@ -37,8 +37,9 @@ class LoginPage extends GetView<LoginController> {
               Container(
                 margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: Obx(
-                      () => AppCornerCardTextFieldWidget(
+                  () => AppCornerCardTextFieldWidget(
                     hintText: 'Mật khẩu',
+                    text: controller.password,
                     onChange: (value) => controller.password = value,
                     leadingIcon: Icon(
                       Icons.lock_outline_rounded,
@@ -53,7 +54,7 @@ class LoginPage extends GetView<LoginController> {
                     obscureText: controller.isObscurePassword.value,
                     suffixIconOnPress: () {
                       controller.isObscurePassword.value =
-                      !controller.isObscurePassword.value;
+                          !controller.isObscurePassword.value;
                     },
                   ),
                 ),
@@ -82,7 +83,9 @@ class LoginPage extends GetView<LoginController> {
                   text: "Đăng nhập",
                   textColor: AppColors.whiteColor(),
                   buttonColor: AppColors.primaryColor(),
-                  onPressed: () {controller.loginWithAccount();},
+                  onPressed: () {
+                    controller.loginWithAccount();
+                  },
                 ),
               ),
               // or
@@ -148,8 +151,7 @@ class LoginPage extends GetView<LoginController> {
               ),
             ],
           );
-        }
-        else {
+        } else {
           return const AppLoadingWidget();
         }
       }),
