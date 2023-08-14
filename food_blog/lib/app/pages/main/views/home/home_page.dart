@@ -47,7 +47,6 @@ class HomePage extends GetWidget<HomeController> {
                 ),
               ),
             ),
-            // receipt season suggest
             Obx(() => controller.ingredientTagList.value != null
                 ? HomeSuggestionWithTagListWidget(
                     title: 'Các nguyên liệu đang trong mùa',
@@ -59,33 +58,44 @@ class HomePage extends GetWidget<HomeController> {
                   )
                 : AppTextBody1Widget().setText('Đang tải...').build(context)),
             Obx(() => controller.recipeByIngredientList.value != null
-                ? Container(
-                    width: double.infinity,
-                    height: 200,
-                    margin: const EdgeInsets.only(top: 16),
-                    child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      shrinkWrap: true,
-                      itemCount:
-                          controller.recipeByIngredientList.value!.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(() => RecipeDetailPage(),
-                                arguments: controller.recipeByIngredientList
-                                    .value?[index].recipeId);
+                ? (controller.recipeByIngredientList.value!.isNotEmpty
+                    ? Container(
+                        width: double.infinity,
+                        height: 200,
+                        margin: const EdgeInsets.only(top: 16),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          shrinkWrap: true,
+                          itemCount:
+                              controller.recipeByIngredientList.value!.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Get.to(() => RecipeDetailPage(),
+                                    arguments: controller.recipeByIngredientList
+                                        .value?[index].recipeId);
+                              },
+                              child: RecipePreviewCardLv2Widget(
+                                controller.recipeByIngredientList.value![index],
+                                cardWidth: 200,
+                                cardHeight: 200,
+                              ),
+                            );
                           },
-                          child: RecipePreviewCardLv2Widget(
-                            controller.recipeByIngredientList.value![index],
-                            cardWidth: 200,
-                            cardHeight: 200,
+                          scrollDirection: Axis.horizontal,
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          const SizedBox(
+                            height: 32,
                           ),
-                        );
-                      },
-                      scrollDirection: Axis.horizontal,
-                    ),
-                  )
-                : AppTextBody1Widget().setText('Đang tải...').build(context)),
+                          AppTextBody2Widget()
+                              .setText('Oh nooo! Không có công thức phù hợp ;(')
+                              .build(context)
+                        ],
+                      ))
+                : const AppLoadingWidget().build(context)),
 
             Obx(
               () => controller.recipePopularList.value != null
@@ -93,7 +103,7 @@ class HomePage extends GetWidget<HomeController> {
                       title: 'Các công thức phổ biến',
                       recipeList: controller.recipePopularList.value!,
                     )
-                  : AppTextBody1Widget().setText('Đang tải...').build(context),
+                  : const AppLoadingWidget().build(context),
             ),
 
             // receipt newest suggest
@@ -103,7 +113,7 @@ class HomePage extends GetWidget<HomeController> {
                       title: 'Các công thức mới nhất',
                       recipeList: controller.recipeNewestList.value!,
                     )
-                  : AppTextBody1Widget().setText('Đang tải...').build(context),
+                  : const AppLoadingWidget().build(context),
             ),
           ],
         ),

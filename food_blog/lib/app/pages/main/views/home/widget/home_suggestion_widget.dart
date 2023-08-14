@@ -6,12 +6,12 @@ import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
 
 class HomeSuggestionWidget extends GetWidget {
-  final String title;
+  final String? title;
   final List<RecipeModel> recipeList;
 
   const HomeSuggestionWidget({
     super.key,
-    required this.title,
+    this.title,
     required this.recipeList,
   });
 
@@ -23,13 +23,14 @@ class HomeSuggestionWidget extends GetWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            child: AppTextBody2Widget()
-                .setText(title)
-                .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
-                .build(context),
-          ),
+          if (title != null)
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: AppTextBody2Widget()
+                  .setText(title)
+                  .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                  .build(context),
+            ),
           Container(
             width: double.infinity,
             height: 200,

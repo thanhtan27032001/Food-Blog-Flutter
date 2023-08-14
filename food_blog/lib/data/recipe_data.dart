@@ -5,6 +5,7 @@ import 'package:food_blog/data/file_data.dart';
 import 'package:food_blog/data/recipe_ingredient_data.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
+import 'package:get/get.dart';
 
 class RecipeData {
   static final RecipeData _instance = RecipeData();
@@ -88,9 +89,10 @@ class RecipeData {
     bool result = false;
     // replace image
     if (newRecipe.imageLocalPath != null) {
-      FileData.instance().uploadFile(
+      final imageUrl = await FileData.instance().uploadFile(
           fileKey: newRecipe.getRecipeImageKey(),
           filePath: newRecipe.imageLocalPath);
+      newRecipe.imageUrl = imageUrl;
     }
     // replace video
     if (newRecipe.videoLocalPath != null) {
@@ -149,6 +151,8 @@ class RecipeData {
     final List<RecipeModel> result = [];
     await recipeDbRef
         .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
+        .orderBy(RecipeCollection.fieldStatus, descending: false)
+        .where(RecipeCollection.fieldStatus, isEqualTo: RecipeStatus.public.value)
         .limit(20)
         .get()
         .then(
@@ -165,16 +169,22 @@ class RecipeData {
             result.add(recipe);
           }
         }
+        result.sort((a, b) {
+          return a.updateDate!.compareTo(b.updateDate!);
+        },);
       },
-    );
+    ).onError((error, stackTrace) {
+      printError(info: 'noooo \n ${error.toString()}');
+    });
     return result;
   }
 
   Future<List<RecipeModel>> getPopularRecipeList() async {
     final List<RecipeModel> result = [];
     await recipeDbRef
+        // .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
         .orderBy(RecipeCollection.fieldNumOfLike, descending: true)
-        .orderBy(RecipeCollection.fieldUpdateDate, descending: true)
+        .where(RecipeCollection.fieldStatus, isEqualTo: RecipeStatus.public.value)
         .limit(20)
         .get()
         .then(
@@ -193,7 +203,9 @@ class RecipeData {
           }
         }
       },
-    );
+    ).onError((error, stackTrace) {
+      error.printError();
+    });
     return result;
   }
 
@@ -251,7 +263,8 @@ class RecipeData {
     print('start search');
     final List<RecipeModel> result = [];
     await recipeDbRef
-        .orderBy(RecipeCollection.fieldTitle)
+        // .orderBy(RecipeCollection.fieldTitle)
+        .where(RecipeCollection.fieldStatus, isEqualTo: RecipeStatus.public.value)
         .get()
         .then((value) async {
       for (var doc in value.docs) {
@@ -279,14 +292,15 @@ class RecipeData {
 
   Future<List<RecipeModel>> getRecipeByIngredientList(String tag) async {
     final List<RecipeModel> result = [];
-    final recipeIdList =
-        await RecipeIngredientTagData.instance().getRecipeIdListByTag(tag);
-    for (var recipeId in recipeIdList) {
-      final recipe = await getRecipeById(recipeId);
-      if (recipe != null) {
-        result.add(recipe);
-      }
-    }
+
+        await RecipeIngredientTagData.instance().getRecipeIdListByTag(tag).then((value) async {
+          for (var recipeId in value) {
+            final recipe = await getRecipeById(recipeId);
+            if (recipe != null) {
+              result.add(recipe);
+            }
+          }
+        });
     return result;
   }
 }
