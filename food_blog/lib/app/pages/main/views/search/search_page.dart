@@ -34,6 +34,9 @@ class SearchPage extends GetView<SearchController> {
               },
               hintText: 'Gõ công thức cần tìm',
               controller: controller.searchController.value,
+              backgroundColor: AppColors.grayColor(level: 0),
+              elevation: 0,
+              autofocus: true,
               onChange: (String value) {
                 controller.searchController.refresh();
                 controller.searchRecipe();

@@ -1,7 +1,9 @@
 part of 'home_controller.dart';
 
 class HomePage extends GetWidget<HomeController> {
-  HomePage({super.key});
+  HomePage({super.key, required MainController mainController}){
+    controller.mainController = mainController;
+  }
 
   @override
   final controller = Get.put(HomeController());
@@ -18,16 +20,19 @@ class HomePage extends GetWidget<HomeController> {
             // search bar
             Container(
               width: double.infinity,
-              margin: const EdgeInsets.fromLTRB(16, 16, 16, 4),
+              margin: const EdgeInsets.fromLTRB(20, 20, 20, 4),
               child: FilledButton(
-                onPressed: () {},
+                onPressed: () {
+                  print('go go go');
+                  controller.mainController.gotoSearchPage();
+                },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
                       AppColors.grayColor(level: 0)),
                 ),
-                child: SizedBox(
+                child: Container(
                   width: double.infinity,
-                  height: 50,
+                  padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
                   child: Row(
                     children: [
                       Icon(
@@ -35,9 +40,9 @@ class HomePage extends GetWidget<HomeController> {
                         color: AppColors.grayColor(level: 2),
                       ),
                       const SizedBox(
-                        width: 4,
+                        width: 8,
                       ),
-                      AppTextBody1Widget()
+                      AppTextBody2Widget()
                           .setText('Gõ nguyên liệu để tìm')
                           .setTextAlign(TextAlign.start)
                           .setColor(AppColors.grayColor(level: 2))

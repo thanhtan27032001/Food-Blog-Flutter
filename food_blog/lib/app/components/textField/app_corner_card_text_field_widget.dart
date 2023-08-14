@@ -89,6 +89,7 @@ class AppCornerCardTextFieldWidget extends GetView {
                 focusNode: _focusNode,
                 textInputAction: _textInputAction,
                 textAlign: TextAlign.left,
+                // style: const TextStyle(fontSize: AppTextStyle.fontSizeBody2),
                 obscureText: _obscureText ?? false,
                 cursorColor: AppColors.secondaryColor(),
                 onFieldSubmitted: _onFieldSubmitted,

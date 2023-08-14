@@ -13,18 +13,24 @@ part 'main_page.dart';
 
 class MainController extends GetxController{
   final RxInt _currentIndex = 0.obs;
-  final List<Widget> _page = [
-    HomePage(),
-    SearchPage(),
-    RecipeManagementPage(),
-    FavoriteRecipePage(),
-    AccountPage(),
-  ];
+  late final List<Widget> _page;
 
   @override
   void onInit() {
     super.onInit();
     print(UserData.instance().getUserLogin()?.id);
     print(UserData.instance().getUserLogin()?.nickname);
+    _page = [
+      HomePage(mainController: this,),
+      SearchPage(),
+      RecipeManagementPage(),
+      FavoriteRecipePage(),
+      AccountPage(),
+    ];
+  }
+
+  void gotoSearchPage() {
+    _currentIndex.value = 1;
+    print('go to search page');
   }
 }
