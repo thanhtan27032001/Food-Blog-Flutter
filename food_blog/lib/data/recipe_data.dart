@@ -217,9 +217,9 @@ class RecipeData {
   Future<List<RecipeModel>> getMyRecipeList() async {
     final List<RecipeModel> result = [];
     await recipeDbRef
-        .orderBy(RecipeCollection.fieldUserId)
         .where(RecipeCollection.fieldUserId,
-            isEqualTo: UserData.instance().getUserLogin()!.id,
+            isEqualTo: UserData.instance().getUserLogin()!.id)
+        .where(RecipeCollection.fieldStatus,
             isNotEqualTo: RecipeStatus.archive.value)
         .get()
         .then(
@@ -227,11 +227,38 @@ class RecipeData {
         for (var doc in value.docs) {
           var recipe = RecipeModel.fromJson(doc.data());
           recipe.recipeId = doc.id;
-          recipe.numOfLike = await FavoriteRecipeData.instance().countNumOfLike(doc.id);
+          recipe.numOfLike =
+              await FavoriteRecipeData.instance().countNumOfLike(doc.id);
           result.add(recipe);
         }
       },
-    );
+    ).onError((error, stackTrace) {
+      error.printError();
+    });
+    return result;
+  }
+
+  Future<List<RecipeModel>> getMyArchivedRecipeList() async {
+    final List<RecipeModel> result = [];
+    await recipeDbRef
+        .where(RecipeCollection.fieldUserId,
+            isEqualTo: UserData.instance().getUserLogin()!.id)
+        .where(RecipeCollection.fieldStatus,
+            isEqualTo: RecipeStatus.archive.value)
+        .get()
+        .then(
+      (value) async {
+        for (var doc in value.docs) {
+          var recipe = RecipeModel.fromJson(doc.data());
+          recipe.recipeId = doc.id;
+          recipe.numOfLike =
+              await FavoriteRecipeData.instance().countNumOfLike(doc.id);
+          result.add(recipe);
+        }
+      },
+    ).onError((error, stackTrace) {
+      error.printError();
+    });
     return result;
   }
 
