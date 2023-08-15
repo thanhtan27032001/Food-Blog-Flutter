@@ -7,6 +7,7 @@ import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/components/textField/app_corner_card_text_field_widget.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
+import 'package:food_blog/app/pages/userWall/user_wall_controller.dart';
 import 'package:food_blog/data/comment_recipe_data.dart';
 import 'package:food_blog/data/favorite_recipe_data.dart';
 import 'package:food_blog/data/recipe_data.dart';
@@ -64,5 +65,11 @@ class RecipeDetailController extends GetxController {
     }
     commentList.value = await CommentRecipeData.instance().getRecipeCommentList(recipeId);
     commentList.refresh();
+  }
+
+  void gotoUserWall(String? userId) {
+    if (userId != null) {
+      Get.to(() => UserWallPage(), arguments: userId);
+    }
   }
 }

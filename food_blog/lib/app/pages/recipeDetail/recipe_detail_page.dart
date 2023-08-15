@@ -77,7 +77,8 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                               avtUrl: controller
                                   .recipeModel.value?.author?.avatarUrl,
                               size: 48,
-                              onPress: () {}),
+                              onPress: () {controller.gotoUserWall(controller
+                                  .recipeModel.value?.author?.id);}),
                           const SizedBox(
                             width: 8,
                           ),

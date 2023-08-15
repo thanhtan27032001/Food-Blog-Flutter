@@ -39,7 +39,9 @@ class UserData {
 
   Future<UserModel?> getUserById({required String userId}) async {
     final data = await userDbRef.doc(userId).get();
-    return data.data() != null ? UserModel.fromJson(data.data()!) : null;
+    return data.data() != null
+        ? UserModel.fromJson({...data.data()!, UserCollection.fieldId: data.id})
+        : null;
   }
 
   Future<UserModel?> getUserByEmail({required String email}) async {

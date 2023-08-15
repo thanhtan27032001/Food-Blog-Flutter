@@ -11,6 +11,7 @@ enum LoginMethod {
 
 @JsonSerializable()
 class UserModel {
+  @JsonKey(includeToJson: false)
   late String? id;
   late String email;
   late String nickname;
