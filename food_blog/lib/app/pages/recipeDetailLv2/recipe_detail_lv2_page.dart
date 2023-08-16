@@ -1,10 +1,10 @@
-part of 'recipe_detail_controller.dart';
+part of 'recipe_detail_lv2_controller.dart';
 
-class RecipeDetailPage extends GetView<RecipeDetailController> {
-  RecipeDetailPage({super.key});
+class RecipeDetailLv2Page extends GetView<RecipeDetailLv2Controller> {
+  RecipeDetailLv2Page({super.key});
 
   @override
-  final controller = Get.put(RecipeDetailController());
+  final controller = Get.put(RecipeDetailLv2Controller());
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +79,10 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                       child: Row(
                         children: [
                           AppAvatarWidget(
-                              avtUrl: controller
-                                  .recipeModel.value?.author?.avatarUrl,
-                              size: 48,
-                              onPress: () {
-                                controller.gotoUserWall(
-                                    controller.recipeModel.value?.author?.id);
-                              }),
+                            avtUrl:
+                                controller.recipeModel.value?.author?.avatarUrl,
+                            size: 48,
+                          ),
                           const SizedBox(
                             width: 8,
                           ),
@@ -279,7 +276,7 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
             ),
           );
         }
-        return const AppLoadingWidget().build(context);
+        return AppLoadingWidget().build(context);
       }),
     );
   }
