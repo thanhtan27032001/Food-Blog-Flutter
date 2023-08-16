@@ -22,7 +22,6 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                   // app bar
                   Container(
                     width: double.infinity,
-                    height: 50,
                     color: AppColors.primaryColor(),
                     child: Row(
                       children: [
@@ -34,16 +33,22 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                           iconSize: 16,
                           color: AppColors.whiteColor(),
                         ),
-                        AppTextBody1Widget()
-                            .setText(controller.recipeModel.value?.title!)
-                            .setTextStyle(
-                              const TextStyle(
-                                // fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            )
-                            .build(context),
-                        const Spacer(),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: AppTextBody1Widget()
+                                .setText(controller.recipeModel.value?.title!)
+                                .setMaxLines(1)
+                                .setTextOverFlow(TextOverflow.ellipsis)
+                                .setTextStyle(
+                                  const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                )
+                                .build(context),
+                          ),
+                        ),
                         AppIconButtonWidget(
                           onPressed: () {
                             controller.changeFavoriteStatus();
@@ -77,8 +82,10 @@ class RecipeDetailPage extends GetView<RecipeDetailController> {
                               avtUrl: controller
                                   .recipeModel.value?.author?.avatarUrl,
                               size: 48,
-                              onPress: () {controller.gotoUserWall(controller
-                                  .recipeModel.value?.author?.id);}),
+                              onPress: () {
+                                controller.gotoUserWall(
+                                    controller.recipeModel.value?.author?.id);
+                              }),
                           const SizedBox(
                             width: 8,
                           ),

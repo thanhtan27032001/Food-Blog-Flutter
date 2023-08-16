@@ -282,6 +282,7 @@ class UpdateRecipeController extends GetxController {
   }
 
   void executeUpdateRecipe(BuildContext context, {bool isDraft = false}) async {
+    newRecipe.value?.title = newRecipe.value?.title?.trim();
     newRecipe.value?.updateDate = DateTime.now();
     newRecipe.value?.status = isDraft == true ? RecipeStatus.draft.value : RecipeStatus.public.value;
     bool result = await RecipeData.instance().replaceRecipe(newRecipe.value!);

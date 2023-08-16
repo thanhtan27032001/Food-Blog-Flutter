@@ -42,6 +42,8 @@ class MyRecipePreviewCardWidget extends GetView {
                     children: [
                       AppTextBody1Widget()
                           .setText(recipe.title)
+                          .setMaxLines(1)
+                          .setTextOverFlow(TextOverflow.ellipsis)
                           .setTextStyle(
                               const TextStyle(fontWeight: FontWeight.bold))
                           .build(context),
