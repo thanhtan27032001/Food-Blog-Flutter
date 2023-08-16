@@ -11,21 +11,21 @@ enum LoginMethod {
 
 @JsonSerializable()
 class UserModel {
-  late String email;
-  late String nickname;
-  late String? city;
-  late String? intro;
-  late String? avatarUrl;
-  late String? loginMethod;
+  String email;
+  String nickname;
+  String? city;
+  String? intro;
+  String? avatarUrl;
+  String? loginMethod;
 
   @JsonKey(includeToJson: false)
-  late String? id;
+  String? id;
   @JsonKey(includeToJson: false)
-  late String? numOfFollowing;
+  int? numOfFollowing;
   @JsonKey(includeToJson: false)
-  late String? numOfFollowed;
+  int? numOfFollowed;
   @JsonKey(includeToJson: false)
-  late String? numOfRecipe;
+  int? numOfRecipe;
 
   UserModel({
     this.id,

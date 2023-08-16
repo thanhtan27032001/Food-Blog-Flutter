@@ -51,7 +51,7 @@ class UserWallPage extends GetView<UserWallController> {
                     .build(context),
                 const SizedBox(height: 4),
                 FilledButton(
-                  onPressed: () {},
+                  onPressed: () {controller.followUser();},
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all(
                         const RoundedRectangleBorder(
@@ -74,7 +74,14 @@ class UserWallPage extends GetView<UserWallController> {
                     children: [
                       Column(
                         children: [
-                          AppTextBody2Widget().setText('xxx').build(context),
+                          AppTextBody2Widget()
+                              .setText(
+                                  controller.userModel.value?.numOfRecipe !=
+                                          null
+                                      ? controller.userModel.value?.numOfRecipe
+                                          .toString()
+                                      : '0')
+                              .build(context),
                           const SizedBox(
                             height: 4,
                           ),
@@ -87,7 +94,11 @@ class UserWallPage extends GetView<UserWallController> {
                       ),
                       Column(
                         children: [
-                          AppTextBody2Widget().setText('xxx').build(context),
+                          AppTextBody2Widget().setText(controller.userModel.value?.numOfFollowed !=
+                              null
+                              ? controller.userModel.value?.numOfFollowed
+                              .toString()
+                              : '0').build(context),
                           const SizedBox(
                             height: 4,
                           ),
@@ -100,7 +111,11 @@ class UserWallPage extends GetView<UserWallController> {
                       ),
                       Column(
                         children: [
-                          AppTextBody2Widget().setText('xxx').build(context),
+                          AppTextBody2Widget().setText(controller.userModel.value?.numOfFollowing !=
+                              null
+                              ? controller.userModel.value?.numOfFollowing
+                              .toString()
+                              : '0').build(context),
                           const SizedBox(
                             height: 4,
                           ),
