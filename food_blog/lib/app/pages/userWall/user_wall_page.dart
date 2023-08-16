@@ -53,14 +53,19 @@ class UserWallPage extends GetView<UserWallController> {
                 FilledButton(
                   onPressed: () {},
                   style: ButtonStyle(
-                    shape: MaterialStateProperty.all(const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)))),
+                    shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(4)))),
                     backgroundColor:
                         MaterialStateProperty.all(AppColors.primaryColor()),
                   ),
-                  child: AppTextBody2Widget().setText('Theo dõi').build(context),
+                  child:
+                      AppTextBody2Widget().setText('Theo dõi').build(context),
                 ),
-                const SizedBox(height: 32,),
+                const SizedBox(
+                  height: 32,
+                ),
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -75,7 +80,8 @@ class UserWallPage extends GetView<UserWallController> {
                           ),
                           AppTextBody2Widget()
                               .setText('Công thức')
-                              .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
                               .build(context),
                         ],
                       ),
@@ -87,7 +93,8 @@ class UserWallPage extends GetView<UserWallController> {
                           ),
                           AppTextBody2Widget()
                               .setText('Người theo dõi')
-                              .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
                               .build(context),
                         ],
                       ),
@@ -99,7 +106,8 @@ class UserWallPage extends GetView<UserWallController> {
                           ),
                           AppTextBody2Widget()
                               .setText('Đang theo dõi')
-                              .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
                               .build(context),
                         ],
                       ),
@@ -107,11 +115,34 @@ class UserWallPage extends GetView<UserWallController> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.fromLTRB(16, 32, 16, 0),
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(top: 16),
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on_outlined),
+                          AppTextBody2Widget()
+                              .setText(controller.userModel.value?.city)
+                              .setTextStyle(
+                                  const TextStyle(fontWeight: FontWeight.bold))
+                              .build(context),
+                        ],
+                      ),
+                      AppTextBody2Widget()
+                          .setText(controller.userModel.value?.intro)
+                          .build(context),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: const Divider(thickness: 1, height: 0),
                 ),
                 Obx(
-                      () {
+                  () {
                     if (controller.myFavoriteRecipeList.value != null) {
                       return SingleChildScrollView(
                         physics: const NeverScrollableScrollPhysics(),
@@ -120,14 +151,16 @@ class UserWallPage extends GetView<UserWallController> {
                           child: Wrap(
                             children: List.generate(
                               controller.myFavoriteRecipeList.value!.length,
-                                  (index) => FractionallySizedBox(
+                              (index) => FractionallySizedBox(
                                 widthFactor: 0.5,
                                 child: LayoutBuilder(
                                   builder: (context, constraints) => Padding(
                                     padding: const EdgeInsets.all(2),
                                     child: RecipePreviewCardLv2Widget(
-                                      controller.myFavoriteRecipeList.value![index],
-                                      onPressed: () => controller.gotoRecipeDetail(index),
+                                      controller
+                                          .myFavoriteRecipeList.value![index],
+                                      onPressed: () =>
+                                          controller.gotoRecipeDetail(index),
                                     ),
                                   ),
                                 ),
@@ -139,7 +172,9 @@ class UserWallPage extends GetView<UserWallController> {
                     } else {
                       return Column(
                         children: [
-                          const SizedBox(height: 32,),
+                          const SizedBox(
+                            height: 32,
+                          ),
                           const AppLoadingWidget().build(context),
                         ],
                       );

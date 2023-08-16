@@ -61,4 +61,10 @@ class UserData {
   UserModel? getUserLogin() {
     return userLogin;
   }
+
+  Future<int> countUserNumOfFollowing(String? userId) async {
+    int result = 0;
+
+    return result;
+  }
 }

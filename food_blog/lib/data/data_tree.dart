@@ -59,3 +59,9 @@ class CommentRecipeCollection {
   static const String fieldComment = 'comment';
   static const String fieldUpdateDate = 'updateDate';
 }
+
+class FollowCollection {
+  static const String collectionName = 'follow';
+  static const String fieldUserFollowedId = 'userFollowedId';
+  static const String fieldUserFollowingId = 'userFollowingId';
+}
