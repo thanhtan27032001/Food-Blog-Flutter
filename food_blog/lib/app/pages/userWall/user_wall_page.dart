@@ -50,19 +50,14 @@ class UserWallPage extends GetView<UserWallController> {
                     .setColor(AppColors.grayColor(level: 2))
                     .build(context),
                 const SizedBox(height: 4),
-                FilledButton(
-                  onPressed: () {controller.followUser();},
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all(
-                        const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(4)))),
-                    backgroundColor:
-                        MaterialStateProperty.all(AppColors.primaryColor()),
-                  ),
-                  child:
-                      AppTextBody2Widget().setText('Theo dõi').build(context),
-                ),
+                Obx(() {
+                  return AppFollowButtonWidget(
+                      onPressed: () {
+                        controller.changeFollowUser();
+                      },
+                      isFollowed: controller.isFollowed.value)
+                      .build(context);
+                }),
                 const SizedBox(
                   height: 32,
                 ),
@@ -94,11 +89,14 @@ class UserWallPage extends GetView<UserWallController> {
                       ),
                       Column(
                         children: [
-                          AppTextBody2Widget().setText(controller.userModel.value?.numOfFollowed !=
-                              null
-                              ? controller.userModel.value?.numOfFollowed
-                              .toString()
-                              : '0').build(context),
+                          AppTextBody2Widget()
+                              .setText(controller
+                                          .userModel.value?.numOfFollowed !=
+                                      null
+                                  ? controller.userModel.value?.numOfFollowed
+                                      .toString()
+                                  : '0')
+                              .build(context),
                           const SizedBox(
                             height: 4,
                           ),
@@ -111,11 +109,14 @@ class UserWallPage extends GetView<UserWallController> {
                       ),
                       Column(
                         children: [
-                          AppTextBody2Widget().setText(controller.userModel.value?.numOfFollowing !=
-                              null
-                              ? controller.userModel.value?.numOfFollowing
-                              .toString()
-                              : '0').build(context),
+                          AppTextBody2Widget()
+                              .setText(controller
+                                          .userModel.value?.numOfFollowing !=
+                                      null
+                                  ? controller.userModel.value?.numOfFollowing
+                                      .toString()
+                                  : '0')
+                              .build(context),
                           const SizedBox(
                             height: 4,
                           ),
@@ -174,8 +175,7 @@ class UserWallPage extends GetView<UserWallController> {
                                     builder: (context, constraints) => Padding(
                                       padding: const EdgeInsets.all(2),
                                       child: RecipePreviewCardLv2Widget(
-                                        controller
-                                            .recipeList.value![index],
+                                        controller.recipeList.value![index],
                                         onPressed: () =>
                                             controller.gotoRecipeDetail(index),
                                       ),

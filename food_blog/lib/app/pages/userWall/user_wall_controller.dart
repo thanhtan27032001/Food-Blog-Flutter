@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_blog/app/components/appBar/app_bar_widget.dart';
 import 'package:food_blog/app/components/avatar/app_avatar_widget.dart';
 import 'package:food_blog/app/components/button/app_icon_button_widget.dart';
+import 'package:food_blog/app/components/followButton/app_follow_button_widget.dart';
 import 'package:food_blog/app/components/loading/app_loading_widget.dart';
 import 'package:food_blog/app/components/mainPage/app_main_page_widget.dart';
 import 'package:food_blog/app/components/text/app_text_base_builder.dart';
@@ -18,6 +19,7 @@ part 'user_wall_page.dart';
 
 class UserWallController extends GetxController {
   String? userId;
+  RxBool isFollowed = false.obs;
   Rxn<UserModel> userModel = Rxn();
   Rxn<List<RecipeModel>> recipeList = Rxn();
 
@@ -32,8 +34,13 @@ class UserWallController extends GetxController {
   Future<void> getUserData() async {
     if (userId != null) {
       userModel.value = await UserData.instance().getUserById(userId: userId!);
-      userModel.value?.numOfFollowed = await FollowData.instance().countNumOfFollowed(userId);
-      userModel.value?.numOfFollowing = await FollowData.instance().countNumOfFollowing(userId);
+      userModel.value?.numOfFollowed =
+          await FollowData.instance().countNumOfFollowed(userId);
+      userModel.value?.numOfFollowing =
+          await FollowData.instance().countNumOfFollowing(userId);
+      isFollowed.value = await FollowData.instance().isFollowed(
+          followingUserId: UserData.instance().userLogin?.id,
+          followedUserId: userId);
     }
   }
 
@@ -50,10 +57,25 @@ class UserWallController extends GetxController {
         arguments: recipeList.value?[index].recipeId);
   }
 
-  Future<void> followUser() async {
-    await FollowData.instance().followUser(
-        followedUserId: userId,
-        followingUserId: UserData.instance().userLogin?.id);
-    const GetSnackBar(message: 'Theo dõi thành công', duration: Duration(seconds: 2),).show();
+  Future<void> changeFollowUser() async {
+    if (isFollowed.value == false) {
+      final result = await FollowData.instance().followUser(
+          followedUserId: userId,
+          followingUserId: UserData.instance().userLogin?.id);
+      if (result == true) {
+        isFollowed.value = true;
+        userModel.value?.numOfFollowed = userModel.value!.numOfFollowed! + 1;
+        userModel.refresh();
+      }
+    } else {
+      final result = await FollowData.instance().unfollowUser(
+          followedUserId: userId,
+          followingUserId: UserData.instance().userLogin?.id);
+      if (result == true) {
+        isFollowed.value = false;
+        userModel.value?.numOfFollowed = userModel.value!.numOfFollowed! - 1;
+        userModel.refresh();
+      }
+    }
   }
 }

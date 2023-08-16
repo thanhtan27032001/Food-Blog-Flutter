@@ -53,25 +53,62 @@ class FollowData {
     return result;
   }
 
+  Future<bool> unfollowUser(
+      {String? followedUserId, String? followingUserId}) async {
+    bool result = false;
+    late final String? idFollow;
+    if (followingUserId != null && followedUserId != null) {
+      await _dbRef
+          .where(
+            FollowCollection.fieldUserFollowedId,
+            isEqualTo: followedUserId,
+          )
+          .where(
+            FollowCollection.fieldUserFollowingId,
+            isEqualTo: followingUserId,
+          )
+          .get()
+          .then(
+        (value) {
+          if (value.docs.isNotEmpty) {
+            idFollow = value.docs[0].id;
+          }
+        },
+      );
+    }
+    if (idFollow != null) {
+      await _dbRef.doc(idFollow).delete().then((value) {
+        result = true;
+      });
+    }
+    return result;
+  }
+
   Future<bool> isFollowed(
       {String? followedUserId, String? followingUserId}) async {
     bool result = false;
-    await _dbRef
-        .where(
-          FollowCollection.fieldUserFollowedId,
-          isEqualTo: followedUserId,
-        )
-        .where(FollowCollection.fieldUserFollowingId,
-            isNotEqualTo: followingUserId)
-        .get()
-        .then((value) {
-      if (value.size > 0) {
-        result = true;
-      }
-    }).onError((error, stackTrace) {
-      result = false;
-      error.printError();
-    });
+    if (followingUserId != null && followedUserId != null) {
+      await _dbRef
+          .where(
+            FollowCollection.fieldUserFollowedId,
+            isEqualTo: followedUserId,
+          )
+          .where(FollowCollection.fieldUserFollowingId,
+              isEqualTo: followingUserId)
+          .get()
+          .then(
+        (value) {
+          if (value.size > 0) {
+            result = true;
+          }
+        },
+      ).onError(
+        (error, stackTrace) {
+          result = false;
+          error.printError();
+        },
+      );
+    }
     return result;
   }
 }
