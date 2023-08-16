@@ -337,4 +337,31 @@ class RecipeData {
     });
     return result;
   }
+
+  Future<List<RecipeModel>> getOtherUserRecipeList(String? userId, {UserModel? author}) async {
+    final List<RecipeModel> result = [];
+    if (userId != null) {
+      await recipeDbRef
+          .where(RecipeCollection.fieldUserId,
+          isEqualTo: userId)
+          .where(RecipeCollection.fieldStatus,
+          isEqualTo: RecipeStatus.public.value)
+          .get()
+          .then(
+            (value) async {
+          for (var doc in value.docs) {
+            var recipe = RecipeModel.fromJson(doc.data());
+            recipe.recipeId = doc.id;
+            recipe.author = author;
+            recipe.numOfLike =
+            await FavoriteRecipeData.instance().countNumOfLike(doc.id);
+            result.add(recipe);
+          }
+        },
+      ).onError((error, stackTrace) {
+        error.printError();
+      });
+    }
+    return result;
+  }
 }

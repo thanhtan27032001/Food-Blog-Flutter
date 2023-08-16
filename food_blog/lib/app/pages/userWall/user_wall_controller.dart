@@ -8,7 +8,7 @@ import 'package:food_blog/app/components/text/app_text_base_builder.dart';
 import 'package:food_blog/app/configs/app_colors.dart';
 import 'package:food_blog/app/pages/main/views/home/widget/recipe_preview_card_lv2_widget.dart';
 import 'package:food_blog/app/pages/recipeDetail/recipe_detail_controller.dart';
-import 'package:food_blog/data/favorite_recipe_data.dart';
+import 'package:food_blog/data/recipe_data.dart';
 import 'package:food_blog/data/user_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
@@ -18,13 +18,14 @@ part 'user_wall_page.dart';
 class UserWallController extends GetxController {
   String? userId;
   Rxn<UserModel> userModel = Rxn();
-  Rxn<List<RecipeModel>> myFavoriteRecipeList = Rxn();
+  Rxn<List<RecipeModel>> recipeList = Rxn();
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     userId = Get.arguments;
-    getUserData();
-    getMyRecipeList();
+    await getUserData();
+    getUserRecipeList();
   }
 
   Future<void> getUserData() async {
@@ -33,13 +34,14 @@ class UserWallController extends GetxController {
     }
   }
 
-  Future<void> getMyRecipeList() async {
-    myFavoriteRecipeList.value = await FavoriteRecipeData.instance().getMyFavoriteRecipeList();
-    myFavoriteRecipeList.refresh();
+  Future<void> getUserRecipeList() async {
+    recipeList.value = await RecipeData.instance()
+        .getOtherUserRecipeList(userId, author: userModel.value);
+    recipeList.refresh();
   }
 
   void gotoRecipeDetail(int index) {
     Get.to(() => RecipeDetailPage(),
-        arguments: myFavoriteRecipeList.value?[index].recipeId);
+        arguments: recipeList.value?[index].recipeId);
   }
 }

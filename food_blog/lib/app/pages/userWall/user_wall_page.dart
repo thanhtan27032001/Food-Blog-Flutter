@@ -33,7 +33,7 @@ class UserWallPage extends GetView<UserWallController> {
     return Obx(() {
       if (controller.userModel.value != null) {
         return RefreshIndicator(
-          onRefresh: controller.getMyRecipeList,
+          onRefresh: controller.getUserRecipeList,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -46,7 +46,7 @@ class UserWallPage extends GetView<UserWallController> {
                 ).build(context),
                 const SizedBox(height: 16),
                 AppTextBody2Widget()
-                    .setText(UserData.instance().getUserLogin()?.email)
+                    .setText(controller.userModel.value?.email)
                     .setColor(AppColors.grayColor(level: 2))
                     .build(context),
                 const SizedBox(height: 4),
@@ -143,24 +143,27 @@ class UserWallPage extends GetView<UserWallController> {
                 ),
                 Obx(
                   () {
-                    if (controller.myFavoriteRecipeList.value != null) {
-                      return SingleChildScrollView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Wrap(
-                            children: List.generate(
-                              controller.myFavoriteRecipeList.value!.length,
-                              (index) => FractionallySizedBox(
-                                widthFactor: 0.5,
-                                child: LayoutBuilder(
-                                  builder: (context, constraints) => Padding(
-                                    padding: const EdgeInsets.all(2),
-                                    child: RecipePreviewCardLv2Widget(
-                                      controller
-                                          .myFavoriteRecipeList.value![index],
-                                      onPressed: () =>
-                                          controller.gotoRecipeDetail(index),
+                    if (controller.recipeList.value != null) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: SingleChildScrollView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Wrap(
+                              children: List.generate(
+                                controller.recipeList.value!.length,
+                                (index) => FractionallySizedBox(
+                                  widthFactor: 0.5,
+                                  child: LayoutBuilder(
+                                    builder: (context, constraints) => Padding(
+                                      padding: const EdgeInsets.all(2),
+                                      child: RecipePreviewCardLv2Widget(
+                                        controller
+                                            .recipeList.value![index],
+                                        onPressed: () =>
+                                            controller.gotoRecipeDetail(index),
+                                      ),
                                     ),
                                   ),
                                 ),
