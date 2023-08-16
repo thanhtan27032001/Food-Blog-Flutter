@@ -97,6 +97,34 @@ class AccountPage extends GetView<AccountController> {
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
+            onPressed: () {Get.to(()=>FollowManagementPage());},
+            style: ElevatedButton.styleFrom(
+                elevation: 2, backgroundColor: AppColors.whiteColor()),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Row(
+                children: [
+                  const Icon(Icons.archive, color: Colors.black,),
+                  const SizedBox(width: 8,),
+                  AppTextBody1Widget()
+                      .setText('Quản lý theo dõi')
+                      .setColor(AppColors.blackColor())
+                      .build(context),
+                  const Spacer(),
+                  Icon(
+                    Icons.keyboard_arrow_right_rounded,
+                    color: AppColors.blackColor(),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
                 elevation: 2, backgroundColor: AppColors.whiteColor()),

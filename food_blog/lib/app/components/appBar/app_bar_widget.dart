@@ -9,6 +9,7 @@ class AppBarWidget extends StatelessWidget {
   final List<Widget>? actions;
   final Color? titleColor;
   final Color? backgroundColor;
+  final PreferredSizeWidget? bottom;
 
   const AppBarWidget({
     super.key,
@@ -18,6 +19,7 @@ class AppBarWidget extends StatelessWidget {
     this.actions,
     this.titleColor,
     this.backgroundColor,
+    this.bottom,
   });
 
   @override
@@ -28,6 +30,7 @@ class AppBarWidget extends StatelessWidget {
       actions: actions,
       leading: leading,
       backgroundColor: backgroundColor ?? AppColors.primaryColor(),
+      bottom: bottom,
     );
   }
 }
