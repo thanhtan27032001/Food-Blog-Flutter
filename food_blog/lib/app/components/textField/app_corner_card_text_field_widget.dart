@@ -21,6 +21,7 @@ class AppCornerCardTextFieldWidget extends GetView {
   late final String? _text;
   late final String? Function(String?)? _validator;
   late final TextEditingController? _controller;
+  late final Function()? _onLeadingPressed;
 
   AppCornerCardTextFieldWidget({
     super.key,
@@ -42,6 +43,7 @@ class AppCornerCardTextFieldWidget extends GetView {
     String? text,
     String? Function(String?)? validator,
     TextEditingController? controller,
+    Function()? onLeadingPressed,
   }) {
     _onChange = onChange;
     _autofocus = autofocus;
@@ -61,6 +63,7 @@ class AppCornerCardTextFieldWidget extends GetView {
     _text = text;
     _validator = validator;
     _controller = controller;
+    _onLeadingPressed = onLeadingPressed;
   }
 
   @override
@@ -76,9 +79,12 @@ class AppCornerCardTextFieldWidget extends GetView {
         child: Row(
           children: [
             _leadingIcon != null
-                ? Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    child: _leadingIcon!)
+                ? GestureDetector(
+                    onTap: _onLeadingPressed,
+                    child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        child: _leadingIcon!),
+                  )
                 : const SizedBox(width: 8),
             Expanded(
               child: TextFormField(
