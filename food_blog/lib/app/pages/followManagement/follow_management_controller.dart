@@ -24,6 +24,8 @@ class FollowManagementController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getMyFollowedList();
+    getMyFollowingList();
   }
 
   void getMyFollowingList() {
