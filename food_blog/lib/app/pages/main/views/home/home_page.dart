@@ -84,7 +84,7 @@ class HomePage extends GetWidget<HomeController> {
                               .build(context)
                         ],
                       ))
-                : const AppLoadingWidget().build(context)),
+                : Container(margin: const EdgeInsets.only(top: 16),child: const AppLoadingWidget().build(context))),
 
             // popular recipe
             Container(
@@ -104,7 +104,7 @@ class HomePage extends GetWidget<HomeController> {
                   ? HomeSuggestionWidget(
                       recipeList: controller.recipePopularList.value!,
                     )
-                  : AppLoadingWidget().build(context),
+                  : const AppLoadingWidget().build(context),
             ),
 
             Container(
@@ -124,7 +124,7 @@ class HomePage extends GetWidget<HomeController> {
                   ? HomeSuggestionWidget(
                 recipeList: controller.recipeNewestList.value!,
               )
-                  : AppLoadingWidget().build(context),
+                  : const AppLoadingWidget().build(context),
             ),
           ],
         ),

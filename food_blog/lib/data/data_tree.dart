@@ -65,3 +65,14 @@ class FollowCollection {
   static const String fieldUserFollowedId = 'userFollowedId';
   static const String fieldUserFollowingId = 'userFollowingId';
 }
+
+class SeasonCollection {
+  static const String collectionName = 'seasons';
+  static const String fieldMonth = 'months';
+}
+
+class SeasonIngredientCollection {
+  static const String collectionName = 'seasonIngredients';
+  static const String fieldIngredientTag = 'ingredientTag';
+  static const String fieldSeasonId = 'seasonId';
+}

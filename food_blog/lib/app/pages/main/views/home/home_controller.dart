@@ -32,7 +32,8 @@ class HomeController extends GetxController {
 
   Future<void> getIngredientTagListThisSeason() async {
     recipeByIngredientList.value = null;
-    ingredientTagList.value = await IngredientData.instance().searchTagByKeyword(keyword: ' ');
+    // ingredientTagList.value = await IngredientData.instance().searchTagByKeyword(keyword: ' ');
+    ingredientTagList.value = await IngredientData.instance().getTagThisSeason();
     if (ingredientTagList.value!.isNotEmpty) {
       getRecipeIngredientTagList(ingredientTagList.value![0].tag ?? '');
     }

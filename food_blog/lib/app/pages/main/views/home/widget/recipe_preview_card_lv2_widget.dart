@@ -11,9 +11,10 @@ class RecipePreviewCardLv2Widget extends GetView {
   final double? cardWidth;
   final double? cardHeight;
   final Function()? onPressed;
+  final Function()? onAvatarPressed;
 
   const RecipePreviewCardLv2Widget(this.recipe,
-      {super.key, this.cardWidth, this.cardHeight, this.onPressed});
+      {super.key, this.cardWidth, this.cardHeight, this.onPressed, this.onAvatarPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class RecipePreviewCardLv2Widget extends GetView {
                       Row(
                         children: [
                           AppAvatarWidget(
-                              avtUrl: recipe.author?.avatarUrl, size: 21),
+                              avtUrl: recipe.author?.avatarUrl, size: 21, onPress: onAvatarPressed,),
                           const SizedBox(
                             width: 4,
                           ),
