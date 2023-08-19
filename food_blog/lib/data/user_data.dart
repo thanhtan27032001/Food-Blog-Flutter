@@ -5,7 +5,8 @@ import 'package:food_blog/domain/models/base_model.dart';
 
 class UserData {
   static final UserData _instance = UserData();
-  final userDbRef = FirebaseFirestore.instance.collection(UserCollection.collectionName);
+  final _dbRef =
+      FirebaseFirestore.instance.collection(UserCollection.collectionName);
   late UserModel? userLogin;
 
   static UserData instance() {
@@ -14,12 +15,11 @@ class UserData {
 
   Future<bool> checkEmailExisted(String email) async {
     bool result = true;
-    await userDbRef.where(UserCollection.fieldEmail, isEqualTo: email).get().then(
+    await _dbRef.where(UserCollection.fieldEmail, isEqualTo: email).get().then(
       (value) {
         if (value.docs.isNotEmpty) {
           result = true;
-        }
-        else {
+        } else {
           result = false;
         }
       },
@@ -30,10 +30,9 @@ class UserData {
   Future<void> addUser(UserModel user) async {
     bool isEmailExisted = await checkEmailExisted(user.email);
     if (isEmailExisted == false) {
-      await userDbRef.add(user.toJson());
+      await _dbRef.add(user.toJson());
       print('Tạo user thành công');
-    }
-    else {
+    } else {
       print('Email tồn tại');
     }
   }
@@ -41,7 +40,7 @@ class UserData {
   Future<UserModel?> getUserById(
       {required String userId, String? checkUserFollowedBy}) async {
     UserModel? result;
-    await userDbRef.doc(userId).get().then(
+    await _dbRef.doc(userId).get().then(
       (value) async {
         if (value.exists) {
           result = UserModel.fromJson(
@@ -57,9 +56,8 @@ class UserData {
   }
 
   Future<UserModel?> getUserByEmail({required String email}) async {
-    final data = await userDbRef
-        .where(UserCollection.fieldEmail, isEqualTo: email)
-        .get();
+    final data =
+        await _dbRef.where(UserCollection.fieldEmail, isEqualTo: email).get();
     return data.docs.isNotEmpty
         ? UserModel.fromJson(
             {...data.docs[0].data(), UserCollection.fieldId: data.docs[0].id})
@@ -77,6 +75,47 @@ class UserData {
   Future<int> countUserNumOfFollowing(String? userId) async {
     int result = 0;
 
+    return result;
+  }
+
+  Future<List<UserModel>> searchUserByEmail(String email) async {
+    List<UserModel> result = [];
+    await _dbRef.get().then((value) async {
+      for (var doc in value.docs) {
+        if (doc
+            .data()[UserCollection.fieldEmail]
+            .toString()
+            .contains(email.toLowerCase())) {
+          UserModel user = UserModel.fromJson(doc.data());
+          user.id = doc.id;
+          user.isFollowed = await FollowData.instance().isFollowed(
+              followingUserId: UserData.instance().userLogin?.id,
+              followedUserId: doc.id);
+          result.add(user);
+        }
+      }
+    });
+    return result;
+  }
+
+  Future<List<UserModel>> searchUserByName(String name) async {
+    List<UserModel> result = [];
+    await _dbRef.get().then((value) async {
+      for (var doc in value.docs) {
+        if (doc
+            .data()[UserCollection.fieldNickname]
+            .toString()
+            .toLowerCase()
+            .contains(name.toLowerCase())) {
+          UserModel user = UserModel.fromJson(doc.data());
+          user.id = doc.id;
+          user.isFollowed = await FollowData.instance().isFollowed(
+              followingUserId: UserData.instance().userLogin?.id,
+              followedUserId: doc.id);
+          result.add(user);
+        }
+      }
+    });
     return result;
   }
 }

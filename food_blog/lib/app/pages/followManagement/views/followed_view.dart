@@ -9,20 +9,23 @@ class FollowedView extends GetView<FollowManagementController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return ListView.builder(
-        itemCount: controller.myFollowedList.length,
-        itemBuilder: (context, index) {
-          return UserInfoCardWidget(
-            controller.myFollowedList[index],
-            onCardPressed: () {
-              Get.to(() => UserWallPage(),
-                  arguments: controller.myFollowedList[index].id);
-            },
-            onFollowButtonPressed: () {
-              controller.changeFollowStatusFollowedList(index);
-            },
-          ).build(context);
-        },
+      return RefreshIndicator(
+        onRefresh: controller.getMyFollowedList,
+        child: ListView.builder(
+          itemCount: controller.myFollowedList.length,
+          itemBuilder: (context, index) {
+            return UserInfoCardWidget(
+              controller.myFollowedList[index],
+              onCardPressed: () {
+                Get.to(() => UserWallPage(),
+                    arguments: controller.myFollowedList[index].id);
+              },
+              onFollowButtonPressed: () {
+                controller.changeFollowStatusFollowedList(index);
+              },
+            ).build(context);
+          },
+        ),
       );
     });
   }

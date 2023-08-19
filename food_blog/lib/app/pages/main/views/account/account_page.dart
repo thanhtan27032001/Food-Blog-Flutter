@@ -41,17 +41,17 @@ class AccountPage extends GetView<AccountController> {
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {Get.to(()=>FollowManagementPage());},
             style: ElevatedButton.styleFrom(
                 elevation: 2, backgroundColor: AppColors.whiteColor()),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Row(
                 children: [
-                  const Icon(Icons.account_circle_outlined, color: Colors.black,),
+                  const Icon(Icons.group_rounded, color: Colors.black,),
                   const SizedBox(width: 8,),
                   AppTextBody1Widget()
-                      .setText('Cập nhật thông tin')
+                      .setText('Quản lý theo dõi')
                       .setColor(AppColors.blackColor())
                       .build(context),
                   const Spacer(),
@@ -64,6 +64,7 @@ class AccountPage extends GetView<AccountController> {
             ),
           ),
         ),
+
         const SizedBox(height: 16),
         Container(
           width: double.infinity,
@@ -92,22 +93,23 @@ class AccountPage extends GetView<AccountController> {
             ),
           ),
         ),
+
         const SizedBox(height: 16),
         Container(
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           child: ElevatedButton(
-            onPressed: () {Get.to(()=>FollowManagementPage());},
+            onPressed: () {},
             style: ElevatedButton.styleFrom(
                 elevation: 2, backgroundColor: AppColors.whiteColor()),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Row(
                 children: [
-                  const Icon(Icons.archive, color: Colors.black,),
+                  const Icon(Icons.account_circle_outlined, color: Colors.black,),
                   const SizedBox(width: 8,),
                   AppTextBody1Widget()
-                      .setText('Quản lý theo dõi')
+                      .setText('Cập nhật thông tin')
                       .setColor(AppColors.blackColor())
                       .build(context),
                   const Spacer(),
@@ -120,6 +122,7 @@ class AccountPage extends GetView<AccountController> {
             ),
           ),
         ),
+
         const SizedBox(height: 16),
         Container(
           width: double.infinity,
