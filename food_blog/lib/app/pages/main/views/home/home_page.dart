@@ -84,7 +84,7 @@ class HomePage extends GetWidget<HomeController> {
                               .build(context)
                         ],
                       ))
-                : AppLoadingWidget().build(context)),
+                : const AppLoadingWidget().build(context)),
 
             // popular recipe
             Container(

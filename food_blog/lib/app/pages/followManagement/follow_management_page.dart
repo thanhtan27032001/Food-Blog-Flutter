@@ -64,7 +64,6 @@ class FollowManagementPage extends GetView<FollowManagementController> {
                     children: [
                       TabBar(
                         unselectedLabelColor: AppColors.grayColor(level: 2),
-                        // overlayColor: MaterialStateProperty.all(AppColors.primaryColor()),
                         labelColor: AppColors.primaryColor(),
                         indicatorColor: AppColors.primaryColor(level: 2),
                         tabs: const [
@@ -74,11 +73,11 @@ class FollowManagementPage extends GetView<FollowManagementController> {
                           Tab(text: 'Được theo dõi'),
                         ],
                       ),
-                      const Expanded(
+                      Expanded(
                         child: TabBarView(
                           children: [
-                            Icon(Icons.flight, size: 350),
-                            Icon(Icons.directions_transit, size: 350),
+                            FollowingView(),
+                            FollowedView(),
                           ],
                         ),
                       )

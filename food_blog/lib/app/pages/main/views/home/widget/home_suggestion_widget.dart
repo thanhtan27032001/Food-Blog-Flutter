@@ -41,52 +41,5 @@ class HomeSuggestionWidget extends GetWidget<HomeController> {
         scrollDirection: Axis.horizontal,
       ),
     );
-    // return Container(
-    //   width: double.infinity,
-    //   margin: const EdgeInsets.only(top: 32),
-    //   child: Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: [
-    //       if (title != null)
-    //         Row(
-    //           children: [
-    //             Container(
-    //               margin: const EdgeInsets.fromLTRB(16, 0, 4, 0),
-    //               child: AppTextBody2Widget()
-    //                   .setText(title)
-    //                   .setTextStyle(const TextStyle(fontWeight: FontWeight.bold))
-    //                   .build(context),
-    //             ),
-    //             if (onRefresh != null)
-    //               GestureDetector(onTap: onRefresh, child: const Icon(Icons.refresh, size: 20,)),
-    //           ],
-    //         ),
-    //       Container(
-    //         width: double.infinity,
-    //         height: 200,
-    //         margin: const EdgeInsets.only(top: 16),
-    //         child: ListView.builder(
-    //           padding: const EdgeInsets.symmetric(horizontal: 12),
-    //           shrinkWrap: true,
-    //           itemCount: recipeList.length,
-    //           itemBuilder: (context, index) {
-    //             return GestureDetector(
-    //               onTap: () {
-    //                 Get.to(() => RecipeDetailPage(),
-    //                     arguments: recipeList[index].recipeId);
-    //               },
-    //               child: RecipePreviewCardLv2Widget(
-    //                 recipeList[index],
-    //                 cardWidth: 200,
-    //                 cardHeight: 200,
-    //               ),
-    //             );
-    //           },
-    //           scrollDirection: Axis.horizontal,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

@@ -26,6 +26,8 @@ class UserModel {
   int? numOfFollowed;
   @JsonKey(includeToJson: false)
   int? numOfRecipe;
+  @JsonKey(includeToJson: false)
+  bool? isFollowed;
 
   UserModel({
     this.id,
@@ -35,6 +37,7 @@ class UserModel {
     this.intro,
     this.avatarUrl,
     this.loginMethod,
+    this.isFollowed,
   });
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);

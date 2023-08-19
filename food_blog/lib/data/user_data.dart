@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
+import 'package:food_blog/data/follow_data.dart';
 import 'package:food_blog/domain/models/base_model.dart';
 
 class UserData {
@@ -37,11 +38,22 @@ class UserData {
     }
   }
 
-  Future<UserModel?> getUserById({required String userId}) async {
-    final data = await userDbRef.doc(userId).get();
-    return data.data() != null
-        ? UserModel.fromJson({...data.data()!, UserCollection.fieldId: data.id})
-        : null;
+  Future<UserModel?> getUserById(
+      {required String userId, String? checkUserFollowedBy}) async {
+    UserModel? result;
+    await userDbRef.doc(userId).get().then(
+      (value) async {
+        if (value.exists) {
+          result = UserModel.fromJson(
+              {...?value.data(), UserCollection.fieldId: value.id});
+          if (checkUserFollowedBy != null) {
+            result?.isFollowed = await FollowData.instance().isFollowed(
+                followedUserId: value.id, followingUserId: checkUserFollowedBy);
+          }
+        }
+      },
+    );
+    return result;
   }
 
   Future<UserModel?> getUserByEmail({required String email}) async {

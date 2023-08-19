@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:food_blog/data/data_tree.dart';
+import 'package:food_blog/data/user_data.dart';
+import 'package:food_blog/domain/models/base_model.dart';
 import 'package:get/get.dart';
 
 class FollowData {
@@ -38,6 +40,47 @@ class FollowData {
     return result;
   }
 
+  Future<List<UserModel>> getFollowing(String? userFollowingId) async {
+    List<UserModel> result = [];
+    await _dbRef
+        .where(FollowCollection.fieldUserFollowingId,
+            isEqualTo: userFollowingId)
+        .get()
+        .then((value) async {
+      for (var doc in value.docs) {
+        UserModel? userResult = await UserData.instance().getUserById(
+            userId: doc[FollowCollection.fieldUserFollowedId]);
+        if (userResult != null) {
+          userResult.isFollowed = true;
+          result.add(userResult);
+        }
+      }
+    }).onError((error, stackTrace) {
+      error.printError();
+    });
+    return result;
+  }
+
+  Future<List<UserModel>> getFollowed(String? userFollowedId) async {
+    List<UserModel> result = [];
+    await _dbRef
+        .where(FollowCollection.fieldUserFollowedId,
+        isEqualTo: userFollowedId)
+        .get()
+        .then((value) async {
+      for (var doc in value.docs) {
+        UserModel? userResult = await UserData.instance().getUserById(
+            userId: doc[FollowCollection.fieldUserFollowingId], checkUserFollowedBy: UserData.instance().userLogin?.id);
+        if (userResult != null) {
+          result.add(userResult);
+        }
+      }
+    }).onError((error, stackTrace) {
+      error.printError();
+    });
+    return result;
+  }
+
   Future<bool> followUser(
       {String? followedUserId, String? followingUserId}) async {
     bool result = false;
@@ -56,7 +99,7 @@ class FollowData {
   Future<bool> unfollowUser(
       {String? followedUserId, String? followingUserId}) async {
     bool result = false;
-    late final String? idFollow;
+    late String? idFollow;
     if (followingUserId != null && followedUserId != null) {
       await _dbRef
           .where(
